@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/Deschamps/Documents/Projet-Mef1-N/Projet-Mef1-N/sources",
+      "program": "/Users/Deschamps/Documents/Projet-Mef1-N/Projet-Mef1-N/sources/build/Debug/outDebug"
+    }
+  ]
+}
