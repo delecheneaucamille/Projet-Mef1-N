@@ -14,9 +14,10 @@ typedef struct
     char name[21];
     int ai; // 0 = player , 1 = AI player
     Card *hand;
+    int sizeHand;
 } Player;
 
-Player *constuctPlayer()
+Player *constuctPlayer(int ai, int sizeHand)
 {
     Player *player = malloc(sizeof(Player));
     if (player == NULL)
@@ -28,20 +29,35 @@ Player *constuctPlayer()
     player->score = 0;
     player->name[0] = '\0';
     char name[21];
-    do
+    if (ai == 0)
     {
-        printf("Enter player name (max 19 characters): ");
-        fgets(name, sizeof(name) - 1, stdin);
-        name[strcspn(name, "\n")] = 0; // Remove newline character
-        if (name[0] != '\0')
+        player->ai = 0;
+        do
         {
-            snprintf(player->name, sizeof(player->name), "%s", name);
-        }
-        else
-        {
-            printf("Name cannot be empty. Please enter a valid name.\n");
-        }
-    } while (player->name[0] == '\0');
+            printf("Enter player name (max 19 characters): ");
+            fgets(name, sizeof(name) - 1, stdin);
+            name[strcspn(name, "\n")] = 0; // Remove newline character
+            if (name[0] != '\0')
+            {
+                strncpy(player->name, name, sizeof(player->name) - 1);
+                player->name[sizeof(player->name) - 1] = '\0'; // Ensure null termination
+            }
+            else
+            {
+                printf("Name cannot be empty. Please enter a valid name.\n");
+            }
+        } while (player->name[0] == '\0');
+    }
+
+    else
+    {
+        player->ai = 1;
+        player->name[0] = 'A';
+        player->name[1] = 'I';
+        player->name[2] = '\0';
+    }
+
+    player->sizeHand = sizeHand;
 
     return player;
 }
