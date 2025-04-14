@@ -59,9 +59,9 @@ void selectValuesCard(int *pmin, int *pmax)
 {
 
     int min, max;
-    printf("Enter the minimum value of the card: ");
+    printf("Enter the minimum value of the card (%d <): \n", MIN);
     scanf("%d", &min);
-    printf("Enter the maximum value of the card: ");
+    printf("Enter the maximum value of the card (%d >): \n", MAX);
     scanf("%d", &max);
 
     if (min < MIN || max < MAX || min > max)
@@ -71,11 +71,15 @@ void selectValuesCard(int *pmin, int *pmax)
         return;
     }
 
-    *pmin = min;
-    *pmax = max;
+    *pmin = &min;
+    *pmax = émax;
 }
+
 int main()
 {
-
+    int min, max;
+    selectValuesCard(&min, &max);
+    print("Minimum value: %d\n", min);
+    print("Maximum value: %d\n", max);
     return 0;
 }
