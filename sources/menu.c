@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include "struct.h"
+#include <string.h> // #include "struct.h"
 #define MIN -5
 #define MAX 15
 
@@ -11,16 +10,22 @@ typedef enum
     PLAY_VS_PLAYER,
     LOAD_GAME,
     SHOW_RULES,
-    EXIT
-}
+    EXIT,
+} MenuOption;
 
-int
-choiceGame()
+int choiceGame()
 {
     int choice;
-    printf("Press '1' play vs AI\nPress '2' play vs player\nPress '3' to load a game\nPress '4' to see the rules\nPress '5' to exit\n");
-    printf("Enter your choice: ");
-    scanf("%d", &choice);
+    do
+    {
+        if (choice != 0)
+        {
+            printf("Select valide choice\n");
+        }
+        printf("Press '1' play vs AI\nPress '2' play vs player\nPress '3' to load a game\nPress '4' to see the rules\nPress '5' to exit\n");
+        printf("Enter your choice: \n");
+        scanf("%d", &choice);
+    } while ((choice < 1) || (choice > 5));
     return choice;
 }
 
@@ -57,29 +62,29 @@ void selectGameMode()
 
 void selectValuesCard(int *pmin, int *pmax)
 {
-
     int min, max;
-    printf("Enter the minimum value of the card (%d <): \n", MIN);
-    scanf("%d", &min);
-    printf("Enter the maximum value of the card (%d >): \n", MAX);
-    scanf("%d", &max);
-
-    if (min < MIN || max < MAX || min > max)
+    do
     {
-        printf("Invalid values. Please enter positive values with min <= max.\n");
-        selectValuesCard(pmin, pmax);
-        return;
-    }
+        printf("Enter the minimum value of the card (%d <= min): \n", MIN);
+        scanf("%d", &min);
+        printf("Enter the maximum value of the card (max <= %d): \n", MAX);
+        scanf("%d", &max);
 
-    *pmin = &min;
-    *pmax = émax;
+        if (min < MIN || max > MAX || min > max)
+        {
+            printf("Invalid values. Please enter values with %d <= min <= max <= %d.\n", MIN, MAX);
+        }
+    } while (min < MIN || max > MAX || min > max);
+
+    *pmin = min;
+    *pmax = max;
 }
 
 int main()
 {
     int min, max;
     selectValuesCard(&min, &max);
-    print("Minimum value: %d\n", min);
-    print("Maximum value: %d\n", max);
+    printf("Minimum value: %d\n", min);
+    printf("Maximum value: %d\n", max);
     return 0;
 }
