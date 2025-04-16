@@ -12,18 +12,25 @@ typedef struct
     int state;
 } Card;
 
-void destructStack(int *stackCard)
+void destructStack(int **stackCard, int size)
 {
+    if (stackCard != NULL)
+    {
+        for (size_t i = 0; i < count; i++)
+        {
+            /* code */
+        }
+    }
     printf("Destructing card stack \n");
     free(stackCard);
 }
 
-void shuffleStack(int *stackCard, int size)
+void shuffleStack(int **stackCard, int size)
 {
     for (int i = 0; i < size; i++)
     {
         int randomIndex = rand() % size;
-        int temp = stackCard[i];
+        int *temp = stackCard[i];
         stackCard[i] = stackCard[randomIndex];
         stackCard[randomIndex] = temp;
     }
@@ -49,11 +56,37 @@ void selectValuesCard(int *pmin, int *pmax)
     *pmax = max;
 }
 
+void initStack(int **stackCard, int size, int min, int max)
+{
+    for (int i = 0; i < size; i++)
+    {
+        Card *c = malloc(sizeof(Card));
+        if (c == NULL)
+        {
+            fprintf(stderr, "Memory allocation failed\n");
+            destructStack(c);
+            exit(EXIT_FAILURE);
+        }
+        c->value = rand() % (max - min + 1) + min;
+        c->state = 0;
+        stackCard[i] = c;
+    }
+}
+
+void printStack(int **stackCard, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        Card *c = stackCard[i];
+        printf("Card %d: Value = %d, State = %d\n", i, c->value, c->state);
+    }
+}
+
 int main()
 {
     srand(time(NULL));
 
-    int *stackCarte = malloc(sizeof(Card) * SIZE_STACK);
+    int **stackCarte = malloc(sizeof(int *) * SIZE_STACK);
     if (stackCarte == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");

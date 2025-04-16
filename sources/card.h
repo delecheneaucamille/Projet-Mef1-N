@@ -13,6 +13,8 @@ typedef struct
     int state;
 } Card;
 
-void shuffleStack(int *stackCarte, int size);
+void shuffleStack(int **stackCarte, int size);
+void destructStack(int **stackCarte);
+void selectValuesCard(int *pmin, int *pmax);
 
 #endif

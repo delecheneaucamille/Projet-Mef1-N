@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> // #include "struct.h"
-#define MIN -5
-#define MAX 15
+#include <string.h>
+#include "card.h"
 
 typedef enum
 {
@@ -16,16 +15,9 @@ typedef enum
 int choiceGame()
 {
     int choice;
-    do
-    {
-        if (choice != 0)
-        {
-            printf("Select valide choice\n");
-        }
-        printf("Press '1' play vs AI\nPress '2' play vs player\nPress '3' to load a game\nPress '4' to see the rules\nPress '5' to exit\n");
-        printf("Enter your choice: \n");
-        scanf("%d", &choice);
-    } while ((choice < 1) || (choice > 5));
+    printf("Press '1' play vs AI\nPress '2' play vs player\nPress '3' to load a game\nPress '4' to see the rules\nPress '5' to exit\n");
+    printf("Enter your choice: \n");
+    scanf("%d", &choice);
     return choice;
 }
 
@@ -58,26 +50,6 @@ void selectGameMode()
             choice = 0; // Reset choice to continue the loop
         }
     } while (choice == 0);
-}
-
-void selectValuesCard(int *pmin, int *pmax)
-{
-    int min, max;
-    do
-    {
-        printf("Enter the minimum value of the card (%d <= min): \n", MIN);
-        scanf("%d", &min);
-        printf("Enter the maximum value of the card (max <= %d): \n", MAX);
-        scanf("%d", &max);
-
-        if (min < MIN || max > MAX || min > max)
-        {
-            printf("Invalid values. Please enter values with %d <= min <= max <= %d.\n", MIN, MAX);
-        }
-    } while (min < MIN || max > MAX || min > max);
-
-    *pmin = min;
-    *pmax = max;
 }
 
 int main()
