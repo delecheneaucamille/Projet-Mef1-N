@@ -12,6 +12,33 @@ typedef enum
     EXIT,
 } MenuOption;
 
+
+void createMenu() {
+    
+
+    
+    printf("╔═════════════════════════════════════╗\n");
+    printf("║                                     ║\n");
+    printf("║        ████  S K Y J O  ████        ║\n");
+    printf("║                                     ║\n");
+    printf("║        Le jeu de cartes sur le       ║\n");
+    printf("║        terminal !                    ║\n");
+    printf("║                                     ║\n");
+    printf("╠═════════════════════════════════════╣\n");
+    printf("║ 1. Nouvelle partie                 ║\n");
+    printf("║ 2. Charger une partie             ║\n");
+    printf("║ 3. Quitter                         ║\n");
+    printf("╠═════════════════════════════════════╣\n");
+    
+}
+
+
+
+
+
+
+
+
 int choiceGame()
 {
     int choice;
@@ -58,5 +85,6 @@ int main()
     selectValuesCard(&min, &max);
     printf("Minimum value: %d\n", min);
     printf("Maximum value: %d\n", max);
+    createMenu();
     return 0;
 }
