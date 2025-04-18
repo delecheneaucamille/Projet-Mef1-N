@@ -4,8 +4,8 @@
 #include <time.h>
 
 #define SIZE_STACK 100
-#define MIN -5
-#define MAX 15
+#define MIN_SIZE_STACK -5
+#define MAX_SIZE_STACK 15
 
 typedef struct
 {
@@ -39,7 +39,7 @@ void shuffleStack(Card **stackCard, int size)
     }
 }
 
-void selectValuesCard(int *pmin, int *pmax)
+void selectCardValues(int *pmin, int *pmax)
 {
     int min, max;
     do
@@ -49,11 +49,11 @@ void selectValuesCard(int *pmin, int *pmax)
         printf("Enter the maximum value of the card : \n");
         scanf("%d", &max);
 
-        if (min < MIN || max > MAX || min > max)
+        if (min < MIN_SIZE_STACK || max > MAX_SIZE_STACK || min > max)
         {
-            printf("Invalid values. Please enter values with [%d, %d].\n", MIN, MAX);
+            printf("Invalid values. Please enter values with [%d, %d].\n", MIN_SIZE_STACK, MAX_SIZE_STACK);
         }
-    } while (min < MIN || max > MAX || min > max);
+    } while (min < MIN_SIZE_STACK || max > MAX_SIZE_STACK || min > max);
 
     *pmin = min;
     *pmax = max;
@@ -89,7 +89,7 @@ int main()
     srand(time(NULL));
 
     int min, max;
-    selectValuesCard(&min, &max);
+    selectCardValues(&min, &max);
 
     Card **stackCarte = malloc(sizeof(Card *) * SIZE_STACK);
     if (stackCarte == NULL)

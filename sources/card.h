@@ -5,8 +5,8 @@
 #include <stdlib.h>
 
 #define SIZE_STACK 100
-#define MIN -5
-#define MAX 15
+#define MIN_SIZE_STACK -5
+#define MAX_SIZE_STACK 15
 
 typedef struct
 {
@@ -16,7 +16,7 @@ typedef struct
 
 void destructStack(Card **stackCard, int size);
 void shuffleStack(Card **stackCard, int size);
-void selectValuesCard(int *pmin, int *pmax);
+void selectCardValues(int *pmin, int *pmax);
 void initStack(Card **stackCard, int size, int min, int max);
 void printStack(Card **stackCard, int size);
 
