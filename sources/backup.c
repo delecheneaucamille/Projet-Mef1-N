@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <card.h>
 
 void backup(Player *player,int noPlayers, int Nogame, const char *fileName ){
 FILE *f= fopen(fileName,"wb"); // open a file to write the infos in 
