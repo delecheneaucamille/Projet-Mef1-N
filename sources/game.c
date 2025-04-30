@@ -1,27 +1,21 @@
-#include "game.h"
+#include <game.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <card.h>
+#include <player.h>
+#include <menu.h>
 
  
 
 #define DECK_SIZE 52
+#define HAND_SIZE 5
+#define MAX_HAND_SIZE 10
+#define MIN_HAND_SIZE 2
+#define MAX_PLAYERS 4
+#define MIN_PLAYERS 2
 
-typedef struct
-{
-    int score;
-    char *name;
-    int ai; // 0 = player , 1 = AI player
-    Card *hand;
-    int sizeHand;
-} Player;
 
-    typedef struct {
-        Card* pile;      // Tableau dynamique pour la défausse
-        int count;       // Nombre de cartes actuellement dans la défausse
-        int capacity;    // Taille maximale allouée
-    } Discard;
 
     typedef struct
     {
@@ -32,15 +26,9 @@ typedef struct
     typedef struct {
         Player players; 
         int currentPlayer;   // Indice du joueur courant
-        Discard discrad;   // Pile de défausse
+        Discard discrad;
+        int number_players;
     } GameState;
-
-
-
-number_of_players = 0;
-
-
-
 
 
 
@@ -49,7 +37,12 @@ number_of_players = 0;
 
 
 
-void init_game(GameState* game, Player players, int min_val, int max_val) {
+void init_game(GameState* game, int number_players, int min_val, int max_val) {
+    if(""number_players < MIN_PLAYERS || number_players > MAX_PLAYERS) {
+        printf("invalid number of players. Should be between %d and %d.\n", MIN_PLAYERS, MAX_PLAYERS);
+        return;
+    }
+    
     game->player;
     game->current_player = 0;
     game->
@@ -57,9 +50,9 @@ void init_game(GameState* game, Player players, int min_val, int max_val) {
    
 
     // Initialisation simple du deck
-    for(int i = 0; i < DECK_SIZE; i++) {
-        game->deck[i].value = (rand() % (max_val - min_val + 1)) + min_val;
-        game->deck[i].is_visible = 0;
+    for(int i = 0; i < hand; i++) {
+        game->hand[i].value = (rand() % (max_val - min_val + 1)) +min_val;
+        game->hand[i].state = 0;
     }
 
     // Distribution des cartes
