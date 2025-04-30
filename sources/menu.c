@@ -21,13 +21,14 @@ void createMenu() {
     printf("║                                     ║\n");
     printf("║        ████  S K Y J O  ████        ║\n");
     printf("║                                     ║\n");
-    printf("║        Le jeu de cartes sur le       ║\n");
-    printf("║        terminal !                    ║\n");
+    printf("║        Le jeu de cartes sur le      ║\n");
+    printf("║        terminal !                   ║\n");
     printf("║                                     ║\n");
     printf("╠═════════════════════════════════════╣\n");
-    printf("║ 1. Nouvelle partie                 ║\n");
-    printf("║ 2. Charger une partie             ║\n");
-    printf("║ 3. Quitter                         ║\n");
+    printf("║ 1. Nouvelle partie                  ║\n");
+    printf("║ 2. Charger une partie               ║\n");
+    printf("║ 3. les règles                       ║\n");
+    printf("║ 4. Quitter                          ║\n");
     printf("╠═════════════════════════════════════╣\n");
     
 }
@@ -42,7 +43,6 @@ void createMenu() {
 int choiceGame()
 {
     int choice;
-    printf("Press '1' play vs AI\nPress '2' play vs player\nPress '3' to load a game\nPress '4' to see the rules\nPress '5' to exit\n");
     printf("Enter your choice: \n");
     scanf("%d", &choice);
     return choice;
@@ -56,22 +56,22 @@ void selectGameMode()
         choice = choiceGame();
         switch (choice)
         {
-        case PLAY_VS_AI:
+        case 1:
             printf("You chose to play against AI.\n");
+            // initializing a new game
             break;
-        case PLAY_VS_PLAYER:
+        case 2:
             printf("You chose to play against another player.\n");
+            // loading an already existing game
             break;
-        case LOAD_GAME:
+        case 3:
             printf("You chose to load a game.\n");
+            // redirecting to a rule page 
             break;
-        case SHOW_RULES:
+        case 4:
             printf("You chose to see the rules.\n");
             break;
-        case EXIT:
-            printf("Exiting the game.\n");
-            exit(0);
-            break;
+        
         default:
             printf("Invalid choice. Please try again.\n");
             choice = 0; // Reset choice to continue the loop
