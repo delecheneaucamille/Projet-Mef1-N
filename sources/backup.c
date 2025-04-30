@@ -3,12 +3,7 @@
 #include <player.h>
 
 
-typedef struct {
-    char name[32];
-    int hp;
-    int hand[5];
-    int score;
-} Player;
+
 
 void save(Player *player, int noPlayers, int Nogame, const char *fileName) {
     FILE *f = fopen(fileName, "wb");
