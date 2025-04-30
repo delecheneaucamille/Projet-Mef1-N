@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <card.h>
 
  
 
@@ -20,7 +21,7 @@ typedef struct
         Card* pile;      // Tableau dynamique pour la défausse
         int count;       // Nombre de cartes actuellement dans la défausse
         int capacity;    // Taille maximale allouée
-    } Defausse;
+    } Discard;
 
     typedef struct
     {
@@ -29,18 +30,31 @@ typedef struct
     } Card;
     
     typedef struct {
-        Player players; // Tableau dynamique pour les mains des joueurs
+        Player players; 
         int currentPlayer;   // Indice du joueur courant
-        Defausse defausse;   // Pile de défausse
+        Discard discrad;   // Pile de défausse
     } GameState;
 
 
 
+number_of_players = 0;
+
+
+
+
+
+
+
+    Card *getLastCardToDescard(Descard *d, int index);
+
+
 
 void init_game(GameState* game, Player players, int min_val, int max_val) {
-    game->player_count = players;
+    game->player;
     game->current_player = 0;
-    game->deck_count = DECK_SIZE;
+    game->
+
+   
 
     // Initialisation simple du deck
     for(int i = 0; i < DECK_SIZE; i++) {

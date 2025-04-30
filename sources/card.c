@@ -159,7 +159,7 @@ void printDescard(Descard *d)
 {
     for (int i = 0; i < d->indexLastCard; i++)
     {
-        printf("Card %d: Value = %d, State = %d\n", i, d->pile[i]->value, d->pile[i]->state);
+        printf("Card %d: Value = %d, State = %d\n", i, (*d->pile[i])->value, (*d->pile)[i]->state);
     }
 }
 
