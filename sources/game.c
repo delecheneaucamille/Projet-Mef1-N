@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-
+ 
 
 #define DECK_SIZE 52
 
