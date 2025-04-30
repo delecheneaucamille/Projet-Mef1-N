@@ -6,7 +6,7 @@
 
 
 void save(Player *player, int noPlayers, int Nogame, const char *fileName) {
-    FILE *f = fopen(fileName, "wb");
+    FILE *f = fopen(fileName, "wb"); 
     if (f == NULL) {
         printf("Error opening file for backup\n");
         return;
@@ -37,8 +37,9 @@ void load(Player *player, int *noPlayers, int *Nogame, const char *fileName) {
 int main(int argc, char *argv[]) {
     Player player;
     strcpy(player.name, "Example Name");
-    player.hp = 100;
-    player.hand[0] = 1;
+    player.ai = 0;
+    player.hand[0].value = 1; // Assign a value to the card
+    strcpy(player.hand[0].state, 0); // Assign a suit to the card
     player.score = 0;
 
     save(&player, 1, 1, "player.sav");
@@ -48,6 +49,6 @@ int main(int argc, char *argv[]) {
 
     load(&player, NULL, NULL, "player.sav");
 
-    printf("Player name: %s\nHP: %d\n", player.name, player.hp);
+    printf("Player name: %s\nscore: %d\n", player.name, player.score);
     return 0;
 }

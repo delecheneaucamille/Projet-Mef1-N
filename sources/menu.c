@@ -57,19 +57,20 @@ void selectGameMode()
         switch (choice)
         {
         case 1:
-            printf("You chose to play against AI.\n");
+            
             // initializing a new game
             break;
         case 2:
-            printf("You chose to play against another player.\n");
+            load();
             // loading an already existing game
             break;
         case 3:
-            printf("You chose to load a game.\n");
+            fopen("rules.txt", "r");
             // redirecting to a rule page 
             break;
         case 4:
-            printf("You chose to see the rules.\n");
+            exit(0);
+            // exit the game
             break;
         
         default:
@@ -86,5 +87,6 @@ int main()
     printf("Minimum value: %d\n", min);
     printf("Maximum value: %d\n", max);
     createMenu();
+    choiceGame();
     return 0;
 }
