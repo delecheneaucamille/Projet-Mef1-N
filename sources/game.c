@@ -4,7 +4,7 @@
 #include <time.h>
 #include <card.h>
 #include <player.h>
-#include <menu.h>
+#include <menu.c>
 
  
 
@@ -43,9 +43,8 @@ void init_game(GameState* game, int number_players, int min_val, int max_val) {
         return;
     }
     
-    game->player;
-    game->current_player = 0;
-    game->
+    game->number_players = number_players;
+    game->currentPlayer = 0;
 
    
 
