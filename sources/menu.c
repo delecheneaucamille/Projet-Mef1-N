@@ -65,7 +65,7 @@ void selectGameMode()
             // loading an already existing game
             break;
         case 3:
-            fopen("rules.txt", "r");
+            fopen("", "r");
             // redirecting to a rule page 
             break;
         case 4:
