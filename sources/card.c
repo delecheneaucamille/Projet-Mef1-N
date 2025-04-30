@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <card.h>
 
 #define SIZE_STACK 100
 #define MIN_SIZE_STACK -5
@@ -12,6 +13,12 @@ typedef struct
     int value;
     int state;
 } Card;
+
+typedef struct
+{
+    int indexLastCard;
+    Card **pile[SIZE_STACK];
+} Descard;
 
 void destructStack(Card **stackCard, int size)
 {
@@ -81,6 +88,78 @@ void printStack(Card **stackCard, int size)
     for (int i = 0; i < size; i++)
     {
         printf("Card %d: Value = %d, State = %d\n", i, ((Card *)stackCard[i])->value, ((Card *)stackCard[i])->state);
+    }
+}
+
+Descard *initDescard()
+{
+    Descard *d = malloc(sizeof(Descard));
+    d->indexLastCard = 0;
+    for (int i = 0; i < SIZE_STACK; i++)
+    {
+        d->pile[i] = NULL;
+    }
+    return d;
+}
+
+void destructDescard(Descard *d)
+{
+    if (d != NULL)
+    {
+        for (int i = 0; i < SIZE_STACK; i++)
+        {
+            free(d->pile[i]);
+        }
+        free(d);
+    }
+    sleep(1); // Just for fun :)
+    printf("Destructing descard\n");
+}
+
+void addCardToDescard(Descard *d, Card *c)
+{
+    if (d->indexLastCard < SIZE_STACK)
+    {
+        d->pile[d->indexLastCard] = c;
+        d->indexLastCard++;
+    }
+    else
+    {
+        printf("Descard is full\n");
+    }
+}
+void removeLastCardToDescard(Descard *d)
+{
+    if (d->indexLastCard > 0)
+    {
+        d->indexLastCard--;
+        free(d->pile[d->indexLastCard]);
+        d->pile[d->indexLastCard] = NULL;
+    }
+    else
+    {
+        printf("Descard is empty\n");
+    }
+}
+
+Card *getLastCardToDescard(Descard *d, int index)
+{
+    if (d->indexLastCard > 0 && index >= 0 && index < d->indexLastCard)
+    {
+        return d->pile[index];
+    }
+    else
+    {
+        printf("Descard is empty\n");
+        return NULL;
+    }
+}
+
+void printDescard(Descard *d)
+{
+    for (int i = 0; i < d->indexLastCard; i++)
+    {
+        printf("Card %d: Value = %d, State = %d\n", i, d->pile[i]->value, d->pile[i]->state);
     }
 }
 
