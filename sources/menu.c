@@ -65,7 +65,7 @@ void selectGameMode()
             // loading an already existing game
             break;
         case 3:
-            fopen("", "r");
+            fopen("README.md", "r");
             // redirecting to a rule page 
             break;
         case 4:
