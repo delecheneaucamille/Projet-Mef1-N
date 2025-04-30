@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define MAX_PLAYERS 4
 #define HAND_SIZE 5
 #define DECK_SIZE 50
@@ -23,6 +27,6 @@ typedef struct {
     PlayerHand* players; // Tableau dynamique pour les mains des joueurs
     int playerCount;     // Nombre de joueurs
     int currentPlayer;   // Indice du joueur courant
-    Defausse defausse;   // Pile de défausse
+    Discard discrad;   // Pile de défausse
 } GameState;
 
