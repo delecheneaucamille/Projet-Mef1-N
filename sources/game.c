@@ -3,7 +3,41 @@
 #include <stdlib.h>
 #include <time.h>
 
-void init_game(GameState* game, int players, int min_val, int max_val) {
+
+
+#define DECK_SIZE 52
+
+typedef struct
+{
+    int score;
+    char *name;
+    int ai; // 0 = player , 1 = AI player
+    Card *hand;
+    int sizeHand;
+} Player;
+
+    typedef struct {
+        Card* pile;      // Tableau dynamique pour la défausse
+        int count;       // Nombre de cartes actuellement dans la défausse
+        int capacity;    // Taille maximale allouée
+    } Defausse;
+
+    typedef struct
+    {
+        int value;
+        int state;
+    } Card;
+    
+    typedef struct {
+        Player players; // Tableau dynamique pour les mains des joueurs
+        int currentPlayer;   // Indice du joueur courant
+        Defausse defausse;   // Pile de défausse
+    } GameState;
+
+
+
+
+void init_game(GameState* game, Player players, int min_val, int max_val) {
     game->player_count = players;
     game->current_player = 0;
     game->deck_count = DECK_SIZE;
