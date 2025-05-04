@@ -5,22 +5,59 @@
 #include <stdlib.h>
 #include "card.h"
 
+// Définitions des constantes
 #define MIN_SIZE_HAND 20
 #define MAX_SIZE_HAND 5
 
+// Définition de la structure Player
 typedef struct
 {
-    int score;
-    char *name;
-    int ai;
-    Card *hand;
-    int sizeHand;
+    int score;    // Score du joueur
+    char *name;   // Nom du joueur
+    int ai;       // 0 = joueur humain, 1 = joueur IA
+    Card *hand;   // Main du joueur (tableau de cartes)
+    int sizeHand; // Taille de la main
 } Player;
 
+// Prototypes des fonctions
+
+/**
+ * @brief Libère la mémoire allouée pour un joueur.
+ *
+ * @param player Pointeur vers le joueur à détruire.
+ */
 void destructPlayer(Player *player);
+
+/**
+ * @brief Alloue dynamiquement un joueur.
+ *
+ * @return Player* Pointeur vers le joueur nouvellement créé.
+ */
 Player *constuctPlayer();
+
+/**
+ * @brief Initialise les attributs d'un joueur.
+ *
+ * @param p Pointeur vers le joueur.
+ * @param score Score initial du joueur.
+ * @param name Nom du joueur.
+ * @param ai Indique si le joueur est une IA (1) ou un humain (0).
+ * @param sizeHand Taille de la main du joueur.
+ */
 void initPlayer(Player *p, int score, char *name, int ai, int sizeHand);
+
+/**
+ * @brief Permet à l'utilisateur de choisir un nom.
+ *
+ * @return char* Pointeur vers le nom choisi.
+ */
 char *choiceName();
+
+/**
+ * @brief Génère aléatoirement la taille de la main d'un joueur.
+ *
+ * @return int Taille de la main.
+ */
 int selectSizeHand();
 
-#endif
+#endif // PLAYER_H

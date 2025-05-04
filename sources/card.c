@@ -20,29 +20,34 @@ typedef struct
     Card **pile[SIZE_STACK];
 } Descard;
 
-void destructStack(Card **stackCard, int size)
+typedef struct
 {
-    if (stackCard != NULL)
+    int sizeStack;
+    Card **stack;
+} Stack;
+
+void destructStack(Stack *stack)
+{
+    if (stack != NULL)
     {
-        printf("Destructing card... \n");
-        for (int i = 0; i < size; i++)
+        printf("Destructing card stack...\n");
+        for (int i = 0; i < stack->sizeStack; i++)
         {
-            free(stackCard[i]);
+            free(stack->stack[i]);
         }
+        free(stack->stack);
+        free(stack);
     }
-    sleep(1); // Just for fun :)
-    printf("Destructing card stack \n");
-    free(stackCard);
 }
 
-void shuffleStack(Card **stackCard, int size)
+void shuffleStack(Stack *stack)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < stack->sizeStack; i++)
     {
-        int randomIndex = rand() % size;
-        Card *temp = stackCard[i];
-        stackCard[i] = stackCard[randomIndex];
-        stackCard[randomIndex] = temp;
+        int randomIndex = rand() % stack->sizeStack;
+        Card *temp = stack->stack[i];
+        stack->stack[i] = stack->stack[randomIndex];
+        stack->stack[randomIndex] = temp;
     }
 }
 
@@ -51,14 +56,14 @@ void selectCardValues(int *pmin, int *pmax)
     int min, max;
     do
     {
-        printf("Enter the minimum value of the card : \n");
+        printf("Enter the minimum value of the card: \n");
         scanf("%d", &min);
-        printf("Enter the maximum value of the card : \n");
+        printf("Enter the maximum value of the card: \n");
         scanf("%d", &max);
 
         if (min < MIN_SIZE_STACK || max > MAX_SIZE_STACK || min > max)
         {
-            printf("Invalid values. Please enter values with [%d, %d].\n", MIN_SIZE_STACK, MAX_SIZE_STACK);
+            printf("Invalid values. Please enter values within [%d, %d].\n", MIN_SIZE_STACK, MAX_SIZE_STACK);
         }
     } while (min < MIN_SIZE_STACK || max > MAX_SIZE_STACK || min > max);
 
@@ -66,28 +71,58 @@ void selectCardValues(int *pmin, int *pmax)
     *pmax = max;
 }
 
-void initStack(Card **stackCard, int size, int min, int max)
+Stack *initStack(int size, int min, int max)
 {
+    Stack *stack = malloc(sizeof(Stack));
+    if (stack == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    stack->sizeStack = size;
+    stack->stack = malloc(sizeof(Card *) * size);
+    if (stack->stack == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        free(stack);
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 0; i < size; i++)
     {
         Card *c = malloc(sizeof(Card));
         if (c == NULL)
         {
             fprintf(stderr, "Memory allocation failed\n");
-            destructStack(stackCard, size);
+            destructStack(stack);
             exit(EXIT_FAILURE);
         }
         c->value = rand() % (max - min + 1) + min;
         c->state = 0;
-        stackCard[i] = c;
+        stack->stack[i] = c;
     }
+
+    return stack;
 }
 
-void printStack(Card **stackCard, int size)
+Card *getCardFromStack(Stack *stack, )
 {
-    for (int i = 0; i < size; i++)
+    if (stack->sizeStack > 0)
     {
-        printf("Card %d: Value = %d, State = %d\n", i, ((Card *)stackCard[i])->value, ((Card *)stackCard[i])->state);
+        int index = stack->sizeStack - 1;
+        stack->sizeStack--;
+        return stack->stack[index];
+    }
+    printf("Erreur la pioche est vide.\n");
+    return NULL;
+}
+
+void printStack(Stack *stack)
+{
+    for (int i = 0; i < stack->sizeStack; i++)
+    {
+        printf("Card %d: Value = %d, State = %d\n", i, stack->stack[i]->value, stack->stack[i]->state);
     }
 }
 
@@ -170,16 +205,8 @@ int main()
     int min, max;
     selectCardValues(&min, &max);
 
-    Card **stackCarte = malloc(sizeof(Card *) * SIZE_STACK);
-    if (stackCarte == NULL)
-    {
-        fprintf(stderr, "Memory allocation failed\n");
-        destructStack(stackCarte, SIZE_STACK);
-        return 1;
-    }
-
-    initStack(stackCarte, SIZE_STACK, min, max);
-    printStack(stackCarte, SIZE_STACK);
-    destructStack(stackCarte, SIZE_STACK);
+    Stack *stackCarte = initStack(SIZE_STACK, min, max);
+    printStack(stackCarte);
+    destructStack(stackCarte);
     return 0;
 }
