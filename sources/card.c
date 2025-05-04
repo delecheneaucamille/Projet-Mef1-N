@@ -142,11 +142,11 @@ void removeLastCardToDescard(Descard *d)
     }
 }
 
-Card *getLastCardToDescard(Descard *d, int index)
+Card *getLastCardToDescard(Descard *d)
 {
-    if (d->indexLastCard > 0 && index >= 0 && index < d->indexLastCard)
+    if (d->indexLastCard > 0)
     {
-        return d->pile[index];
+        return d->pile[d->indexLastCard];
     }
     else
     {
