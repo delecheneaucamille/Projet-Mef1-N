@@ -13,7 +13,7 @@
 typedef struct
 {
     int value; // Valeur de la carte
-    int state; // État de la carte (0 = non utilisée, 1 = utilisée, etc.)
+    int state; // État de la carte (0 = face cahée, 1 = face visible, etc.)
 } Card;
 
 // Définition de la structure Stack
