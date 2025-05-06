@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <ia.h>
-#include <game.h>
-#include <card.h>
-#include <player.h>
+#include "ia.h"
+#include "game.h"
+#include "card.h"
+#include "player.h"
 // #include <menu.h>
 
 #define MAX_PLAYERS 4 // Max 9 players
