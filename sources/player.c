@@ -116,18 +116,6 @@ void distributeInitialCards(GameState *game) {
     for (int i = 0; i < game->playerCount; i++) {
         Player *currentPlayer = game->players[i];
         
-                if (currentPlayer == NULL || currentPlayer->hand == NULL) {
-                    fprintf(stderr, "Erreur : Joueur %d invalide\n", i);
-                    continue;
-                }
-        
-                // Vérification qu'il y a assez de cartes dans le stack
-                if (game->stack->sizeStack < 2) {
-                    fprintf(stderr, "Erreur : Pas assez de cartes dans le stack\n");
-                    return;
-                }
-        
-              
                 int index1 = rand() % game->stack->sizeStack;
                 int index2;
                 do {
