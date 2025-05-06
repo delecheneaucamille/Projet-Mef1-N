@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <card.h>
-#include <player.h>
-#include <game.h>
+#include "card.h"
+#include "player.h"
+#include "game.h"
 
 #define MAX_COLONNES 4
 #define MAX_LIGNES 3
