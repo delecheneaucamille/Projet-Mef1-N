@@ -17,8 +17,8 @@ typedef struct
 typedef struct
 {
     int indexLastCard;
-    Card **pile[SIZE_STACK];
-} Descard;
+    Card *pile[SIZE_STACK];
+} Discard;
 
 typedef struct
 {
@@ -106,7 +106,7 @@ Stack *initStack(int size, int min, int max)
     return stack;
 }
 
-Card *getCardFromStack(Stack *stack, )
+Card *getCardFromStack(Stack *stack)
 {
     if (stack->sizeStack > 0)
     {
@@ -126,9 +126,9 @@ void printStack(Stack *stack)
     }
 }
 
-Descard *initDescard()
+Discard *initDiscard()
 {
-    Descard *d = malloc(sizeof(Descard));
+    Discard *d = malloc(sizeof(Discard));
     d->indexLastCard = 0;
     for (int i = 0; i < SIZE_STACK; i++)
     {
@@ -137,7 +137,7 @@ Descard *initDescard()
     return d;
 }
 
-void destructDescard(Descard *d)
+void destructDiscard(Discard *d)
 {
     if (d != NULL)
     {
@@ -148,10 +148,10 @@ void destructDescard(Descard *d)
         free(d);
     }
     sleep(1); // Just for fun :)
-    printf("Destructing descard\n");
+    printf("Destructing discard\n");
 }
 
-void addCardToDescard(Descard *d, Card *c)
+void addCardToDiscard(Discard *d, Card *c)
 {
     if (d->indexLastCard < SIZE_STACK)
     {
@@ -160,10 +160,11 @@ void addCardToDescard(Descard *d, Card *c)
     }
     else
     {
-        printf("Descard is full\n");
+        printf("Discard is full\n");
     }
 }
-void removeLastCardToDescard(Descard *d)
+
+void removeLastCardFromDiscard(Discard *d)
 {
     if (d->indexLastCard > 0)
     {
@@ -173,28 +174,28 @@ void removeLastCardToDescard(Descard *d)
     }
     else
     {
-        printf("Descard is empty\n");
+        printf("Discard is empty\n");
     }
 }
 
-Card *getLastCardToDescard(Descard *d)
+Card *getLastCardFromDiscard(Discard *d)
 {
     if (d->indexLastCard > 0)
     {
-        return d->pile[d->indexLastCard];
+        return d->pile[d->indexLastCard - 1];
     }
     else
     {
-        printf("Descard is empty\n");
+        printf("Discard is empty\n");
         return NULL;
     }
 }
 
-void printDescard(Descard *d)
+void printDiscard(Discard *d)
 {
     for (int i = 0; i < d->indexLastCard; i++)
     {
-        printf("Card %d: Value = %d, State = %d\n", i, (*d->pile[i])->value, (*d->pile)[i]->state);
+        printf("Card %d: Value = %d, State = %d\n", i, d->pile[i]->value, d->pile[i]->state);
     }
 }
 
