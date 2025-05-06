@@ -198,16 +198,3 @@ void printDiscard(Discard *d)
         printf("Card %d: Value = %d, State = %d\n", i, d->pile[i]->value, d->pile[i]->state);
     }
 }
-
-int main()
-{
-    srand(time(NULL));
-
-    int min, max;
-    selectCardValues(&min, &max);
-
-    Stack *stackCarte = initStack(SIZE_STACK, min, max);
-    printStack(stackCarte);
-    destructStack(stackCarte);
-    return 0;
-}

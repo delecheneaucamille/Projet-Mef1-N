@@ -8,10 +8,12 @@
 #include "player.h"
 // #include <menu.h>
 
-#define SIZE_STACK 100
-#define MIN_SIZE_STACK -5
-#define MAX_SIZE_STACK 15
 #define MAX_PLAYERS 4
+#define MIN_SIZE_HAND 20
+#define MAX_SIZE_HAND 5
+#define MAX_SIZE_STACK 15
+#define MIN_SIZE_STACK -5
+#define SIZE_STACK 100
 
 typedef struct
 {
@@ -19,10 +21,10 @@ typedef struct
     int playerCount;   // Nombre de joueurs
     int currentPlayer; // Indice du joueur courant
     Discard *discard;  // Pile de défausse
-    Stack *deck;       // Tas de cartes
+    Stack *stack;      // Tas de cartes
 } GameState;
 
-GameState *initGame(int playerCount, Discard *discard, int currentPlayer, Stack *deck)
+GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playerCount)
 {
     if (playerCount < 1 || playerCount > MAX_PLAYERS)
     {
@@ -40,7 +42,7 @@ GameState *initGame(int playerCount, Discard *discard, int currentPlayer, Stack 
     game->playerCount = playerCount;
     game->currentPlayer = currentPlayer;
     game->discard = discard;
-    game->deck = deck;
+    game->stack = stack;
 
     // Allouer de la mémoire pour les joueurs
     game->players = malloc(playerCount * sizeof(*Player));
@@ -72,23 +74,15 @@ void destructGame(GameState *game)
     destructDescard(game->discard);
 
     // Libérer la mémoire pour le tas de cartes
-    destructStack(game->deck);
+    destructStack(game->stack);
 
     // Libérer la mémoire pour l'état du jeu
     free(game);
 }
 
-/*
-    *
-    *
-    * C'est pas bon donc je vais le refaire
-    *
-    *
-
-
-void createPlayers(GameState *game, int iaCount)
+void createPlayers(GameState *game, int aiCount)
 {
-    for (int i = 0; i < game->playerCount; i++)
+    for (int i = game->playerCount - 1; i > 0; i--)
     {
         game->players[i] = constuctPlayer();
         if (game->players[i] == NULL)
@@ -96,54 +90,68 @@ void createPlayers(GameState *game, int iaCount)
             perror("Memory allocation failed for player");
             exit(EXIT_FAILURE);
         }
-        char *name = choiceName();
-        int ai = 0;
-        if (iaCount > 0 && i >= (game->playerCount - iaCount))
+        if (aiCount > 0)
         {
-            ai = 1;
+            game->players[i]->name = malloc(5); // Allocate enough space for "IA" + digits
+            sprintf(game->players[i]->name, "IA%d\0", i + 1 % 10);
+            initPlayer(game->players[i], 0, game->players[i]->name, 1, selectSizeHand()); // IA
+            aiCount--;
         }
-        initPlayer(game->players[i], 0, name, ai, selectSizeHand());
+        else
+        {
+            initPlayer(game->players[i], 0, choiceName(), 0, selectSizeHand()); // Human player
+        }
     }
 }
 
-int max(int a, int b)
+int selectNbPlayers()
 {
-    if (a > b)
-        return a;
-    return b;
-}
-
-void choiceNumberOfPlayers(int *playerCount, int *iaCount)
-{
-    *playerCount = 1;
+    playerCount = 0;
     do
     {
-        if (*playerCount < 1 || *playerCount > MAX_PLAYERS)
-            ;
+        if (playerCount > 0)
         {
-            fprintf(stderr, "Invalid number of players: %d\n", *playerCount);
+            printf("Invalid number of players. Please enter a value between 2 and %d.\n", MAX_PLAYERS);
         }
-        printf("Enter the number of players (1-%d): ", MAX_PLAYERS);
-        scanf("%d", *playerCount);
-    } while (*playerCount < 1 || *playerCount > MAX_PLAYERS);
-
-    if (*playerCount == MAX_PLAYERS)
-    {
-        *iaCount = 0;
-    }
-    else
-    {
-        *iaCount = 1;
-        do
-        {
-            if (*iaCount < max(2 - *playerCount, 0) || *iaCount > (MAX_PLAYERS - *playerCount))
-                ;
-            {
-                fprintf("Invalid number of AIs: %d\n", *iaCount);
-            }
-            printf("Enter the number of AIs playing with you (%d-%d): ", max(2 - *playerCount, 0), (MAX_PLAYERS - *playerCount));
-            scanf("%d", playerCount);
-        } while (*iaCount < max(2 - *playerCount, 0) || *iaCount > (MAX_PLAYERS - *playerCount));
-    }
+        printf("Enter the number of players (2-%d):\n", MAX_PLAYERS);
+        scanf("%d", &playerCount);
+    } while (playerCount < 2 || playerCount > MAX_PLAYERS);
+    return playerCount;
 }
-*/
+
+int selectNbAI(GameState *game)
+{
+    int nbAI = 0;
+    if (game->playerCount == MAX_PLAYERS)
+    {
+        fprintf(stderr, "Not enough players to select AI.\n");
+        return 0;
+    }
+    do
+    {
+        if (nbAI > 0)
+        {
+            printf("Invalid number of AI players. Please enter a value between 0 and %d.\n", game->playerCount - 1);
+        }
+        printf("Enter the number of AI players (0-%d):\n", game->playerCount - 1);
+        scanf("%d", &nbAI);
+    } while (nbAI < 0 || nbAI > game->playerCount - 1);
+
+    return nbAI;
+}
+
+void newGame()
+{
+
+    srand(time(NULL));
+
+    int min, max, ;
+    selectCardValues(&min, &max);
+    Stack *stack = initStack(SIZE_STACK, min, max);
+    Discard *discard = initDescard();
+    GameState *game = initGame(stack, discard, 0, selectNbPlayers());
+    createPlayers(game, selectNbAI(game));
+    shuffleStack(stack);
+
+    return 0;
+}
