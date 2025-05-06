@@ -4,13 +4,11 @@
 #include "player.h"
 #include "game.h"
 
-#define MAX_COLONNES 4
-#define MAX_LIGNES 3
+#define MAX_COLUMNS 4
+#define MAX_ROWS 3
 
-
-
-void afficherCarteLigne(Card c, int ligne) {
-    switch (ligne) {
+void displayCardLine(Card c, int line) {
+    switch (line) {
         case 0: printf("╔═══╗"); break;
         case 1:
             if (c.state == 1)
@@ -22,18 +20,18 @@ void afficherCarteLigne(Card c, int ligne) {
     }
 }
 
-void afficherCartes(Card **cartes, int nbofplayer, int *nbCardByPlayer) {
-    for (int joueur = 0; joueur < nbofplayer; joueur++) {
-        printf("=========== Joueur %d ===========\n", joueur + 1);
-        int nbCartes = nbCardByPlayer[joueur];
-        int lignes = (nbCartes + MAX_COLONNES - 1) / MAX_COLONNES;
+void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
+    for (int player = 0; player < numberOfPlayers; player++) {
+        printf("=========== Player %d ===========\n", player + 1);
+        int numberOfCards = cardsPerPlayer[player];
+        int rows = (numberOfCards + MAX_COLUMNS - 1) / MAX_COLUMNS;
 
-        for (int ligneCarte = 0; ligneCarte < lignes; ligneCarte++) {
-            for (int h = 0; h < 3; h++) { // hauteur de chaque carte
-                for (int col = 0; col < MAX_COLONNES; col++) {
-                    int index = ligneCarte * MAX_COLONNES + col;
-                    if (index < nbCartes) {
-                        afficherCarteLigne(cartes[joueur][index], h);
+        for (int cardRow = 0; cardRow < rows; cardRow++) {
+            for (int h = 0; h < 3; h++) { // height of each card
+                for (int col = 0; col < MAX_COLUMNS; col++) {
+                    int index = cardRow * MAX_COLUMNS + col;
+                    if (index < numberOfCards) {
+                        displayCardLine(cards[player][index], h);
                         printf(" ");
                     } else {
                         printf("       ");
@@ -46,27 +44,26 @@ void afficherCartes(Card **cartes, int nbofplayer, int *nbCardByPlayer) {
     }
 }
 
-
 int main() {
-    int nbofplayer = 3;
-    int nbCardByPlayer[] = {12, 9, 6};
+    int numberOfPlayers = 3;
+    int cardsPerPlayer[] = {12, 9, 6};
 
-    // Allocation dynamique
-    Card **cartes = malloc(nbofplayer * sizeof(Card *));
-    for (int i = 0; i < nbofplayer; i++) {
-        cartes[i] = malloc(nbCardByPlayer[i] * sizeof(Card));
-        for (int j = 0; j < nbCardByPlayer[i]; j++) {
-            cartes[i][j].value = rand() % 13 - 2; // [-2, 10]
-            cartes[i][j].state = rand() % 2;        // 0 ou 1
+    // Dynamic allocation
+    Card **cards = malloc(numberOfPlayers * sizeof(Card *));
+    for (int i = 0; i < numberOfPlayers; i++) {
+        cards[i] = malloc(cardsPerPlayer[i] * sizeof(Card));
+        for (int j = 0; j < cardsPerPlayer[i]; j++) {
+            cards[i][j].value = rand() % 13 - 2; // [-2, 10]
+            cards[i][j].state = rand() % 2;     // 0 or 1
         }
     }
 
-    afficherCartes(cartes, nbofplayer, nbCardByPlayer);
+    displayCards(cards, numberOfPlayers, cardsPerPlayer);
 
-    for (int i = 0; i < nbofplayer; i++) {
-        free(cartes[i]);
+    for (int i = 0; i < numberOfPlayers; i++) {
+        free(cards[i]);
     }
-    free(cartes);
+    free(cards);
 
     return 0;
 }

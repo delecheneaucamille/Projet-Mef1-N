@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <ia.h>
-#include <game.h>
-#include <card.h>
-#include <player.h>
+#include "ia.h"
+#include "game.h"
+#include "card.h"
+#include "player.h"
 // #include <menu.h>
 
-#define MAX_PLAYERS 4
+#define MAX_PLAYERS 4 // Max 9 players
 #define MIN_SIZE_HAND 20
 #define MAX_SIZE_HAND 5
 #define MAX_SIZE_STACK 15
@@ -140,6 +140,11 @@ int selectNbAI(GameState *game)
     return nbAI;
 }
 
+void playerTurn(Player *p, Discard *d, Stack *s)
+{
+    cardToDiscard
+}
+
 void newGame()
 {
 
@@ -152,6 +157,9 @@ void newGame()
     GameState *game = initGame(stack, discard, 0, selectNbPlayers());
     createPlayers(game, selectNbAI(game));
     shuffleStack(stack);
+    // Distribuer les cartes aux joueurs
+
+    // Retourner 2 cartes de chaque mains
 
     return 0;
 }
