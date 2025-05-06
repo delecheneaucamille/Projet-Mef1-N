@@ -17,11 +17,7 @@ typedef struct
 typedef struct
 {
     int indexLastCard;
-<<<<<<< HEAD
-    Card **pile[SIZE_STACK];
-=======
     Card *pile[SIZE_STACK];
->>>>>>> bfdf2fc0498501172c5bd4c86e1991fbec55abe1
 } Discard;
 
 typedef struct
@@ -167,12 +163,8 @@ void addCardToDiscard(Discard *d, Card *c)
         printf("Discard is full\n");
     }
 }
-<<<<<<< HEAD
-void removeLastCardToDiscard(Discard *d)
-=======
 
 void removeLastCardFromDiscard(Discard *d)
->>>>>>> bfdf2fc0498501172c5bd4c86e1991fbec55abe1
 {
     if (d->indexLastCard > 0)
     {
@@ -186,11 +178,7 @@ void removeLastCardFromDiscard(Discard *d)
     }
 }
 
-<<<<<<< HEAD
-Card *getLastCardToDiscard(Discard *d)
-=======
 Card *getLastCardFromDiscard(Discard *d)
->>>>>>> bfdf2fc0498501172c5bd4c86e1991fbec55abe1
 {
     if (d->indexLastCard > 0)
     {
