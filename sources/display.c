@@ -45,25 +45,16 @@ void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
 }
 
 int main() {
-    int numberOfPlayers = 3;
-    int cardsPerPlayer[] = {12, 9, 6};
+    // Création d'une carte pour le test
+    Card testCard;
+    testCard.value = 7;  // Exemple : valeur de la carte
+    testCard.state = 1;  // 1 = face visible, 0 = face cachée
 
-    // Dynamic allocation
-    Card **cards = malloc(numberOfPlayers * sizeof(Card *));
-    for (int i = 0; i < numberOfPlayers; i++) {
-        cards[i] = malloc(cardsPerPlayer[i] * sizeof(Card));
-        for (int j = 0; j < cardsPerPlayer[i]; j++) {
-            cards[i][j].value = rand() % 13 - 2; // [-2, 10]
-            cards[i][j].state = rand() % 2;     // 0 or 1
-        }
+    // Affichage de la carte ligne par ligne
+    for (int line = 0; line < 3; line++) {
+        displayCardLine(testCard, line);
+        printf("\n");
     }
-
-    displayCards(cards, numberOfPlayers, cardsPerPlayer);
-
-    for (int i = 0; i < numberOfPlayers; i++) {
-        free(cards[i]);
-    }
-    free(cards);
 
     return 0;
 }
