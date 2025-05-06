@@ -17,7 +17,11 @@ typedef struct
 typedef struct
 {
     int indexLastCard;
+<<<<<<< HEAD
     Card **pile[SIZE_STACK];
+=======
+    Card *pile[SIZE_STACK];
+>>>>>>> bfdf2fc0498501172c5bd4c86e1991fbec55abe1
 } Discard;
 
 typedef struct
@@ -106,7 +110,7 @@ Stack *initStack(int size, int min, int max)
     return stack;
 }
 
-Card *getCardFromStack(Stack *stack, )
+Card *getCardFromStack(Stack *stack)
 {
     if (stack->sizeStack > 0)
     {
@@ -163,7 +167,12 @@ void addCardToDiscard(Discard *d, Card *c)
         printf("Discard is full\n");
     }
 }
+<<<<<<< HEAD
 void removeLastCardToDiscard(Discard *d)
+=======
+
+void removeLastCardFromDiscard(Discard *d)
+>>>>>>> bfdf2fc0498501172c5bd4c86e1991fbec55abe1
 {
     if (d->indexLastCard > 0)
     {
@@ -177,11 +186,15 @@ void removeLastCardToDiscard(Discard *d)
     }
 }
 
+<<<<<<< HEAD
 Card *getLastCardToDiscard(Discard *d)
+=======
+Card *getLastCardFromDiscard(Discard *d)
+>>>>>>> bfdf2fc0498501172c5bd4c86e1991fbec55abe1
 {
     if (d->indexLastCard > 0)
     {
-        return d->pile[d->indexLastCard];
+        return d->pile[d->indexLastCard - 1];
     }
     else
     {
@@ -194,6 +207,6 @@ void printDiscard(Discard *d)
 {
     for (int i = 0; i < d->indexLastCard; i++)
     {
-        printf("Card %d: Value = %d, State = %d\n", i, (*d->pile[i])->value, (*d->pile)[i]->state);
+        printf("Card %d: Value = %d, State = %d\n", i, d->pile[i]->value, d->pile[i]->state);
     }
 }
