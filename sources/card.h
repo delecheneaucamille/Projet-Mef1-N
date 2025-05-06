@@ -45,7 +45,6 @@ void removeLastCardFromDiscard(Discard *d);
 Card *getLastCardFromDiscard(Discard *d);
 void printDiscard(Discard *d);
 
-
 // Prototypes des fonctions utilitaires
 void selectCardValues(int *pmin, int *pmax);
 

@@ -9,14 +9,18 @@
 
 void displayCardLine(Card c, int line) {
     switch (line) {
-        case 0: printf("╔═══╗"); break;
+        case 0: 
+            printf("╔═══╗"); 
+            break;
         case 1:
             if (c.state == 1)
                 printf("║%3d║", c.value);
             else
                 printf("║ ??║");
             break;
-        case 2: printf("╚═══╝"); break;
+        case 2:
+            printf("╚═══╝");
+            break;
     }
 }
 
@@ -31,7 +35,7 @@ void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
                 for (int col = 0; col < MAX_COLUMNS; col++) {
                     int index = cardRow * MAX_COLUMNS + col;
                     if (index < numberOfCards) {
-                        displayCardLine(cards[player][index], h);
+                        displayCardLine(cards[player][index], h); // Pass the card line
                         printf(" ");
                     } else {
                         printf("       ");
@@ -40,9 +44,33 @@ void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
                 printf("\n");
             }
         }
-        printf("\n");
+
+        // Now display the index for each card in the last line
+        for (int col = 0; col < MAX_COLUMNS; col++) {
+            int index = col;
+            if (index < numberOfCards) {
+                printf("  %2d  ", index); // Display the index
+            } else {
+                printf("       ");
+            }
+        }
+        printf("\n\n");
     }
 }
+
+
+int main() {
+    Card player1Cards[3] = {{5, 1}, {7, 1}, {3, 1}};
+    Card player2Cards[3] = {{9, 1}, {4, 1}, {0, 0}}; // last card is face down
+    
+    Card *playersCards[2] = {player1Cards, player2Cards};
+    int cardsPerPlayer[2] = {3, 3}; // Each player has 3 cards
+
+    displayCards(playersCards, 2, cardsPerPlayer);
+
+    return 0;
+}
+
 
 int main() {
     // Création d'une carte pour le test
