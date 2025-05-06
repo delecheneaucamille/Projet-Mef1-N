@@ -18,7 +18,7 @@ typedef struct
 {
     int indexLastCard;
     Card **pile[SIZE_STACK];
-} Descard;
+} Discard;
 
 typedef struct
 {
@@ -126,9 +126,9 @@ void printStack(Stack *stack)
     }
 }
 
-Descard *initDescard()
+Discard *initDiscard()
 {
-    Descard *d = malloc(sizeof(Descard));
+    Discard *d = malloc(sizeof(Discard));
     d->indexLastCard = 0;
     for (int i = 0; i < SIZE_STACK; i++)
     {
@@ -137,7 +137,7 @@ Descard *initDescard()
     return d;
 }
 
-void destructDescard(Descard *d)
+void destructDiscard(Discard *d)
 {
     if (d != NULL)
     {
@@ -148,10 +148,10 @@ void destructDescard(Descard *d)
         free(d);
     }
     sleep(1); // Just for fun :)
-    printf("Destructing descard\n");
+    printf("Destructing discard\n");
 }
 
-void addCardToDescard(Descard *d, Card *c)
+void addCardToDiscard(Discard *d, Card *c)
 {
     if (d->indexLastCard < SIZE_STACK)
     {
@@ -160,10 +160,10 @@ void addCardToDescard(Descard *d, Card *c)
     }
     else
     {
-        printf("Descard is full\n");
+        printf("Discard is full\n");
     }
 }
-void removeLastCardToDescard(Descard *d)
+void removeLastCardToDiscard(Discard *d)
 {
     if (d->indexLastCard > 0)
     {
@@ -173,11 +173,11 @@ void removeLastCardToDescard(Descard *d)
     }
     else
     {
-        printf("Descard is empty\n");
+        printf("Discard is empty\n");
     }
 }
 
-Card *getLastCardToDescard(Descard *d)
+Card *getLastCardToDiscard(Discard *d)
 {
     if (d->indexLastCard > 0)
     {
@@ -185,28 +185,15 @@ Card *getLastCardToDescard(Descard *d)
     }
     else
     {
-        printf("Descard is empty\n");
+        printf("Discard is empty\n");
         return NULL;
     }
 }
 
-void printDescard(Descard *d)
+void printDiscard(Discard *d)
 {
     for (int i = 0; i < d->indexLastCard; i++)
     {
         printf("Card %d: Value = %d, State = %d\n", i, (*d->pile[i])->value, (*d->pile)[i]->state);
     }
-}
-
-int main()
-{
-    srand(time(NULL));
-
-    int min, max;
-    selectCardValues(&min, &max);
-
-    Stack *stackCarte = initStack(SIZE_STACK, min, max);
-    printStack(stackCarte);
-    destructStack(stackCarte);
-    return 0;
 }
