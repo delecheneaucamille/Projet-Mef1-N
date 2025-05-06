@@ -38,12 +38,13 @@ Card *getCardFromStack(Stack *stack);
 void printStack(Stack *stack);
 
 // Prototypes des fonctions pour Descard
-Descard *initDescard();
-void destructDescard(Discard *d);
-void addCardToDescard(Discard *d, Card *c);
-void removeLastCardToDescard(Discard *d);
-Card *getLastCardToDescard(Discard *d);
-void printDescard(Discard *d);
+Discard *initDiscard();
+void destructDiscard(Discard *d);
+void addCardToDiscard(Discard *d, Card *c);
+void removeLastCardFromDiscard(Discard *d);
+Card *getLastCardFromDiscard(Discard *d);
+void printDiscard(Discard *d);
+
 
 // Prototypes des fonctions utilitaires
 void selectCardValues(int *pmin, int *pmax);
