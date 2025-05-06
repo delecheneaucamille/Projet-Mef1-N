@@ -16,12 +16,16 @@ void save(GameState *gameState, const char *fileName) {
         return;
     }
 
+    // Write the player count
     fwrite(&gameState->playerCount, sizeof(int), 1, f);
-    
+
+    // Write each player's data
     for (int i = 0; i < gameState->playerCount; i++) {
-        fwrite(gameState->players[i], sizeof(Player), 1, f);
+        // Serialize the PlayerHand structure
+        fwrite(&gameState->players[i], sizeof(PlayerHand), 1, f);
     }
 
+    // Write the current player index
     fwrite(&gameState->currentPlayer, sizeof(int), 1, f);
 
     fclose(f);
@@ -40,7 +44,7 @@ void load(GameState *gameState, const char *fileName) {
     fread(&gameState->playerCount, sizeof(int), 1, f);
     
     for (int i = 0; i < gameState->playerCount; i++) {
-        fread(gameState->players[i], sizeof(Player), 1, f);
+        fread(&gameState->players[i], sizeof(PlayerHand), 1, f);
     }
 
     fread(&gameState->currentPlayer, sizeof(int), 1, f);
@@ -55,8 +59,8 @@ int main() {
     player1.score = 0;
 
     GameState gameState;
-    gameState.players = (Player**) malloc(sizeof(Player*));
-    gameState.players[0] = &player1;
+    gameState.players = (PlayerHand*) malloc(sizeof(PlayerHand));
+    gameState.players[0] = player1;
     gameState.playerCount = 1;
     gameState.currentPlayer = 0;
 
