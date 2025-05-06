@@ -101,7 +101,7 @@ int main()
 
 void statehand(int *Player){
     
-   (for(int i = 0 < player->sizehand; i++){
+   (for(int i = 0, i < player->sizehand; i++){
        if(player->hand[i].state == 0 ){
        
         return 0;}  
