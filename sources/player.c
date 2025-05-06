@@ -97,3 +97,18 @@ int main()
 
     return 0;
 }
+
+
+void statehand(int *Player){
+    
+   (for(int i = 0 < player->sizehand; i++){
+       if(player->hand[i].state == 0 ){
+       
+        return 0;}  
+       
+        else{return 1;
+     } 
+   }
+}
+    
+
