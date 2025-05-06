@@ -28,7 +28,7 @@ typedef struct
 {
     int indexLastCard;       // Index de la dernière carte dans la pile
     Card **pile[SIZE_STACK]; // Liste des cartes dans le tas de défausse
-} Descard;
+} Discard;
 
 // Prototypes des fonctions pour Stack
 Stack *initStack(int size, int min, int max);
@@ -39,11 +39,11 @@ void printStack(Stack *stack);
 
 // Prototypes des fonctions pour Descard
 Descard *initDescard();
-void destructDescard(Descard *d);
-void addCardToDescard(Descard *d, Card *c);
-void removeLastCardToDescard(Descard *d);
-Card *getLastCardToDescard(Descard *d);
-void printDescard(Descard *d);
+void destructDescard(Discard *d);
+void addCardToDescard(Discard *d, Card *c);
+void removeLastCardToDescard(Discard *d);
+Card *getLastCardToDescard(Discard *d);
+void printDescard(Discard *d);
 
 // Prototypes des fonctions utilitaires
 void selectCardValues(int *pmin, int *pmax);
