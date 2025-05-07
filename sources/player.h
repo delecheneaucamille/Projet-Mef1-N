@@ -66,6 +66,6 @@ int selectSizeHand();
  * @param player Pointeur vers le joueur dont on veut vérifier la main.
  * @return 1 si toutes les cartes sont retournées, 0 sinon.
  */
- void statehand(int *Player)
+ void statehand(int *Player);
 
 #endif // PLAYER_H

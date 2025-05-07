@@ -60,7 +60,8 @@ int main() {
 
     GameState gameState;
     gameState.players = (PlayerHand*) malloc(sizeof(PlayerHand));
-    gameState.players[0].player = player1; // Assign the player to the 'player' field
+    gameState.players[0]. = &player1; // Assign the player to the first slot in the hand
+
     gameState.playerCount = 1;
     gameState.currentPlayer = 0;
 

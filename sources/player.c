@@ -98,6 +98,8 @@ int main()
     return 0;
 }
 
+void statehand(int *Player)
+{
 
 void statehand(int *Player){
     
@@ -132,6 +134,12 @@ void distributeInitialCards(GameState *game) {
     
             
         }
+
+        else
+        {
+            return 1;
+        }
+    }
 }
 
 void distributeCards(GameState *game) {
@@ -151,4 +159,6 @@ void distributeCards(GameState *game) {
          }
         }
         return 1;
-    }
+}
+
+

@@ -112,6 +112,7 @@ Card *getCardFromStack(Stack *stack)
     {
         int index = stack->sizeStack - 1;
         stack->sizeStack--;
+        stack->stack[index]->state = 1;
         return stack->stack[index];
     }
     printf("Erreur la pioche est vide.\n");

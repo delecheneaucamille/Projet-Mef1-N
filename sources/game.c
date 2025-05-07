@@ -106,7 +106,7 @@ void createPlayers(GameState *game, int aiCount)
 
 int selectNbPlayers()
 {
-    playerCount = 0;
+    int playerCount = 0;
     do
     {
         if (playerCount > 0)
@@ -142,7 +142,88 @@ int selectNbAI(GameState *game)
 
 void playerTurn(Player *p, Discard *d, Stack *s)
 {
-    cardToDiscard
+    Card *card = getLastCardToDiscard(d);
+    int choice = 0;
+    if (card == NULL)
+    {
+        perror("No card to discard.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("It's %s's turn!\n", p->name);
+    do
+    {
+        if (choice > 0)
+        {
+            printf("Invalid choice. Please enter 1 or 2.\n");
+        }
+        printf("Si vous sahouaitez piocher une carte, entrez 1, sinon, si vous souhaiter prendre la carte de la pioche entrez 2\n");
+        scanf("%d", &choice);
+    } while (choice != 1 && choice != 2);
+
+    if (choice == 1)
+    {
+        Card *card = getCardFromStack(s);
+        if (card == NULL)
+        {
+            perror("No card to draw.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        printf("%s draws a card: %d\n", p->name, card->value);
+        choice = -1;
+        do
+        {
+            if (choice > -1)
+            {
+                printf("Invalid choice. Please enter a valid number.\n");
+            }
+            printf("Entrez 0 pour mettre la carte a la defausse ou choisissez le numero avec laquelle vous vouler echanger (0-%d): \n", p->sizeHand);
+            scanf("%d", &choice);
+        } while (choice < 0 || choice > p->sizeHand);
+
+        if (choice == 0)
+        {
+            addCardToDiscard(d, card);
+            printf("%s puts the card in the discard pile.\n", p->name);
+
+            choice = 0;
+            do
+            {
+                if (choice > 0)
+                {
+                    printf("Invalid choice. Please enter a valid number.\n");
+                }
+                printf("Quelle carte souhaitez vous retourner (1-%d): \n", p->sizeHand);
+                scanf("%d", &choice);
+            } while (choice < 1 || choice > p->sizeHand);
+            p->hand[choice - 1]->state = 1;
+        }
+        else
+        {
+            Card *temp = p->hand[choice];
+            p->hand[choice] = card;
+            addCardToDiscard(d, temp);
+        }
+    }
+    else
+    {
+        printf("%s takes the card from the discard pile: %d\n", p->name, cardToDiscard->value);
+        removeLastCardFromDiscard(d);
+        choice = 0;
+        do
+        {
+            if (choice > 0)
+            {
+                printf("Invalid choice. Please enter a valid number.\n");
+            }
+            printf("Choisissez le numero avec laquelle vous vouler echanger (1-%d): \n", p->sizeHand);
+            scanf("%d", &choice);
+        } while (choice < 0 || choice > p->sizeHand);
+        Card *temp = p->hand[choice - 1];
+        p->hand[choice - 1] = card;
+        addCardToDiscard(d, temp);
+    }
 }
 
 void newGame()
