@@ -194,7 +194,7 @@ void printDiscard(Discard *d)
     {
         if (d->pile[i] != NULL)
         {
-            printf("Card %d: Value = %d, State = %d\n", i, (*d->pile[i])->value, (*d->pile[i])->state);
+            printf("Card %d: Value = %d, State = %d\n", i, d->pile[i]->value, d->pile[i]->state);
         }
     }
 }
