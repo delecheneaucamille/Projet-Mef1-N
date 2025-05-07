@@ -3,6 +3,7 @@
 #include <string.h>
 #include "card.h"
 #include "player.h"
+#include "game.h"
 
 typedef enum
 {
@@ -94,21 +95,21 @@ int main()
 
 
 
-void ranking(Gamestate *game){
+void ranking(GameState*game){
 
 
-    for(int i=0; i<game->playercount -1; i++){
-       for(int j=i+1; j<game->playercount; j++){
-        if(game->player[j]->score > game->player[i]->score){
-            Player *temp = game->player[i];
-            game->player[i] = game->player[j];
-            game->player[j] = temp;
+    for(int i=0; i<game->playerCount -1; i++){
+       for(int j=i+1; j<game->playerCount; j++){
+        if(game->players[j]->score > game->players[i]->score){
+            Player *temp = game->players[i];
+            game->players[i] = game->players[j];
+            game->players[j] = temp;
         }
         }
     }
     printf("\nClassement : \n");
-    for(int i=0; i<game->playercount; i++){
-        printf("%d %d %s\n", i+1, game->player[i]->score, game->player[i]->name);
+    for(int i=0; i<game->playerCount; i++){
+        printf("%d %d %s\n", i+1, game->players[i]->score, game->players[i]->name);
     }
 }
 
