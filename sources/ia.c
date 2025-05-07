@@ -39,7 +39,7 @@ void turnStateCard(Player *p)
     }
 }
 
-void iaTurn(Player *p, GameState *game)
+void iaTurn(Player *p, Stack *s, Discard *d)
 {
     printf("IA %s joue son tour...\n", p->name);
 
@@ -50,7 +50,7 @@ void iaTurn(Player *p, GameState *game)
         exit(EXIT_FAILURE);
     }
 
-    Card *cardToDiscard = getLastCardToDiscard(game->discard);
+    Card *cardToDiscard = getLastCardToDiscard(d);
     if (cardToDiscard == NULL)
     {
         fprintf(stderr, "IA %s ne peut pas jouer.\n", p->name);
@@ -61,14 +61,14 @@ void iaTurn(Player *p, GameState *game)
     {
         Card temp = p->hand[indexMax];
         p->hand[indexMax] = *cardToDiscard;
-        removeCardFromDescard(game->discard);
+        removeCardFromDescard(d);
         printf("IA %s a echangé la carte de la defausse %d avec sa carte n°%d .\n", p->name, cardToDiscard->value, indexMax);
-        addCardToDescard(game->discard, cardToDiscard);
+        addCardToDescard(d, cardToDiscard);
     }
 
     else
     {
-        Card *cardToStack = getCardFromStack(game->stack);
+        Card *cardToStack = getCardFromStack(s);
         if (cardToStack == NULL)
         {
             fprintf(stderr, "IA %s ne peut pas piocher.\n", p->name);
@@ -78,7 +78,7 @@ void iaTurn(Player *p, GameState *game)
 
         if (cardToStack->value > p->hand[indexMax].value)
         {
-            addCardToDescard(game->discard, cardToStack);
+            addCardToDescard(d, cardToStack);
             printf("IA %s met la carte de la pioche %d dans la defausse.\n", p->name, cardToStack->value);
             turnStateCard(p);
         }
@@ -87,7 +87,7 @@ void iaTurn(Player *p, GameState *game)
             printf("IA %s a echangé la carte de la pioche %d avec sa carte n°%d .\n", p->name, cardToStack->value, indexMax);
             Card temp = p->hand[indexMax];
             p->hand[indexMax] = *cardToStack;
-            addCardToDescard(game->discard, temp);
+            addCardToDescard(d, temp);
         }
     }
 }
