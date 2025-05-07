@@ -97,20 +97,29 @@ int main()
 
 void ranking(GameState*game){
 
-
-    for(int i=0; i<game->playerCount -1; i++){
-       for(int j=i+1; j<game->playerCount; j++){
-        if(game->players[j]->score > game->players[i]->score){
-            Player *temp = game->players[i];
-            game->players[i] = game->players[j];
-            game->players[j] = temp;
+    for(int i = 0; i < game->playerCount; i++){
+        game->players[i]->score = 0;
+    
+        for(int j =0; j< game->players[i]->sizeHand; j++){
+            if(game->players[i]->hand[j]->state == 1){
+            game->players[i]->score += game->players[i]->hand[j]->value;
+            }
         }
+        for(int i =0; i<playerCount; i++){
+            for(int j =0; j<playerCount; j++){
+                if(game->players[i]->score < game->players[j]->score){
+                    Player* temp = game->players[i];
+                    game->players[i]= game->players[j];
+                    game->players[j]= temp;
+                }
+            }
         }
-    }
-    printf("\nClassement : \n");
-    for(int i=0; i<game->playerCount; i++){
-        printf("%d %d %s\n", i+1, game->players[i]->score, game->players[i]->name);
-    }
 }
+    printf("\nRanking:\n");
+    for(int i = 0; i< game->playerCount; i++){
+        printf("Player %d; Score %d\n", game->players[i]->name, game->players[i]->score);
+    }
+
+
 
    
