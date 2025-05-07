@@ -129,34 +129,26 @@ void distributeInitialCards(GameState *game) {
                 currentPlayer->hand[1].state = 1;
         
                
-                game->stack->stack[index1] = NULL;
-                game->stack->stack[index2] = NULL;
+    
             
         }
 }
 
-void distributeInitialCards(GameState *game) {
+void distributeCards(GameState *game) {
    
     for (int i = 0; i < game->playerCount; i++) {
-        Player *currentPlayer = game->players[i];
-
-        for (int j = 0; j < 2; j++) {
-            Card *card = getCardFromStack(game->stack);
-            if (card == NULL) {
-                fprintf(stderr, "Erreur : Stack vide pour le joueur %d\n", i);
-                return;
-            }
-
-            card->state = 1;
-            
-            // Ajouter à la main du joueur
-            currentPlayer->hand[j] = *card;
-            
+         Player *currentPlayer = game->players[i];
+         if(currentPlayer == NULL || currentPlayer->sizeHand== NULL) continue;
+         
+         Card *card = getCardFromStack(game->stack);
         
-            if (j >= currentPlayer->handSize) {
-                fprintf(stderr, "Erreur : Main du joueur %d trop petite\n", i);
-                return;
+         for(int j=0; i<currentPlayer->sizehand; j++){
+            if(currentPlayer->hand[j].state == 0){
+                currentplayer->hand[j]=*card;
+                currentPlayer->hand[j].state = 0;
+                break;
             }
+         }
         }
+        return 1;
     }
-}
