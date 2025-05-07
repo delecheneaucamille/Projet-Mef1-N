@@ -21,7 +21,7 @@ void createMenu() {
     
     printf("╔═════════════════════════════════════╗\n");
     printf("║                                     ║\n");
-    printf("║        ████  S K Y J O  ████        ║\n");
+    printf("║ ████ \033[32mS K Y J O\033[0m ████  ║\n");
     printf("║                                     ║\n");
     printf("║        Le jeu de cartes sur le      ║\n");
     printf("║        terminal !                   ║\n");
@@ -59,7 +59,7 @@ void selectGameMode()
         switch (choice)
         {
         case 1:
-            
+            newGame();
             // initializing a new game
             break;
         case 2:
@@ -76,7 +76,7 @@ void selectGameMode()
             break;
         
         default:
-            printf("Invalid choice. Please try again.\n");
+            printf("\031[32mInvalid choice. Please try again.\033[0m\n");
             choice = 0; // Reset choice to continue the loop
         }
     } while (choice == 0);
@@ -101,12 +101,12 @@ void ranking(GameState*game){
         game->players[i]->score = 0;
     
         for(int j =0; j< game->players[i]->sizeHand; j++){
-            if(game->players[i]->hand[j]->state == 1){
-            game->players[i]->score += game->players[i]->hand[j]->value;
+            if(game->players[i]->hand[j].state == 1){
+            game->players[i]->score += game->players[i]->hand[j].value;
             }
         }
-        for(int i =0; i<playerCount; i++){
-            for(int j =0; j<playerCount; j++){
+        for(int i =0; i<game->playerCount; i++){
+            for(int j =0; j< game->playerCount; j++){
                 if(game->players[i]->score < game->players[j]->score){
                     Player* temp = game->players[i];
                     game->players[i]= game->players[j];

@@ -45,7 +45,7 @@ GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playe
     game->stack = stack;
 
     // Allouer de la mémoire pour les joueurs
-    game->players = malloc(playerCount * sizeof(*Player));
+    game->players = malloc(playerCount * sizeof(Player*));
     if (game->players == NULL)
     {
         perror("Memory allocation failed for players");
@@ -202,7 +202,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         else
         {
             Card *temp = p->hand[choice];
-            p->hand[choice] = card;
+            p->hand[choice] == card;
             addCardToDiscard(d, temp);
         }
     }
@@ -221,7 +221,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             scanf("%d", &choice);
         } while (choice < 0 || choice > p->sizeHand);
         Card *temp = p->hand[choice - 1];
-        p->hand[choice - 1] = card;
+        p->hand[choice - 1] == card;
         addCardToDiscard(d, temp);
     }
 }

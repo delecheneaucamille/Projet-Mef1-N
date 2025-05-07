@@ -25,49 +25,38 @@ void displayCardLine(Card c, int line) {
     }
 }
 
-void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
-    for (int player = 0; player < numberOfPlayers; player++) {
-        printf("\033[31m=========== Player %d ===========\n\033[0m", player + 1);
-        int numberOfCards = cardsPerPlayer[player];
-        int rows = (numberOfCards + MAX_COLUMNS - 1) / MAX_COLUMNS;
+void displayCards(Player *players, int playerCount) {
+    for (int i = 0; i < playerCount; i++) {
+        printf("\033[31m=========== %s ===========\n\033[0m", players[i].name);
+        int numberOfCards = players[i].sizeHand;
+        int rows = (numberOfCards + MAX_COLUMNS - 1) / MAX_COLUMNS;  // Calcul du nombre de lignes
 
+        // Affichage des cartes ligne par ligne
         for (int cardRow = 0; cardRow < rows; cardRow++) {
+            // Affichage des cartes (lignes de chaque carte)
             for (int h = 0; h < 3; h++) { // height of each card
                 for (int col = 0; col < MAX_COLUMNS; col++) {
                     int index = cardRow * MAX_COLUMNS + col;
                     if (index < numberOfCards) {
-                        displayCardLine(cards[player][index], h); // Pass the card line
+                        displayCardLine(players[i].hand[index], h); // Affiche la ligne de la carte
                         printf(" ");
                     } else {
-                        printf("       ");
+                        printf("       "); // Espace vide pour les cartes manquantes
                     }
                 }
                 printf("\n");
             }
-        }
 
-        // Now display the index for each card in the last line
-        for (int col = 0; col < MAX_COLUMNS; col++) {
-            int index = col;
-            if (index < numberOfCards) {
-                printf("  %2d  ", index); // Display the index
-            } else {
-                printf("       ");
+            // Affichage des indices sous les cartes
+            for (int col = 0; col < MAX_COLUMNS; col++) {
+                int index = cardRow * MAX_COLUMNS + col;
+                if (index < numberOfCards) {
+                    printf("  %2d   ", index + 1); // Affiche l'indice aligné sous la carte
+                } else {
+                    printf("       "); // Espace vide pour les cartes manquantes
+                }
             }
+            printf("\n\n"); // Espacement entre les lignes de cartes
         }
-        printf("\n\n");
     }
 }
-
-
-void displayGameState(GameState *game) {
-    printf("=========== Game State ===========\n");
-    printf("Current Player: %d\n", game->currentPlayer + 1);
-    printf("Number of Players: %d\n", game->playerCount);
-    printf("Discard Pile:\n");
-    printDiscard(game->discard);
-    printf("Stack:\n");
-    printStack(game->stack);
-    printf("\n");
-}
-
