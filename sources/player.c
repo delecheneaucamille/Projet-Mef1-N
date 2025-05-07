@@ -98,17 +98,73 @@ int main()
     return 0;
 }
 
+void statehand(int *Player)
+{
 
-void statehand(int *Player){
-    
-   (for(int i = 0, i < player->sizehand; i++){
-       if(player->hand[i].state == 0 ){
-       
-        return 0;}  
-       
-        else{return 1;
-     } 
-   }
+    for (int i = 0, i < player->sizehand; i++)
+    {
+        if (player->hand[i].state == 0)
+        {
+            return 0;
+        }
+
+        else
+        {
+            return 1;
+        }
+    }
 }
-    
 
+void distributeInitialCards(GameState *game)
+{
+    // Pour chaque joueur
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        Player *currentPlayer = game->players[i];
+
+        int index1 = rand() % game->stack->sizeStack;
+        int index2;
+        do
+        {
+            index2 = rand() % game->stack->sizeStack;
+        } while (index2 == index1);
+        currentPlayer->hand[0] = *game->stack->stack[index1];
+        currentPlayer->hand[1] = *game->stack->stack[index2];
+
+        currentPlayer->hand[0].state = 1;
+        currentPlayer->hand[1].state = 1;
+
+        game->stack->stack[index1] = NULL;
+        game->stack->stack[index2] = NULL;
+    }
+}
+
+void distributeInitialCards(GameState *game)
+{
+
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        Player *currentPlayer = game->players[i];
+
+        for (int j = 0; j < 2; j++)
+        {
+            Card *card = getCardFromStack(game->stack);
+            if (card == NULL)
+            {
+                fprintf(stderr, "Erreur : Stack vide pour le joueur %d\n", i);
+                return;
+            }
+
+            card->state = 1;
+
+            // Ajouter à la main du joueur
+            currentPlayer->hand[j] = *card;
+
+            if (j >= currentPlayer->handSize)
+            {
+                fprintf(stderr, "Erreur : Main du joueur %d trop petite\n", i);
+                return;
+            }
+        }
+    }
+}
