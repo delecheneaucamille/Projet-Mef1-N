@@ -59,16 +59,14 @@ void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
 }
 
 
-int main() {
-    Card player1Cards[3] = {{5, 1}, {7, 1}, {3, 1}};
-    Card player2Cards[3] = {{9, 1}, {4, 1}, {0, 0}}; // last card is face down
-    
-    Card *playersCards[2] = {player1Cards, player2Cards};
-    int cardsPerPlayer[2] = {3, 3}; // Each player has 3 cards
-
-    displayCards(playersCards, 2, cardsPerPlayer);
-
-    return 0;
+void displayGameState(GameState *game) {
+    printf("=========== Game State ===========\n");
+    printf("Current Player: %d\n", game->currentPlayer + 1);
+    printf("Number of Players: %d\n", game->playerCount);
+    printf("Discard Pile:\n");
+    printDiscard(game->discard);
+    printf("Stack:\n");
+    printStack(game->stack);
+    printf("\n");
 }
-
 
