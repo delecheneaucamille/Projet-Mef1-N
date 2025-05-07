@@ -72,17 +72,3 @@ int main() {
 }
 
 
-int main() {
-    // Création d'une carte pour le test
-    Card testCard;
-    testCard.value = 7;  // Exemple : valeur de la carte
-    testCard.state = 1;  // 1 = face visible, 0 = face cachée
-
-    // Affichage de la carte ligne par ligne
-    for (int line = 0; line < 3; line++) {
-        displayCardLine(testCard, line);
-        printf("\n");
-    }
-
-    return 0;
-}
