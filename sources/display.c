@@ -47,10 +47,11 @@ void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
         }
 
         // Now display the index for each card in the last line
-        for (int col = 0; col < MAX_COLUMNS; col++) {
-            int index = col;
+        int cardRow = (numberOfCards + MAX_COLUMNS - 1) / MAX_COLUMNS - 1; // Calculate the last row index
+        for (int col = 0; col < MAX_COLUMNS; col++) { // Start from col = 0
+            int index = cardRow * MAX_COLUMNS + col; // Calculate the correct index
             if (index < numberOfCards) {
-                printf("  %2d  ", index); // Display the index
+                printf("  %2d  ", index + 1); // Add 1 to the index to start from 1
             } else {
                 printf("       ");
             }
@@ -60,14 +61,5 @@ void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
 }
 
 
-void displayGameState(GameState *game) {
-    printf("=========== Game State ===========\n");
-    printf("Current Player: %d\n", game->currentPlayer + 1);
-    printf("Number of Players: %d\n", game->playerCount);
-    printf("Discard Pile:\n");
-    printDiscard(game->discard);
-    printf("Stack:\n");
-    printStack(game->stack);
-    printf("\n");
-}
+
 
