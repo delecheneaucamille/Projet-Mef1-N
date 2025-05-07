@@ -3,6 +3,7 @@
 #include "card.h"
 #include "player.h"
 #include "game.h"
+#include "colors.h"
 
 #define MAX_COLUMNS 4
 #define MAX_ROWS 3
@@ -10,23 +11,23 @@
 void displayCardLine(Card c, int line) {
     switch (line) {
         case 0: 
-            printf("╔═══╗"); 
+            printf("\033[34m╔═══╗\033[0m"); // Bordure en bleu
             break;
         case 1:
-            if (c.state == 1)
-                printf("║%3d║", c.value);
-            else
-                printf("║ ??║");
+            if (c.state == 1) // Carte visible
+                printf("\033[35m║%3d║\033[0m", c.value); // Chiffre en magenta
+            else // Carte cachée
+                printf("\033[34m║ ??║\033[0m"); // Texte en bleu
             break;
         case 2:
-            printf("╚═══╝");
+            printf("\033[34m╚═══╝\033[0m"); // Bordure en bleu
             break;
     }
 }
 
 void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer) {
     for (int player = 0; player < numberOfPlayers; player++) {
-        printf("=========== Player %d ===========\n", player + 1);
+        printf("\033[31m=========== Player %d ===========\n\033[0m", player + 1);
         int numberOfCards = cardsPerPlayer[player];
         int rows = (numberOfCards + MAX_COLUMNS - 1) / MAX_COLUMNS;
 
