@@ -109,11 +109,20 @@ int selectNbPlayers()
     int playerCount = 0;
     do
     {
+        system("clear");
         if (playerCount > 0)
         {
             printf("Invalid number of players. Please enter a value between 2 and %d.\n", MAX_PLAYERS);
         }
-        printf("Enter the number of players (2-%d):\n", MAX_PLAYERS);
+        printf("╔=============================================╗\n");
+        printf("║    \033[32mSELECTION DU NOMBRE\033[0m       ║ \n");
+        printf("║         \033[32mDE JOUEURS\033[0m           ║ \n");
+        printf("╠=============================================╣\n");
+        printf("║                                             ║\n");
+        printf("║Veuillez entrer un nombre de joueurs (2-%d) :║\n", MAX_PLAYERS);
+        printf("║                                             ║\n");
+        printf("╠=============================================╣\n");
+        
         scanf("%d", &playerCount);
     } while (playerCount < 2 || playerCount > MAX_PLAYERS);
     return playerCount;
@@ -129,11 +138,19 @@ int selectNbAI(GameState *game)
     }
     do
     {
+        system("clear");
         if (nbAI > 0)
         {
             printf("Invalid number of AI players. Please enter a value between 0 and %d.\n", game->playerCount - 1);
         }
-        printf("Enter the number of AI players (0-%d):\n", game->playerCount - 1);
+        printf("╔===========================================╗\n");
+        printf("║    \033[32mSELECTION DU NOMBRE\033[0m     ║\n");
+        printf("║           \033[32mDE AI\033[0m            ║\n");
+        printf("╠===========================================╣\n");
+        printf("║                                           ║\n");
+        printf("║ Enter the number of AI players (0-%d):    ║\n", game->playerCount - 1);
+        printf("║                                           ║\n");
+        printf("╠===========================================╣\n");
         scanf("%d", &nbAI);
     } while (nbAI < 0 || nbAI > game->playerCount - 1);
 
