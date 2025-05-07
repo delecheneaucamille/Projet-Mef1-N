@@ -10,12 +10,12 @@
 
 int getIndexHighestCard(Player *p)
 {
-    if (sizeHand > 0)
+    if (p->sizeHand > 0)
     {
         int index = 0;
         for (int i = 1; i < p->sizeHand; i++)
         {
-            if ((p->hand[i].value > p->hand[index]->value) && (p->hand[i].state == 1))
+            if ((p->hand[i].value > p->hand[index].value) && (p->hand[i].state == 1))
             {
                 index = i;
             }
@@ -30,9 +30,9 @@ void turnStateCard(Player *p)
 {
     for (int i = 0; i < p->sizeHand; i++)
     {
-        if (p->hand[i]->state == 0)
+        if (p->hand[i].state == 0)
         {
-            p->hand[i]->state = 1;
+            p->hand[i].state = 1;
             i = p->sizeHand + 1;
             printf("IA %s retourne la carte n°%d.\n", p->name, i);
         }
@@ -46,24 +46,24 @@ void iaTurn(Player *p, GameState *game)
     int indexMax = getIndexHighestCard(p);
     if (indexMax == NULL)
     {
-        perror("IA %s ne peut pas jouer.\n", p->name);
+        fprintf(stderr, "IA %s ne peut pas jouer.\n", p->name);
         exit(EXIT_FAILURE);
     }
 
-    Card *cardToDescard = getLastCardToDescard(game->descard);
-    if (cardMax == NULL)
+    Card *cardToDiscard = getLastCardToDiscard(game->discard);
+    if (cardToDiscard == NULL)
     {
-        perror("IA %s ne peut pas jouer.\n", p->name);
+        fprintf(stderr, "IA %s ne peut pas jouer.\n", p->name);
         exit(EXIT_FAILURE);
     }
 
-    if (p->hand[indexMax]->value > cardToDescard->value)
+    if (p->hand[indexMax].value > cardToDiscard->value)
     {
-        Card *temp = p->hand[indexMax];
-        p->hand[indexMax] = cardToDescard;
-        removeCardFromDescard(game->descard);
-        printf("IA %s a echangé la carte de la defausse %d avec sa carte n°%d .\n", p->name, cardToDescard->value, indexMax);
-        addCardToDescard(game->descard, cardToDescard);
+        Card temp = p->hand[indexMax];
+        p->hand[indexMax] = *cardToDiscard;
+        removeCardFromDescard(game->discard);
+        printf("IA %s a echangé la carte de la defausse %d avec sa carte n°%d .\n", p->name, cardToDiscard->value, indexMax);
+        addCardToDescard(game->discard, cardToDiscard);
     }
 
     else
@@ -71,23 +71,23 @@ void iaTurn(Player *p, GameState *game)
         Card *cardToStack = getCardFromStack(game->stack);
         if (cardToStack == NULL)
         {
-            perror("IA %s ne peut pas piocher.\n", p->name);
+            fprintf(stderr, "IA %s ne peut pas piocher.\n", p->name);
             exit(EXIT_FAILURE);
         }
         printf("IA %s pioche.\n", p->name);
 
-        if (cardToStack->value > p->hand[indexMax]->value)
+        if (cardToStack->value > p->hand[indexMax].value)
         {
-            addCardToDescard(game->descard, cardToStack);
+            addCardToDescard(game->discard, cardToStack);
             printf("IA %s met la carte de la pioche %d dans la defausse.\n", p->name, cardToStack->value);
             turnStateCard(p);
         }
         else
         {
             printf("IA %s a echangé la carte de la pioche %d avec sa carte n°%d .\n", p->name, cardToStack->value, indexMax);
-            Card *temp = p->hand[indexMax];
-            p->hand[indexMax] = cardToStack;
-            addCardToDescard(game->descard, temp);
+            Card temp = p->hand[indexMax];
+            p->hand[indexMax] = *cardToStack;
+            addCardToDescard(game->discard, temp);
         }
     }
 }

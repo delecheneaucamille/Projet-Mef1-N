@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "card.h"
 #include "player.h"
 #include "game.h"
@@ -22,7 +24,7 @@ void save(GameState *gameState, const char *fileName) {
     // Write each player's data
     for (int i = 0; i < gameState->playerCount; i++) {
         // Serialize the PlayerHand structure
-        fwrite(&gameState->players[i], sizeof(PlayerHand), 1, f);
+        fwrite(&gameState->players[i], sizeof(Player), 1, f);
     }
 
     // Write the current player index
@@ -44,7 +46,7 @@ void load(GameState *gameState, const char *fileName) {
     fread(&gameState->playerCount, sizeof(int), 1, f);
     
     for (int i = 0; i < gameState->playerCount; i++) {
-        fread(&gameState->players[i], sizeof(PlayerHand), 1, f);
+        fread(&gameState->players[i], sizeof(Player), 1, f);
     }
 
     fread(&gameState->currentPlayer, sizeof(int), 1, f);
@@ -59,8 +61,8 @@ int main() {
     player1.score = 0;
 
     GameState gameState;
-    gameState.players = (PlayerHand*) malloc(sizeof(PlayerHand));
-    gameState.players[0]. = &player1; // Assign the player to the first slot in the hand
+    gameState.players = (Player**) malloc(sizeof(Player));
+    gameState.players[0] = &player1; // Assign the player to the first slot in the hand
 
     gameState.playerCount = 1;
     gameState.currentPlayer = 0;
