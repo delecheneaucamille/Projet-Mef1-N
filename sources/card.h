@@ -26,8 +26,8 @@ typedef struct
 // Définition de la structure Descard
 typedef struct
 {
-    int indexLastCard;       // Index de la dernière carte dans la pile
-    Card **pile[SIZE_STACK]; // Liste des cartes dans le tas de défausse
+    int indexLastCard; // Index de la dernière carte dans la pile
+    Card **pile;       // Liste des cartes dans le tas de défausse
 } Discard;
 
 // Prototypes des fonctions pour Stack
