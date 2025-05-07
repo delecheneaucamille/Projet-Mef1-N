@@ -28,8 +28,9 @@ void turnStateCard(Player *p);
  * @brief Effectue le tour de jeu d'un joueur IA.
  *
  * @param p Pointeur vers le joueur IA.
- * @param game Pointeur vers l'état actuel du jeu.
+ * @param s Pointeur vers le tas de cartes.
+ * @param d Pointeur vers la pile de défausse.
  */
-void iaTurn(Player *p, GameState *game);
+void iaTurn(Player *p, Stack *s, Discard *d);
 
 #endif // IA_H
