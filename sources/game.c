@@ -226,6 +226,28 @@ void playerTurn(Player *p, Discard *d, Stack *s)
     }
 }
 
+void turnGame(GameState *game)
+{
+
+    while (statehand(game->players[game->currentPlayer]) == 0 && game->stack->sizeStack > 0)
+    {
+        if (game->players[game->currentPlayer]->ai == 0)
+        {
+            playerTurn(game->players[game->currentPlayer], game->discard, game->stack);
+        }
+        else
+        {
+            iaTurn(game->players[game->currentPlayer], game);
+        }
+        game->currentPlayer = (game->currentPlayer + 1) % game->playerCount;
+    }
+    if (statehand(game->players[g; ame->currentPlayer]) == 0)
+    {
+        printf("Le joueur %s a retourné toutes ses cartes. \n", game->players[game->currentPlayer])
+            printf("Le jeu s'arrete.\nDécompte des points...\n")
+    }
+}
+
 void newGame()
 {
 
@@ -238,9 +260,11 @@ void newGame()
     GameState *game = initGame(stack, discard, 0, selectNbPlayers());
     createPlayers(game, selectNbAI(game));
     shuffleStack(stack);
-    // Distribuer les cartes aux joueurs
 
+    // Distribuer les cartes aux joueurs
     // Retourner 2 cartes de chaque mains
+
+    turnGame(game);
 
     return 0;
 }
