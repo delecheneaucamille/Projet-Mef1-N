@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <card.h>
+#include "card.h"
 
 #define SIZE_STACK 100
 #define MIN_SIZE_STACK -5
@@ -156,7 +156,7 @@ void addCardToDiscard(Discard *d, Card *c)
 {
     if (d->indexLastCard < SIZE_STACK)
     {
-        d->pile[d->indexLastCard] = c;
+        d->pile[d->indexLastCard] = &c;
         d->indexLastCard++;
     }
     else
@@ -196,6 +196,9 @@ void printDiscard(Discard *d)
 {
     for (int i = 0; i < d->indexLastCard; i++)
     {
-        printf("Card %d: Value = %d, State = %d\n", i, d->pile[i]->value, d->pile[i]->state);
+        if (d->pile[i] != NULL)
+        {
+            printf("Card %d: Value = %d, State = %d\n", i, (*d->pile[i]).value, (*d->pile[i]).state);
+        }
     }
 }
