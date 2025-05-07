@@ -21,7 +21,7 @@ void createMenu() {
     
     printf("╔═════════════════════════════════════╗\n");
     printf("║                                     ║\n");
-    printf("║        ████  S K Y J O  ████        ║\n");
+    printf("║ ████ \033[32mS K Y J O\033[0m ████  ║\n");
     printf("║                                     ║\n");
     printf("║        Le jeu de cartes sur le      ║\n");
     printf("║        terminal !                   ║\n");
@@ -59,7 +59,7 @@ void selectGameMode()
         switch (choice)
         {
         case 1:
-            
+            newGame();
             // initializing a new game
             break;
         case 2:
@@ -76,7 +76,7 @@ void selectGameMode()
             break;
         
         default:
-            printf("Invalid choice. Please try again.\n");
+            printf("\031[32mInvalid choice. Please try again.\033[0m\n");
             choice = 0; // Reset choice to continue the loop
         }
     } while (choice == 0);
