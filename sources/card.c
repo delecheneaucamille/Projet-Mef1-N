@@ -156,7 +156,7 @@ void addCardToDiscard(Discard *d, Card *c)
 {
     if (d->indexLastCard < SIZE_STACK)
     {
-        d->pile[d->indexLastCard] = &c;
+        d->pile[d->indexLastCard] = c;
         d->indexLastCard++;
     }
     else

@@ -241,10 +241,10 @@ void turnGame(GameState *game)
         }
         game->currentPlayer = (game->currentPlayer + 1) % game->playerCount;
     }
-    if (statehand(game->players[g; ame->currentPlayer]) == 0)
+    if (statehand(game->players[game->currentPlayer]) == 0)
     {
-        printf("Le joueur %s a retourné toutes ses cartes. \n", game->players[game->currentPlayer])
-            printf("Le jeu s'arrete.\nDécompte des points...\n")
+        printf("Le joueur %s a retourné toutes ses cartes. \n", game->players[game->currentPlayer]);
+        printf("Le jeu s'arrete.\nDécompte des points...\n");
     }
 }
 
@@ -253,7 +253,7 @@ void newGame()
 
     srand(time(NULL));
 
-    int min, max, ;
+    int min, max;
     selectCardValues(&min, &max);
     Stack *stack = initStack(SIZE_STACK, min, max);
     Discard *discard = initDescard();

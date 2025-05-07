@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "player.h"
-#include "game.h"
+
+// Déclaration anticipée de GameState
+typedef struct GameState GameState;
 
 // Prototypes des fonctions
 
