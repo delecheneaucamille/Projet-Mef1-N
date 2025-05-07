@@ -92,73 +92,71 @@ int selectSizeHand()
     return rand() % (MAX_SIZE_HAND - MIN_SIZE_HAND + 1) + MIN_SIZE_HAND;
 }
 
+int statehand(Player *player)
+{
+    for (int i = 0; i < player->sizeHand; i++)
+    {
+        if (player->hand[i].state == 0)
+        {
+            return 0; // Une carte n'est pas retournée
+        }
+    }
+    return 1; // Toutes les cartes sont retournées
+}
+
 int main()
 {
 
     return 0;
 }
 
-void statehand(int *Player)
+void distributeInitialCards(GameState *game)
 {
-
-void statehand(int *Player){
-    
-   (for(int i = 0, i < player->sizehand; i++){
-       if(player->hand[i].state == 0 ){
-       
-        return 0;}  
-       
-        else{return 1;
-     } 
-   }
-}
-    
-void distributeInitialCards(GameState *game) {
     // Pour chaque joueur
-    for (int i = 0; i < game->playerCount; i++) {
+    for (int i = 0; i < game->playerCount; i++)
+    {
         Player *currentPlayer = game->players[i];
-        
-                int index1 = rand() % game->stack->sizeStack;
-                int index2;
-                do {
-                    index2 = rand() % game->stack->sizeStack;
-                } while (index2 == index1);        
-                currentPlayer->hand[0] = *game->stack->stack[index1];
-                currentPlayer->hand[1] = *game->stack->stack[index2];
-        
-               
-                currentPlayer->hand[0].state = 1;
-                currentPlayer->hand[1].state = 1;
-        
-               
-    
-            
-        }
 
-        else
+        int index1 = rand() % game->stack->sizeStack;
+        int index2;
+        do
         {
-            return 1;
-        }
+            index2 = rand() % game->stack->sizeStack;
+        } while (index2 == index1);
+        currentPlayer->hand[0] = *game->stack->stack[index1];
+        currentPlayer->hand[1] = *game->stack->stack[index2];
+
+        currentPlayer->hand[0].state = 1;
+        currentPlayer->hand[1].state = 1;
+    }
+
+    else
+    {
+        return 1;
     }
 }
+}
 
-void distributeCards(GameState *game) {
-   
-    for (int i = 0; i < game->playerCount; i++) {
-         Player *currentPlayer = game->players[i];
-         if(currentPlayer == NULL || currentPlayer->sizeHand== NULL) continue;
-         
-         Card *card = getCardFromStack(game->stack);
-        
-         for(int j=0; i<currentPlayer->sizehand; j++){
-            if(currentPlayer->hand[j].state == 0){
-                currentplayer->hand[j]=*card;
+void distributeCards(GameState *game)
+{
+
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        Player *currentPlayer = game->players[i];
+        if (currentPlayer == NULL || currentPlayer->sizeHand == NULL)
+            continue;
+
+        Card *card = getCardFromStack(game->stack);
+
+        for (int j = 0; i < currentPlayer->sizehand; j++)
+        {
+            if (currentPlayer->hand[j].state == 0)
+            {
+                currentplayer->hand[j] = *card;
                 currentPlayer->hand[j].state = 0;
                 break;
             }
-         }
         }
-        return 1;
+    }
+    return 1;
 }
-
-

@@ -23,7 +23,7 @@ void save(GameState *gameState, const char *fileName) {
 
     // Write each player's data
     for (int i = 0; i < gameState->playerCount; i++) {
-        // Serialize the PlayerHand structure
+        
         fwrite(&gameState->players[i], sizeof(Player), 1, f);
     }
 
