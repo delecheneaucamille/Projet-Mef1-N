@@ -74,3 +74,20 @@ void displayCards(Player *players, int playerCount)
         }
     }
 }
+
+void displayCardWithName(Card *card, const char *name)
+{
+    if (card == NULL || name == NULL)
+    {
+        printf("Invalid card or name.\n");
+        return;
+    }
+
+    printf("Card Name: %s\n", name);
+    printf("╔═══╗\n");
+    if (card->state == 1) // Carte visible
+        printf("║%3d║\n", card->value);
+    else // Carte cachée
+        printf("║ ??║\n");
+    printf("╚═══╝\n");
+}

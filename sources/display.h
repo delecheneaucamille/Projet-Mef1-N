@@ -11,5 +11,12 @@
 // Prototypes des fonctions
 void displayCardLine(Card c, int line);
 void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer);
+/**
+ * @brief Affiche une carte avec son nom.
+ *
+ * @param card Pointeur vers la carte à afficher.
+ * @param name Nom de la carte.
+ */
+void displayCardWithName(Card *card, const char *name)
 
 #endif // DISPLAY_H

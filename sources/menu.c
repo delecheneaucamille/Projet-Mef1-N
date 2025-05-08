@@ -1,25 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "card.h"
-#include "player.h"
-#include "game.h"
 
-typedef enum
-{
-    PLAY_VS_AI = 1,
-    PLAY_VS_PLAYER,
-    LOAD_GAME,
-    SHOW_RULES,
-    EXIT,
-} MenuOption;
+#include "game.h"
 
 void createMenu()
 {
 
     printf("╔═════════════════════════════════════╗\n");
     printf("║                                     ║\n");
-    printf("║ ████ \033[32mS K Y J O\033[0m ████  ║\n");
+    printf("║         ████ \033[32mS K Y J O\033[0m ████         ║\n");
     printf("║                                     ║\n");
     printf("║        Le jeu de cartes sur le      ║\n");
     printf("║        terminal !                   ║\n");
@@ -60,7 +50,8 @@ void selectGameMode()
             // initializing a new game
             break;
         case 2:
-
+            printf("Loading game...\n");
+            printf("It's not implemented yet sorry :)\n");
             // loading an already existing game
             break;
         case 3:
@@ -81,7 +72,6 @@ void selectGameMode()
 
 void ranking(GameState *game)
 {
-
     for (int i = 0; i < game->playerCount; i++)
     {
         game->players[i]->score = 0;
