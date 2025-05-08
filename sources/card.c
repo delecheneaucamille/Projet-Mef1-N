@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 #define SIZE_STACK 100
-#define MIN_SIZE_STACK -5
-#define MAX_SIZE_STACK 15
+#define MIN_CARDS_VALUES -5
+#define MAX_CARDS_VALUES 15
 
 void destructStack(Stack *stack)
 {
@@ -35,16 +35,28 @@ void selectCardValues(int *pmin, int *pmax)
     int min, max;
     do
     {
-        printf("Enter the minimum value of the card: \n");
+        printf("╔===========================================╗\n");
+        printf("║   \033[32mSELECTION DES VALEURS\033[0m   ║\n");
+        printf("║         \033[32mDES CARTES\033[0m         ║\n");
+        printf("╠===========================================╣\n");
+        printf("║                                           ║\n");
+        printf("║Veuillez entrer la valeur minimale :      ║\n");
+        printf("║                                           ║\n");
         scanf("%d", &min);
-        printf("Enter the maximum value of the card: \n");
+        printf("╔===========================================╗\n");
+        printf("║   \033[32mSELECTION DES VALEURS\033[0m   ║\n");
+        printf("║         \033[32mDES CARTES\033[0m         ║\n");
+        printf("╠===========================================╣\n");
+        printf("║                                           ║\n");
+        printf("║Veuillez entrer la valeur maximale :      ║\n");
+        printf("║                                           ║\n");
         scanf("%d", &max);
 
-        if (min < MIN_SIZE_STACK || max > MAX_SIZE_STACK || min > max)
+        if (min < MIN_CARDS_VALUES || max > MAX_CARDS_VALUES || min > max)
         {
-            printf("Invalid values. Please enter values within [%d, %d].\n", MIN_SIZE_STACK, MAX_SIZE_STACK);
+            printf("Invalid values. Please enter values within [%d, %d].\n", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         }
-    } while (min < MIN_SIZE_STACK || max > MAX_SIZE_STACK || min > max);
+    } while (min < MIN_CARDS_VALUES || max > MAX_CARDS_VALUES || min > max);
 
     *pmin = min;
     *pmax = max;

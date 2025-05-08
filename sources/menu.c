@@ -14,11 +14,9 @@ typedef enum
     EXIT,
 } MenuOption;
 
+void createMenu()
+{
 
-void createMenu() {
-    
-
-    
     printf("╔═════════════════════════════════════╗\n");
     printf("║                                     ║\n");
     printf("║ ████ \033[32mS K Y J O\033[0m ████  ║\n");
@@ -32,15 +30,7 @@ void createMenu() {
     printf("║ 3. les règles                       ║\n");
     printf("║ 4. Quitter                          ║\n");
     printf("╠═════════════════════════════════════╣\n");
-    
 }
-
-
-
-
-
-
-
 
 int choiceGame()
 {
@@ -68,13 +58,13 @@ void selectGameMode()
             break;
         case 3:
             fopen("README.md", "r");
-            // redirecting to a rule page 
+            // redirecting to a rule page
             break;
         case 4:
             exit(0);
             // exit the game
             break;
-        
+
         default:
             printf("\031[32mInvalid choice. Please try again.\033[0m\n");
             choice = 0; // Reset choice to continue the loop
@@ -93,33 +83,36 @@ int main()
     return 0;
 }
 
+void ranking(GameState *game)
+{
 
-
-void ranking(GameState*game){
-
-    for(int i = 0; i < game->playerCount; i++){
+    for (int i = 0; i < game->playerCount; i++)
+    {
         game->players[i]->score = 0;
-    
-        for(int j =0; j< game->players[i]->sizeHand; j++){
-            if(game->players[i]->hand[j].state == 1){
-            game->players[i]->score += game->players[i]->hand[j].value;
+
+        for (int j = 0; j < game->players[i]->sizeHand; j++)
+        {
+            if (game->players[i]->hand[j].state == 1)
+            {
+                game->players[i]->score += game->players[i]->hand[j].value;
             }
         }
-        for(int i =0; i<game->playerCount; i++){
-            for(int j =0; j< game->playerCount; j++){
-                if(game->players[i]->score < game->players[j]->score){
-                    Player* temp = game->players[i];
-                    game->players[i]= game->players[j];
-                    game->players[j]= temp;
+        for (int i = 0; i < game->playerCount; i++)
+        {
+            for (int j = 0; j < game->playerCount; j++)
+            {
+                if (game->players[i]->score < game->players[j]->score)
+                {
+                    Player *temp = game->players[i];
+                    game->players[i] = game->players[j];
+                    game->players[j] = temp;
                 }
             }
         }
-}
+    }
     printf("\nRanking:\n");
-    for(int i = 0; i< game->playerCount; i++){
+    for (int i = 0; i < game->playerCount; i++)
+    {
         printf("Player %d; Score %d\n", game->players[i]->name, game->players[i]->score);
     }
-
-
-
-   
+}

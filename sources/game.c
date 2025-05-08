@@ -230,6 +230,46 @@ int checkEndGame(Player *player)
     return 1; // Toutes les cartes sont retournées
 }
 
+Player *calculateRanking(GameState *game)
+{
+    Player *ranking = malloc(game->playerCount * sizeof(Player *));
+    if (ranking == NULL)
+    {
+        perror("Memory allocation failed for ranking");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        int score = 0;
+        for (int j = 0; j < game->players[i]->sizeHand; j++)
+        {
+            score += game->players[i]->hand[j].value;
+        }
+        game->players[i]->score = score;
+    }
+
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        ranking[i] = game->players[i];
+    }
+
+    for (int i = 0; i < game->playerCount - 1; i++)
+    {
+        for (int j = i + 1; j < game->playerCount; j++)
+        {
+            if (ranking[i]->score > ranking[j]->score)
+            {
+                Player *temp = ranking[i];
+                ranking[i] = ranking[j];
+                ranking[j] = temp;
+            }
+        }
+    }
+
+    return ranking;
+}
+
 void newGame()
 {
 
@@ -242,9 +282,15 @@ void newGame()
     GameState *game = initGame(stack, discard, 0, selectNbPlayers());
     createPlayers(game, selectNbAI(game));
     shuffleStack(stack);
-
-    // Distribuer les cartes aux joueurs
-    // Retourner 2 cartes de chaque mains
-
+    distributeCards(game);
+    return2RandomCards(game);
+    printf("Les cartes sont melangees et distribuees...\n");
+    printf("Le jeu commence !\n");
     turnGame(game);
+    Player *ranking = calculateRanking(game);
+    printf("Classement final :\n");
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        printf("%s : %d points\n", ranking[i]->name, ranking[i]->score);
+    }
 }

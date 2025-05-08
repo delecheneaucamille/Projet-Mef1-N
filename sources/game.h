@@ -98,6 +98,14 @@ void distributeCards(GameState *game);
 int checkEndGame(Player *player);
 
 /**
+ * @brief Calcule le classement final des joueurs.
+ *
+ * @param game Pointeur vers l'état du jeu.
+ * @return Player* Tableau des joueurs triés par score.
+ */
+Player *calculateRanking(GameState *game);
+
+/**
  * @brief Lance une nouvelle partie.
  */
 void newGame();
