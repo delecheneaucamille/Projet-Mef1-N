@@ -68,7 +68,7 @@ void selectGameMode()
             // redirecting to a rule page
             break;
         case 4:
-            exit(0);
+            exit(-1);
             // exit the game
             break;
 
