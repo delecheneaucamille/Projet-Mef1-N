@@ -94,7 +94,6 @@ void distributeCards(GameState *game);
  */
 void displayLoading();
 
-
 /**
  * @brief Vérifie si un joueur a terminé la partie.
  *
