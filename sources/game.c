@@ -169,6 +169,18 @@ int checkEndGame(Player *player)
     return 1; // All cards are flipped
 }
 
+
+// Fonction pour afficher l'animation de chargement
+void displayLoading() {
+    for (int i = 0; i < 3; i++) {
+    sleep(1); // Attend une seconde
+    printf("."); // Affiche un point à chaque seconde
+    fflush(stdout); // Force l'affichage immédiat du point
+    }
+    printf("\n"); // Passe à la ligne après l'animation
+}
+
+
 void turnGame(GameState *game)
 {
     while (checkEndGame(game->players[game->currentPlayer]) == 0 && game->stack->sizeStack > 0)
@@ -186,12 +198,14 @@ void turnGame(GameState *game)
     if (checkEndGame(game->players[game->currentPlayer]) == 1)
     {
         printf("Player %s has flipped all their cards.\n", game->players[game->currentPlayer]->name);
-        printf("The game ends.\nCalculating scores...\n");
+        printf("The game ends.\nCalculating scores");
+        displayLoading();
     }
     else
     {
         printf("No more cards in the stack.\n");
-        printf("The game ends.\nCalculating scores...\n");
+        printf("The game ends.\nCalculating scores");
+        displayLoading();
     }
 }
 
@@ -300,15 +314,7 @@ Player **calculateRanking(GameState *game)
 }
 
 
-// Fonction pour afficher l'animation de chargement
-void displayLoading() {
-for (int i = 0; i < 3; i++) {
-sleep(1); // Attend une seconde
-printf("."); // Affiche un point à chaque seconde
-fflush(stdout); // Force l'affichage immédiat du point
-}
-printf("\n"); // Passe à la ligne après l'animation
-}
+
 
 
 
