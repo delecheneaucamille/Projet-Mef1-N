@@ -18,6 +18,6 @@ void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer);
  * @param card Pointeur vers la carte à afficher.
  * @param name Nom de la carte.
  */
-void displayCardWithName(Card *card, const char *name)
+void displayCardWithName(Card *card, const char *name);
 
 #endif // DISPLAY_H
