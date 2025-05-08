@@ -350,6 +350,10 @@ void newGame()
     printf("\033[34mThe cards have been distributed\033[0m\n");
     sleep(1);
 
+    addCardToDiscard(discard, getCardFromStack(stack));
+    printf("\033[34mThe first card from the stack goes to the discard pile\033[0m\n");
+    sleep(1);
+
     // Vérifiez les joueurs et leurs mains avant d'afficher
     for (int i = 0; i < game->playerCount; i++)
     {

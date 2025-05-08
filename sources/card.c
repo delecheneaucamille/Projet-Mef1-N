@@ -14,7 +14,7 @@ void destructStack(Stack *stack)
     if (stack != NULL)
     {
         printf("\033[34mDestructing card stack\033[0m");
-        
+
         for (int i = 0; i < stack->sizeStack; i++)
         {
             free(stack->stack[i]);
@@ -176,6 +176,7 @@ void addCardToDiscard(Discard *d, Card *c)
     {
         d->pile[d->indexLastCard] = c; // Add the card to the array
         d->indexLastCard++;
+        c->state = 1; // Set the state of the card to 1 (face up)
     }
     else
     {
