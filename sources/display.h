@@ -10,6 +10,6 @@
 
 // Prototypes des fonctions
 void displayCardLine(Card c, int line);
-void displayCards(Card **cards, int numberOfPlayers, int *cardsPerPlayer);
+void displayCards(Player *players, int playerCount);
 
 #endif // DISPLAY_H

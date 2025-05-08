@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "ia.h"
 #include "card.h"
 #include "player.h"
+#include "display.h"
 
 #define MAX_PLAYERS 4 // Max 9 players
 #define MIN_SIZE_HAND 5
@@ -297,32 +299,104 @@ Player **calculateRanking(GameState *game)
     return ranking;
 }
 
+
+// Fonction pour afficher l'animation de chargement
+void displayLoading() {
+for (int i = 0; i < 3; i++) {
+sleep(1); // Attend une seconde
+printf("."); // Affiche un point à chaque seconde
+fflush(stdout); // Force l'affichage immédiat du point
+}
+printf("\n"); // Passe à la ligne après l'animation
+}
+
+
+
+
 void newGame()
 {
-
     srand(time(NULL));
 
     int min, max;
     selectCardValues(&min, &max);
     Stack *stack = initStack(SIZE_STACK, min, max);
+    if (stack == NULL)
+    {
+        fprintf(stderr, "Error: Failed to initialize stack.\n");
+        exit(EXIT_FAILURE);
+    }
+
     Discard *discard = initDiscard();
+    if (discard == NULL)
+    {
+        fprintf(stderr, "Error: Failed to initialize discard.\n");
+        destructStack(stack);
+        exit(EXIT_FAILURE);
+    }
+
     GameState *game = initGame(stack, discard, 0, selectNbPlayers());
+    if (game == NULL)
+    {
+        fprintf(stderr, "Error: Failed to initialize game state.\n");
+        destructStack(stack);
+        destructDiscard(discard);
+        exit(EXIT_FAILURE);
+    }
+
     system("clear");
-    printf("The game is initialized\033[5m...\033[0m\n");
+    printf("The game is initialized");
+    displayLoading();
+    sleep(1);
+    
+
     createPlayers(game, selectNbAI(game));
-    printf("The players are created\033[5m...\033[0m\n");
+    printf("The players are created");
+    displayLoading();
+    sleep(1);
+    
+
     shuffleStack(stack);
-    printf("The stack is shuffled\033[5m...\033[0m\n");
+    printf("The stack is shuffled");
+    displayLoading();
+    sleep(1);
+
     distributeCards(game);
-    printf("Les cartes ont ete distribué\033[5m...\033[0m\n");
+    printf("The cards have been distributed");
+    sleep(1);
+
+    // Vérifiez les joueurs et leurs mains avant d'afficher
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        if (game->players[i] == NULL)
+        {
+            fprintf(stderr, "Error: Player %d is NULL.\n", i);
+            exit(EXIT_FAILURE);
+        }
+        if (game->players[i]->hand == NULL)
+        {
+            fprintf(stderr, "Error: Player %s has no hand allocated.\n", game->players[i]->name);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    
+
     return2RandomCards(game);
-    printf("The cards are shuffled and distributed\033[5m...\033[0m\n");
+    printf("The cards are shuffled and distributed!!!\n");
+    
+    sleep(1);
     printf("The game begins!\n");
+
     turnGame(game);
+
     Player **ranking = calculateRanking(game);
     printf("Final ranking:\n");
     for (int i = 0; i < game->playerCount; i++)
     {
         printf("%s : %d points\n", ranking[i]->name, ranking[i]->score);
     }
+
+    // Libérer la mémoire
+    free(ranking);
+    destructGame(game);
 }
