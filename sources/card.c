@@ -14,7 +14,7 @@ void destructStack(Stack *stack)
     if (stack != NULL)
     {
         printf("\033[34mDestructing card stack\033[0m");
-        displayLoading();
+        
         for (int i = 0; i < stack->sizeStack; i++)
         {
             free(stack->stack[i]);
