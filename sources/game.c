@@ -7,8 +7,8 @@
 #include "player.h"
 
 #define MAX_PLAYERS 4 // Max 9 players
-#define MIN_SIZE_HAND 20
-#define MAX_SIZE_HAND 5
+#define MIN_SIZE_HAND 5
+#define MAX_SIZE_HAND 20
 #define MAX_SIZE_STACK 15
 #define MIN_SIZE_STACK -5
 #define SIZE_STACK 100
@@ -69,7 +69,7 @@ void destructGame(GameState *game)
     free(game->players);
 
     // Libérer la mémoire pour la pile de défausse
-    destructDescard(game->discard);
+    destructDiscard(game->discard);
 
     // Libérer la mémoire pour le tas de cartes
     destructStack(game->stack);
@@ -82,7 +82,7 @@ void createPlayers(GameState *game, int aiCount)
 {
     for (int i = game->playerCount - 1; i > 0; i--)
     {
-        game->players[i] = constuctPlayer();
+        game->players[i] = constructPlayer();
         if (game->players[i] == NULL)
         {
             perror("Memory allocation failed for player");
@@ -90,9 +90,9 @@ void createPlayers(GameState *game, int aiCount)
         }
         if (aiCount > 0)
         {
-            game->players[i]->name = malloc(5); // Allocate enough space for "IA" + digits
-            sprintf(game->players[i]->name, "IA%d\0", i + 1 % 10);
-            initPlayer(game->players[i], 0, game->players[i]->name, 1, selectSizeHand()); // IA
+            game->players[i]->name = malloc(5); // Allocate enough space for "AI" + digits
+            sprintf(game->players[i]->name, "AI%d", (i + 1) % 10);
+            initPlayer(game->players[i], 0, game->players[i]->name, 1, selectSizeHand()); // AI
             aiCount--;
         }
         else
@@ -113,11 +113,11 @@ int selectNbPlayers()
             printf("Invalid number of players. Please enter a value between 2 and %d.\n", MAX_PLAYERS);
         }
         printf("╔=============================================╗\n");
-        printf("║    \033[32mSELECTION DU NOMBRE\033[0m       ║ \n");
-        printf("║         \033[32mDE JOUEURS\033[0m           ║ \n");
+        printf("║    \033[32mSELECT NUMBER\033[0m             ║ \n");
+        printf("║         \033[32mOF PLAYERS\033[0m           ║ \n");
         printf("╠=============================================╣\n");
         printf("║                                             ║\n");
-        printf("║Veuillez entrer un nombre de joueurs (2-%d) :║\n", MAX_PLAYERS);
+        printf("║ Please enter the number of players (2-%d):  ║\n", MAX_PLAYERS);
         printf("║                                             ║\n");
         printf("╠=============================================╣\n");
 
@@ -142,8 +142,8 @@ int selectNbAI(GameState *game)
             printf("Invalid number of AI players. Please enter a value between 0 and %d.\n", game->playerCount - 1);
         }
         printf("╔===========================================╗\n");
-        printf("║    \033[32mSELECTION DU NOMBRE\033[0m     ║\n");
-        printf("║           \033[32mDE AI\033[0m            ║\n");
+        printf("║    \033[32mSELECT NUMBER\033[0m           ║\n");
+        printf("║           \033[32mOF AI\033[0m            ║\n");
         printf("╠===========================================╣\n");
         printf("║                                           ║\n");
         printf("║ Enter the number of AI players (0-%d):    ║\n", game->playerCount - 1);
@@ -155,10 +155,24 @@ int selectNbAI(GameState *game)
     return nbAI;
 }
 
+int checkEndGame(Player *player)
+{
+    for (int i = 0; i < player->sizeHand; i++)
+    {
+        if (player->hand[i].state == 0)
+        {
+            return 0; // A card is still face down
+        }
+    }
+    return 1; // All cards are flipped
+}
+
+
+
 void turnGame(GameState *game)
 {
 
-    while (statehand(game->players[game->currentPlayer]) == 1 && game->stack->sizeStack > 0)
+    while (checkEndGame(game->players[game->currentPlayer]) == 0 && game->stack->sizeStack > 0)
     {
         if (game->players[game->currentPlayer]->ai == 0)
         {
@@ -166,25 +180,25 @@ void turnGame(GameState *game)
         }
         else
         {
-            iaTurn(game->players[game->currentPlayer], game);
+            iaTurn(game->players[game->currentPlayer], game->stack, game->discard); // Adjusted arguments to match iaTurn's definition
         }
         game->currentPlayer = (game->currentPlayer + 1) % game->playerCount;
     }
-    if (statehand(game->players[game->currentPlayer]) == 1)
+    if (checkEndGame(game->players[game->currentPlayer]) == 1)
     {
-        printf("Le joueur %s a retourné toutes ses cartes. \n", game->players[game->currentPlayer]);
-        printf("Le jeu s'arrete.\nDécompte des points...\n");
+        printf("Player %s has flipped all their cards.\n", game->players[game->currentPlayer]->name);
+        printf("The game ends.\nCalculating scores...\n");
     }
     else
     {
-        printf("Plus de carte dans la pioche.\n");
-        printf("Le jeu s'arrete.\nDécompte des points...\n");
+        printf("No more cards in the stack.\n");
+        printf("The game ends.\nCalculating scores...\n");
     }
 }
 
 void return2RandomCards(GameState *game)
 {
-    // Pour chaque joueur
+    // For each player
     for (int i = 0; i < game->playerCount; i++)
     {
         int index1 = rand() % game->players[i]->sizeHand;
@@ -194,8 +208,8 @@ void return2RandomCards(GameState *game)
             index2 = rand() % game->players[i]->sizeHand;
         } while (index2 == index1);
 
-        currentPlayer->hand[index1].state = 1;
-        currentPlayer->hand[index2].state = 1;
+        game->players[i]->hand[index1].state = 1;
+        game->players[i]->hand[index2].state = 1;
     }
 }
 
@@ -204,35 +218,30 @@ void distributeCards(GameState *game)
 
     for (int i = 0; i < game->playerCount; i++)
     {
-        Player *currentPlayer = ;
-        if (game->players[i] == NULL || game->players[i]->sizeHand == NULL)
+        Player *currentPlayer = game->players[i];
+        if (currentPlayer == NULL)
+        {
+            fprintf(stderr, "Error: Player %d is NULL.\n", i);
+            continue;
+        }
+        if (game->players[i] == NULL || game->players[i]->sizeHand <= 0)
             continue;
 
         Card *card = getCardFromStack(game->stack);
 
-        for (int j = 0; j < game->players[i]->sizehand; j++)
+        for (int j = 0; j < game->players[i]->sizeHand; j++)
         {
-            game->players[i]->hand[j] = card;
+            game->players[i]->hand[j] = *card;
             game->players[i]->hand[j].state = 0;
         }
     }
 }
 
-int checkEndGame(Player *player)
-{
-    for (int i = 0; i < player->sizeHand; i++)
-    {
-        if (player->hand[i].state == 0)
-        {
-            return 0; // Une carte n'est pas retournée
-        }
-    }
-    return 1; // Toutes les cartes sont retournées
-}
 
-Player *calculateRanking(GameState *game)
+
+Player **calculateRanking(GameState *game)
 {
-    Player *ranking = malloc(game->playerCount * sizeof(Player *));
+    Player **ranking = malloc(game->playerCount * sizeof(Player *));
     if (ranking == NULL)
     {
         perror("Memory allocation failed for ranking");
@@ -284,11 +293,11 @@ void newGame()
     shuffleStack(stack);
     distributeCards(game);
     return2RandomCards(game);
-    printf("Les cartes sont melangees et distribuees...\n");
-    printf("Le jeu commence !\n");
+    printf("The cards are shuffled and distributed...\n");
+    printf("The game begins!\n");
     turnGame(game);
-    Player *ranking = calculateRanking(game);
-    printf("Classement final :\n");
+    Player **ranking = calculateRanking(game);
+    printf("Final ranking:\n");
     for (int i = 0; i < game->playerCount; i++)
     {
         printf("%s : %d points\n", ranking[i]->name, ranking[i]->score);

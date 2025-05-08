@@ -53,7 +53,7 @@ void selectGameMode()
             // initializing a new game
             break;
         case 2:
-            load();
+            
             // loading an already existing game
             break;
         case 3:
@@ -72,16 +72,6 @@ void selectGameMode()
     } while (choice == 0);
 }
 
-int main()
-{
-    int min, max;
-    selectValuesCard(&min, &max);
-    printf("Minimum value: %d\n", min);
-    printf("Maximum value: %d\n", max);
-    createMenu();
-    choiceGame();
-    return 0;
-}
 
 void ranking(GameState *game)
 {
@@ -113,6 +103,6 @@ void ranking(GameState *game)
     printf("\nRanking:\n");
     for (int i = 0; i < game->playerCount; i++)
     {
-        printf("Player %d; Score %d\n", game->players[i]->name, game->players[i]->score);
+        printf("Player %s; Score %d\n", game->players[i]->name, game->players[i]->score);
     }
 }

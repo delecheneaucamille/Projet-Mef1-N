@@ -33,22 +33,23 @@ void destructPlayer(Player *player)
     }
 }
 
-Player *constuctPlayer()
+Player *constructPlayer()
 {
     Player *player = malloc(sizeof(Player));
     if (player == NULL)
     {
         perror("Memory allocation failed");
-        void destructPlayer(player);
+        void destructPlayer(Player *player);
         exit(EXIT_FAILURE);
     }
     return player;
 }
 
+
 void initPlayer(Player *p, int score, char *name, int ai, int sizeHand)
 {
-    p->score;
-    p->score;
+    p->score =score;
+    p->ai = ai;
     p->name = name;
     p->sizeHand = sizeHand;
 }
@@ -74,14 +75,14 @@ char *choiceName()
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
-    name[0] = "/0";
+    name[0] = '\0';
 
     do
     {
         printf("Enter your username : \n");
         scanf("%s", name);
-    } while (name == "/0");
-    name[size] = "/0";
+    } while (strlen(name) == 0);
+    name[size] = '\0';
 
     return name;
 }
@@ -93,7 +94,7 @@ int selectSizeHand()
 
 void playerTurn(Player *p, Discard *d, Stack *s)
 {
-    Card *card = getLastCardToDiscard(d);
+    Card *card = getLastCardFromDiscard(d);
     int choice = 0;
     if (card == NULL)
     {
@@ -148,18 +149,18 @@ void playerTurn(Player *p, Discard *d, Stack *s)
                 printf("Quelle carte souhaitez vous retourner (1-%d): \n", p->sizeHand);
                 scanf("%d", &choice);
             } while (choice < 1 || choice > p->sizeHand);
-            p->hand[choice - 1]->state = 1;
+            p->hand[choice - 1].state = 1;
         }
         else
         {
-            Card *temp = p->hand[choice];
-            p->hand[choice] == card;
+            Card *temp = &p->hand[choice];
+            p->hand[choice] = *card;
             addCardToDiscard(d, temp);
         }
     }
     else
     {
-        printf("%s takes the card from the discard pile: %d\n", p->name, cardToDiscard->value);
+        printf("%s takes the card from the discard pile: %d\n", p->name, card->value);
         removeLastCardFromDiscard(d);
         choice = 0;
         do
@@ -171,8 +172,8 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             printf("Choisissez le numero avec laquelle vous vouler echanger (1-%d): \n", p->sizeHand);
             scanf("%d", &choice);
         } while (choice < 0 || choice > p->sizeHand);
-        Card *temp = p->hand[choice - 1];
-        p->hand[choice - 1] == card;
+        Card *temp = &p->hand[choice - 1];
+        p->hand[choice - 1] = *card;
         addCardToDiscard(d, temp);
     }
 }

@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include "card.h"
+#include "player.h"
+#include "game.h"
 
 #define SIZE_STACK 100
 #define MIN_CARDS_VALUES -5
@@ -36,19 +40,19 @@ void selectCardValues(int *pmin, int *pmax)
     do
     {
         printf("╔===========================================╗\n");
-        printf("║   \033[32mSELECTION DES VALEURS\033[0m   ║\n");
+        printf("║   \033[32mSELECTION DES VALEURS\033[0m    ║\n");
         printf("║         \033[32mDES CARTES\033[0m         ║\n");
         printf("╠===========================================╣\n");
         printf("║                                           ║\n");
-        printf("║Veuillez entrer la valeur minimale :      ║\n");
+        printf("║  Veuillez entrer la valeur minimale :     ║\n");
         printf("║                                           ║\n");
         scanf("%d", &min);
         printf("╔===========================================╗\n");
-        printf("║   \033[32mSELECTION DES VALEURS\033[0m   ║\n");
+        printf("║   \033[32mSELECTION DES VALEURS\033[0m    ║\n");
         printf("║         \033[32mDES CARTES\033[0m         ║\n");
         printf("╠===========================================╣\n");
         printf("║                                           ║\n");
-        printf("║Veuillez entrer la valeur maximale :      ║\n");
+        printf("║  Veuillez entrer la valeur maximale :     ║\n");
         printf("║                                           ║\n");
         scanf("%d", &max);
 

@@ -9,8 +9,8 @@
 
 // Définitions des constantes
 #define MAX_PLAYERS 4
-#define MIN_SIZE_HAND 20
-#define MAX_SIZE_HAND 5
+#define MIN_SIZE_HAND 5
+#define MAX_SIZE_HAND 20
 #define MAX_SIZE_STACK 15
 #define MIN_SIZE_STACK -5
 #define SIZE_STACK 100

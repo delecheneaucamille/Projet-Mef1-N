@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "card.h"
-#include "discard.h"
+
 
 // Définitions des constantes
 #define MIN_SIZE_HAND 5
