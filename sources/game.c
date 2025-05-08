@@ -385,7 +385,7 @@ void newGame()
 
     turnGame(game);
 
-    Player **ranking = calculateRanking(game);
+    Player *ranking = calculateRanking(game);
     printf("\033[34mFinal ranking:\033[0m\n");
     for (int i = 0; i < game->playerCount; i++)
     {
