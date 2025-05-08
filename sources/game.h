@@ -90,6 +90,12 @@ void return2RandomCards(GameState *game);
 void distributeCards(GameState *game);
 
 /**
+ * @brief lance une animation de chargement
+ */
+void displayLoading();
+
+
+/**
  * @brief Vérifie si un joueur a terminé la partie.
  *
  * @param player Pointeur vers le joueur.
