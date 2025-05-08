@@ -7,7 +7,7 @@
 #define clrscr() printf("\033[H\033[2J")
 
 // Sélection de couleurs
-#define colors(param) printf("\033[%sm",param)
+#define colors(param) printf("\033[%sm", param)
 /*   param devant être un const char *, vide (identique à "0") ou formé
      d'une où plusieurs valeurs séparées par des ; parmi
          0  réinitialisation         1  haute intensité (des caractères)

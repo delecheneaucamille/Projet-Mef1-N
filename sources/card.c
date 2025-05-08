@@ -1,9 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
-#include "card.h"
 
 #define SIZE_STACK 100
 #define MIN_SIZE_STACK -5

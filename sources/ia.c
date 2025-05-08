@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <card.h>
 
-#include "menu.h"
+#include "card.h"
 #include "player.h"
-#include "game.h"
 
 int getIndexHighestCard(Player *p)
 {

@@ -3,10 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "player.h"
 #include "card.h"
-#include "game.h"
 #include "ia.h"
 
 // Définitions des constantes
@@ -71,20 +69,33 @@ int selectNbPlayers();
 int selectNbAI(GameState *game);
 
 /**
- * @brief Gère le tour d'un joueur humain.
- *
- * @param p Pointeur vers le joueur.
- * @param d Pointeur vers la pile de défausse.
- * @param s Pointeur vers le tas de cartes.
- */
-void playerTurn(Player *p, Discard *d, Stack *s);
-
-/**
  * @brief Gère le déroulement du jeu.
  *
  * @param game Pointeur vers l'état du jeu.
  */
 void turnGame(GameState *game);
+
+/**
+ * @brief Retourne deux cartes aléatoires pour chaque joueur.
+ *
+ * @param game Pointeur vers l'état du jeu.
+ */
+void return2RandomCards(GameState *game);
+
+/**
+ * @brief Distribue les cartes aux joueurs.
+ *
+ * @param game Pointeur vers l'état du jeu.
+ */
+void distributeCards(GameState *game);
+
+/**
+ * @brief Vérifie si un joueur a terminé la partie.
+ *
+ * @param player Pointeur vers le joueur.
+ * @return int 1 si toutes les cartes sont retournées, 0 sinon.
+ */
+int checkEndGame(Player *player);
 
 /**
  * @brief Lance une nouvelle partie.

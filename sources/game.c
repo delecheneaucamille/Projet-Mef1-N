@@ -3,10 +3,8 @@
 #include <time.h>
 
 #include "ia.h"
-#include "game.h"
 #include "card.h"
 #include "player.h"
-// #include <menu.h>
 
 #define MAX_PLAYERS 4 // Max 9 players
 #define MIN_SIZE_HAND 20
@@ -45,7 +43,7 @@ GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playe
     game->stack = stack;
 
     // Allouer de la mémoire pour les joueurs
-    game->players = malloc(playerCount * sizeof(Player*));
+    game->players = malloc(playerCount * sizeof(Player *));
     if (game->players == NULL)
     {
         perror("Memory allocation failed for players");
@@ -122,7 +120,7 @@ int selectNbPlayers()
         printf("║Veuillez entrer un nombre de joueurs (2-%d) :║\n", MAX_PLAYERS);
         printf("║                                             ║\n");
         printf("╠=============================================╣\n");
-        
+
         scanf("%d", &playerCount);
     } while (playerCount < 2 || playerCount > MAX_PLAYERS);
     return playerCount;
@@ -157,92 +155,6 @@ int selectNbAI(GameState *game)
     return nbAI;
 }
 
-void playerTurn(Player *p, Discard *d, Stack *s)
-{
-    Card *card = getLastCardToDiscard(d);
-    int choice = 0;
-    if (card == NULL)
-    {
-        perror("No card to discard.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    printf("It's %s's turn!\n", p->name);
-    do
-    {
-        if (choice > 0)
-        {
-            printf("Invalid choice. Please enter 1 or 2.\n");
-        }
-        printf("Si vous sahouaitez piocher une carte, entrez 1, sinon, si vous souhaiter prendre la carte de la pioche entrez 2\n");
-        scanf("%d", &choice);
-    } while (choice != 1 && choice != 2);
-
-    if (choice == 1)
-    {
-        Card *card = getCardFromStack(s);
-        if (card == NULL)
-        {
-            perror("No card to draw.\n");
-            exit(EXIT_FAILURE);
-        }
-
-        printf("%s draws a card: %d\n", p->name, card->value);
-        choice = -1;
-        do
-        {
-            if (choice > -1)
-            {
-                printf("Invalid choice. Please enter a valid number.\n");
-            }
-            printf("Entrez 0 pour mettre la carte a la defausse ou choisissez le numero avec laquelle vous vouler echanger (0-%d): \n", p->sizeHand);
-            scanf("%d", &choice);
-        } while (choice < 0 || choice > p->sizeHand);
-
-        if (choice == 0)
-        {
-            addCardToDiscard(d, card);
-            printf("%s puts the card in the discard pile.\n", p->name);
-
-            choice = 0;
-            do
-            {
-                if (choice > 0)
-                {
-                    printf("Invalid choice. Please enter a valid number.\n");
-                }
-                printf("Quelle carte souhaitez vous retourner (1-%d): \n", p->sizeHand);
-                scanf("%d", &choice);
-            } while (choice < 1 || choice > p->sizeHand);
-            p->hand[choice - 1]->state = 1;
-        }
-        else
-        {
-            Card *temp = p->hand[choice];
-            p->hand[choice] == card;
-            addCardToDiscard(d, temp);
-        }
-    }
-    else
-    {
-        printf("%s takes the card from the discard pile: %d\n", p->name, cardToDiscard->value);
-        removeLastCardFromDiscard(d);
-        choice = 0;
-        do
-        {
-            if (choice > 0)
-            {
-                printf("Invalid choice. Please enter a valid number.\n");
-            }
-            printf("Choisissez le numero avec laquelle vous vouler echanger (1-%d): \n", p->sizeHand);
-            scanf("%d", &choice);
-        } while (choice < 0 || choice > p->sizeHand);
-        Card *temp = p->hand[choice - 1];
-        p->hand[choice - 1] == card;
-        addCardToDiscard(d, temp);
-    }
-}
-
 void turnGame(GameState *game)
 {
 
@@ -263,6 +175,59 @@ void turnGame(GameState *game)
         printf("Le joueur %s a retourné toutes ses cartes. \n", game->players[game->currentPlayer]);
         printf("Le jeu s'arrete.\nDécompte des points...\n");
     }
+    else
+    {
+        printf("Plus de carte dans la pioche.\n");
+        printf("Le jeu s'arrete.\nDécompte des points...\n");
+    }
+}
+
+void return2RandomCards(GameState *game)
+{
+    // Pour chaque joueur
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        int index1 = rand() % game->players[i]->sizeHand;
+        int index2;
+        do
+        {
+            index2 = rand() % game->players[i]->sizeHand;
+        } while (index2 == index1);
+
+        currentPlayer->hand[index1].state = 1;
+        currentPlayer->hand[index2].state = 1;
+    }
+}
+
+void distributeCards(GameState *game)
+{
+
+    for (int i = 0; i < game->playerCount; i++)
+    {
+        Player *currentPlayer = ;
+        if (game->players[i] == NULL || game->players[i]->sizeHand == NULL)
+            continue;
+
+        Card *card = getCardFromStack(game->stack);
+
+        for (int j = 0; j < game->players[i]->sizehand; j++)
+        {
+            game->players[i]->hand[j] = card;
+            game->players[i]->hand[j].state = 0;
+        }
+    }
+}
+
+int checkEndGame(Player *player)
+{
+    for (int i = 0; i < player->sizeHand; i++)
+    {
+        if (player->hand[i].state == 0)
+        {
+            return 0; // Une carte n'est pas retournée
+        }
+    }
+    return 1; // Toutes les cartes sont retournées
 }
 
 void newGame()
@@ -282,6 +247,4 @@ void newGame()
     // Retourner 2 cartes de chaque mains
 
     turnGame(game);
-
-    
 }

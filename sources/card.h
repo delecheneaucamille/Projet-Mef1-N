@@ -13,21 +13,21 @@
 typedef struct
 {
     int value; // Valeur de la carte
-    int state; // État de la carte (0 = face cahée, 1 = face visible, etc.)
+    int state; // État de la carte (0 = face cachée, 1 = face visible, etc.)
 } Card;
 
 // Définition de la structure Stack
 typedef struct
 {
     int sizeStack; // Taille actuelle de la pile
-    Card **stack;  // Liste des cartes
+    Card **stack;  // Tableau de pointeurs vers les cartes
 } Stack;
 
-// Définition de la structure Descard
+// Définition de la structure Discard
 typedef struct
 {
     int indexLastCard; // Index de la dernière carte dans la pile
-    Card **pile;       // Liste des cartes dans le tas de défausse
+    Card **pile;       // Tableau de pointeurs vers les cartes dans le tas de défausse
 } Discard;
 
 // Prototypes des fonctions pour Stack
@@ -37,7 +37,7 @@ void shuffleStack(Stack *stack);
 Card *getCardFromStack(Stack *stack);
 void printStack(Stack *stack);
 
-// Prototypes des fonctions pour Descard
+// Prototypes des fonctions pour Discard
 Discard *initDiscard();
 void destructDiscard(Discard *d);
 void addCardToDiscard(Discard *d, Card *c);

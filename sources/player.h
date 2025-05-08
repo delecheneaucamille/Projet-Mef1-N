@@ -4,10 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "card.h"
+#include "discard.h"
 
 // Définitions des constantes
-#define MIN_SIZE_HAND 20
-#define MAX_SIZE_HAND 5
+#define MIN_SIZE_HAND 5
+#define MAX_SIZE_HAND 20
 
 // Définition de la structure Player
 typedef struct
@@ -33,7 +34,7 @@ void destructPlayer(Player *player);
  *
  * @return Player* Pointeur vers le joueur nouvellement créé.
  */
-Player *constuctPlayer();
+Player *constructPlayer();
 
 /**
  * @brief Initialise les attributs d'un joueur.
@@ -61,11 +62,12 @@ char *choiceName();
 int selectSizeHand();
 
 /**
- * Vérifie si toutes les cartes dans la main du joueur sont retournées (face visible).
- * 
- * @param player Pointeur vers le joueur dont on veut vérifier la main.
- * @return 1 si toutes les cartes sont retournées, 0 sinon.
+ * @brief Gère le tour d'un joueur humain.
+ *
+ * @param p Pointeur vers le joueur.
+ * @param d Pointeur vers la pile de défausse.
+ * @param s Pointeur vers le tas de cartes.
  */
- void statehand(int *Player);
+void playerTurn(Player *p, Discard *d, Stack *s);
 
 #endif // PLAYER_H
