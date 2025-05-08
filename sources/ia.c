@@ -61,7 +61,7 @@ void iaTurn(Player *p, Stack *s, Discard *d)
         p->hand[indexMax] = *cardToDiscard;
         removeLastCardFromDiscard(d);
         printf("AI %s swapped the discard card %d with its card #%d.\n", p->name, cardToDiscard->value, indexMax);
-        addCardToDiscard(d, cardToDiscard);
+        addCardToDiscard(d, &temp);
     }
     else
     {
