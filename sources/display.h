@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "card.h"
+#include "game.h"
 
 // Définitions des constantes
 #define MAX_COLUMNS 4
