@@ -15,15 +15,6 @@
 #define MIN_SIZE_STACK -5
 #define SIZE_STACK 100
 
-typedef struct
-{
-    Player **players;  // Liste des joueurs
-    int playerCount;   // Nombre de joueurs
-    int currentPlayer; // Indice du joueur courant
-    Discard *discard;  // Pile de défausse
-    Stack *stack;      // Tas de cartes
-} GameState;
-
 GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playerCount)
 {
     if (playerCount < 1 || playerCount > MAX_PLAYERS)
@@ -294,11 +285,7 @@ Player **calculateRanking(GameState *game)
             score += game->players[i]->hand[j].value;
         }
         game->players[i]->score = score;
-    }
-
-    for (int i = 0; i < game->playerCount; i++)
-    {
-        ranking[i] = game->players[i];
+        ranking[i] = game->players[i]; // Assignez correctement le pointeur
     }
 
     for (int i = 0; i < game->playerCount - 1; i++)
@@ -385,7 +372,7 @@ void newGame()
 
     turnGame(game);
 
-    Player *ranking = calculateRanking(game);
+    Player **ranking = calculateRanking(game);
     printf("\033[34mFinal ranking:\033[0m\n");
     for (int i = 0; i < game->playerCount; i++)
     {
