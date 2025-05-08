@@ -34,9 +34,16 @@ void createMenu()
 
 int choiceGame()
 {
-    int choice;
-    printf("Enter your choice: \n");
-    scanf("%d", &choice);
+    int choice = 0;
+    do
+    {
+        if (choice != 0)
+        {
+            printf("\033[31mInvalid choice. Please try again.\033[0m\n");
+        }
+        printf("Enter your choice: \n");
+        scanf("%d", &choice);
+    } while (choice < 1 || choice > 4);
     return choice;
 }
 
@@ -53,7 +60,7 @@ void selectGameMode()
             // initializing a new game
             break;
         case 2:
-            
+
             // loading an already existing game
             break;
         case 3:
@@ -71,7 +78,6 @@ void selectGameMode()
         }
     } while (choice == 0);
 }
-
 
 void ranking(GameState *game)
 {

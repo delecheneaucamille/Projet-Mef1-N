@@ -42,7 +42,7 @@ GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playe
     game->discard = discard;
     game->stack = stack;
 
-    // Allouer de la mémoire pour les joueurs
+    // Allouer de la mémoire pour un tableau de pointeurs vers les joueurs
     game->players = malloc(playerCount * sizeof(Player *));
     if (game->players == NULL)
     {
@@ -80,7 +80,7 @@ void destructGame(GameState *game)
 
 void createPlayers(GameState *game, int aiCount)
 {
-    for (int i = game->playerCount - 1; i > 0; i--)
+    for (int i = 0; i < game->playerCount; i++)
     {
         game->players[i] = constructPlayer();
         if (game->players[i] == NULL)
@@ -167,11 +167,8 @@ int checkEndGame(Player *player)
     return 1; // All cards are flipped
 }
 
-
-
 void turnGame(GameState *game)
 {
-
     while (checkEndGame(game->players[game->currentPlayer]) == 0 && game->stack->sizeStack > 0)
     {
         if (game->players[game->currentPlayer]->ai == 0)
@@ -180,7 +177,7 @@ void turnGame(GameState *game)
         }
         else
         {
-            iaTurn(game->players[game->currentPlayer], game->stack, game->discard); // Adjusted arguments to match iaTurn's definition
+            iaTurn(game->players[game->currentPlayer], game->stack, game->discard);
         }
         game->currentPlayer = (game->currentPlayer + 1) % game->playerCount;
     }
@@ -215,7 +212,6 @@ void return2RandomCards(GameState *game)
 
 void distributeCards(GameState *game)
 {
-
     for (int i = 0; i < game->playerCount; i++)
     {
         Player *currentPlayer = game->players[i];
@@ -224,20 +220,42 @@ void distributeCards(GameState *game)
             fprintf(stderr, "Error: Player %d is NULL.\n", i);
             continue;
         }
-        if (game->players[i] == NULL || game->players[i]->sizeHand <= 0)
-            continue;
-
-        Card *card = getCardFromStack(game->stack);
-
-        for (int j = 0; j < game->players[i]->sizeHand; j++)
+        if (currentPlayer->sizeHand <= 0)
         {
-            game->players[i]->hand[j] = *card;
-            game->players[i]->hand[j].state = 0;
+            fprintf(stderr, "Error: Player %d has an invalid hand size.\n", i);
+            continue;
+        }
+
+        if (currentPlayer->hand == NULL)
+        {
+            currentPlayer->hand = malloc(currentPlayer->sizeHand * sizeof(Card));
+            if (currentPlayer->hand == NULL)
+            {
+                perror("Memory allocation failed for player's hand");
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        for (int j = 0; j < currentPlayer->sizeHand; j++)
+        {
+            if (game->stack->sizeStack <= 0)
+            {
+                fprintf(stderr, "Error: Not enough cards in the stack to distribute.\n");
+                exit(EXIT_FAILURE);
+            }
+
+            Card *card = getCardFromStack(game->stack);
+            if (card == NULL)
+            {
+                fprintf(stderr, "Error: Failed to retrieve a card from the stack.\n");
+                exit(EXIT_FAILURE);
+            }
+
+            currentPlayer->hand[j] = *card;
+            currentPlayer->hand[j].state = 0;
         }
     }
 }
-
-
 
 Player **calculateRanking(GameState *game)
 {
@@ -289,9 +307,13 @@ void newGame()
     Stack *stack = initStack(SIZE_STACK, min, max);
     Discard *discard = initDiscard();
     GameState *game = initGame(stack, discard, 0, selectNbPlayers());
+    printf("The game is initialized...\n");
     createPlayers(game, selectNbAI(game));
+    printf("The players are created...\n");
     shuffleStack(stack);
+    printf("The stack is shuffled...\n");
     distributeCards(game);
+    printf("Les cartes ont ete distribué...\n");
     return2RandomCards(game);
     printf("The cards are shuffled and distributed...\n");
     printf("The game begins!\n");

@@ -51,11 +51,30 @@ void iaTurn(Player *p, Stack *s, Discard *d)
     Card *cardToDiscard = getLastCardFromDiscard(d);
     if (cardToDiscard == NULL)
     {
-        fprintf(stderr, "AI %s cannot play because the discard pile is empty.\n", p->name);
-        exit(EXIT_FAILURE);
+        Card *cardToStack = getCardFromStack(s);
+        if (cardToStack == NULL)
+        {
+            fprintf(stderr, "AI %s cannot draw a card because the stack is empty.\n", p->name);
+            exit(EXIT_FAILURE);
+        }
+        printf("AI %s draws a card.\n", p->name);
+
+        if (cardToStack->value > p->hand[indexMax].value)
+        {
+            addCardToDiscard(d, cardToStack);
+            printf("AI %s placed the drawn card %d in the discard pile.\n", p->name, cardToStack->value);
+            turnStateCard(p);
+        }
+        else
+        {
+            printf("AI %s swapped the drawn card %d with its card #%d.\n", p->name, cardToStack->value, indexMax);
+            Card temp = p->hand[indexMax];
+            p->hand[indexMax] = *cardToStack;
+            addCardToDiscard(d, &temp);
+        }
     }
 
-    if (p->hand[indexMax].value > cardToDiscard->value)
+    else if (p->hand[indexMax].value > cardToDiscard->value)
     {
         Card temp = p->hand[indexMax];
         p->hand[indexMax] = *cardToDiscard;

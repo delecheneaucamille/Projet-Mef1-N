@@ -39,16 +39,15 @@ Player *constructPlayer()
     if (player == NULL)
     {
         perror("Memory allocation failed");
-        void destructPlayer(Player *player);
+        void destructPlayer(Player * player);
         exit(EXIT_FAILURE);
     }
     return player;
 }
 
-
 void initPlayer(Player *p, int score, char *name, int ai, int sizeHand)
 {
-    p->score =score;
+    p->score = score;
     p->ai = ai;
     p->name = name;
     p->sizeHand = sizeHand;
@@ -61,13 +60,13 @@ char *choiceName()
 
     do
     {
-        if (size > 0)
+        if (size != 0)
         {
             printf("Enter a valid value \n");
         }
         printf("How many letters will your username contain (max 25):\n");
         scanf("%d", &size);
-    } while ((size < 26) && (size > 0));
+    } while (size < 1 || size > 25);
 
     name = malloc(sizeof(char) * (size + 1));
     if (name == NULL)
