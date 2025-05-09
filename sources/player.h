@@ -5,14 +5,6 @@
 #include <stdlib.h>
 #include "card.h"
 
-// Définitions des constantes
-#define MIN_SIZE_HAND 5
-#define MAX_SIZE_HAND 20
-
-// Déclaration anticipée de Discard et Stack
-typedef struct Discard Discard;
-typedef struct Stack Stack;
-
 // Définition de la structure Player
 typedef struct
 {
@@ -23,7 +15,6 @@ typedef struct
     int sizeHand; // Taille de la main
 } Player;
 
-// Prototypes des fonctions
 void destructPlayer(Player *player);
 Player *constructPlayer();
 void initPlayer(Player *p, int score, char *name, int ai, int sizeHand);

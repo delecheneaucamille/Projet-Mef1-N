@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "game.h"
+#include "menu.h"
 
 void createMenu()
 {

@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "player.h"
+#include "display.h"
 
 #define MIN_SIZE_HAND 5
 #define MAX_SIZE_HAND 20
@@ -91,7 +92,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         perror("No card to discard.\n");
         exit(EXIT_FAILURE);
     }
-    displayCards(p->hand, p->sizeHand);
+    displayPlayerCards(p->hand, p->sizeHand);
     displayCardWithName(card, "Card to discard");
     printf("It's %s's turn!\n", p->name);
     do
@@ -107,7 +108,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
     if (choice == 1)
     {
         Card *card = getCardFromStack(s);
-        displaycardWithName(card, "Card to stack");
+        displayCardWithName(card, "Card to stack");
         if (card == NULL)
         {
             perror("No card to draw.\n");

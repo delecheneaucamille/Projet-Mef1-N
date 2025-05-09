@@ -30,22 +30,15 @@ typedef struct
     Card **pile;       // Tableau de pointeurs vers les cartes dans le tas de défausse
 } Discard;
 
-// Prototypes des fonctions pour Stack
-Stack *initStack(int size, int min, int max);
 void destructStack(Stack *stack);
 void shuffleStack(Stack *stack);
+void selectCardValues(int *pmin, int *pmax);
+Stack *initStack(int size, int min, int max);
 Card *getCardFromStack(Stack *stack);
-void printStack(Stack *stack);
-
-// Prototypes des fonctions pour Discard
-Discard *initDiscard();
-void destructDiscard(Discard *d);
 void addCardToDiscard(Discard *d, Card *c);
 void removeLastCardFromDiscard(Discard *d);
 Card *getLastCardFromDiscard(Discard *d);
-void printDiscard(Discard *d);
-
-// Prototypes des fonctions utilitaires
-void selectCardValues(int *pmin, int *pmax);
+Discard *initDiscard();
+void destructDiscard(Discard *d);
 
 #endif // CARD_H

@@ -3,10 +3,10 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "game.h"
+#include "player.h" // Pour les fonctions liées aux joueurs
+#include "card.h"   // Pour les fonctions liées aux cartes et piles
 #include "ia.h"
-#include "card.h"
-#include "player.h"
-#include "display.h"
 
 #define MAX_PLAYERS 4 // Max 9 players
 #define MIN_SIZE_HAND 5

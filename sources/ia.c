@@ -4,6 +4,8 @@
 #include <time.h>
 
 #include "ia.h"
+#include "display.h" // Pour displayPlayerCards et displayCardWithName
+#include "card.h"    // Pour getLastCardFromDiscard
 
 int getIndexHighestCard(Player *p)
 {
@@ -31,7 +33,7 @@ void turnStateCard(Player *p)
         {
             p->hand[i].state = 1;
             i = p->sizeHand + 1;
-            displayCards(p->hand, p->sizeHand);
+            displayPlayerCards(p);
             printf("IA %s retourne la carte n°%d.\n", p->name, i);
         }
     }
@@ -49,7 +51,7 @@ void iaTurn(Player *p, Stack *s, Discard *d)
     }
 
     Card *cardToDiscard = getLastCardFromDiscard(d);
-    displayCards(p->hand, p->sizeHand);
+    displayPlayerCards(p);
     if (cardToDiscard == NULL)
     {
         Card *cardToStack = getCardFromStack(s);
@@ -110,5 +112,5 @@ void iaTurn(Player *p, Stack *s, Discard *d)
             addCardToDiscard(d, &temp);
         }
     }
-    displayCards(p->hand, p->sizeHand);
+    displayPlayerCards(p);
 }

@@ -4,7 +4,7 @@
 #include "game.h"
 #include "card.h"
 #include "player.h"
-// github public
+// github publiques
 
 int main()
 {

@@ -203,11 +203,7 @@ Card *getLastCardFromDiscard(Discard *d)
     {
         return d->pile[d->indexLastCard - 1];
     }
-    else
-    {
-        printf("\033[31mError: Discard is empty.\033[0m\n");
-        return NULL;
-    }
+    return NULL;
 }
 
 void printDiscard(Discard *d)
