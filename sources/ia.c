@@ -3,9 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "card.h"
-#include "player.h"
-#include "display.h"
+#include "ia.h"
 
 int getIndexHighestCard(Player *p)
 {

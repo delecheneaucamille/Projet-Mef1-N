@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
 #include "card.h"
-#include "player.h"
-#include "game.h"
 
 #define SIZE_STACK 100
 #define MIN_CARDS_VALUES -5

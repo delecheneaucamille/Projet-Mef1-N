@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "card.h"
-#include "display.h"
 #include "player.h"
 
 #define MIN_SIZE_HAND 5

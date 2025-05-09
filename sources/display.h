@@ -2,7 +2,6 @@
 #define DISPLAY_H
 
 #include <stdio.h>
-#include "game.h"
 
 // Définitions des constantes
 #define MAX_COLUMNS 4
@@ -11,7 +10,8 @@
 // Déclaration anticipée de Player
 typedef struct Player Player;
 
-// Déclaration anticipée de Stack et Discard
+// Déclaration anticipée de Stack Discard Card
+typedef struct Card Card;
 typedef struct Stack Stack;
 typedef struct Discard Discard;
 

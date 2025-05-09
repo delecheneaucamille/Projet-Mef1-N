@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "card.h"
-#include "player.h"
-#include "game.h"
+
+#include "display.h"
 #include "colors.h"
 
 #define MAX_COLUMNS 4
