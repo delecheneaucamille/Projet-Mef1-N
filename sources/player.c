@@ -92,7 +92,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         perror("No card to discard.\n");
         exit(EXIT_FAILURE);
     }
-    displayPlayerCards(p->hand, p->sizeHand);
+    displayPlayerCards(p);
     displayCardWithName(card, "Card to discard");
     printf("It's %s's turn!\n", p->name);
     do
@@ -154,7 +154,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
     }
     else
     {
-        displayCards(p->hand, p->sizeHand);
+        displayPlayerCards(p);
         printf("%s takes the card from the discard pile: %d\n", p->name, card->value);
         removeLastCardFromDiscard(d);
         choice = 0;
@@ -170,7 +170,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         Card *temp = &p->hand[choice - 1];
         p->hand[choice - 1] = *card;
         addCardToDiscard(d, temp);
-        displayCards(p->hand, p->sizeHand);
+        displayPlayerCards(p);
         displayCardWithName(card, "Card to discard");
     }
 }
