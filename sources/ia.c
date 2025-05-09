@@ -5,6 +5,7 @@
 
 #include "card.h"
 #include "player.h"
+#include "display.h"
 
 int getIndexHighestCard(Player *p)
 {
@@ -32,6 +33,7 @@ void turnStateCard(Player *p)
         {
             p->hand[i].state = 1;
             i = p->sizeHand + 1;
+            displayCards(p->hand, p->sizeHand);
             printf("IA %s retourne la carte n°%d.\n", p->name, i);
         }
     }
@@ -49,6 +51,7 @@ void iaTurn(Player *p, Stack *s, Discard *d)
     }
 
     Card *cardToDiscard = getLastCardFromDiscard(d);
+    displayCards(p->hand, p->sizeHand);
     if (cardToDiscard == NULL)
     {
         Card *cardToStack = getCardFromStack(s);
@@ -57,6 +60,7 @@ void iaTurn(Player *p, Stack *s, Discard *d)
             fprintf(stderr, "AI %s cannot draw a card because the stack is empty.\n", p->name);
             exit(EXIT_FAILURE);
         }
+        displayCardWithName(cardToStack, "Card to stack");
         printf("AI %s draws a card.\n", p->name);
 
         if (cardToStack->value > p->hand[indexMax].value)
@@ -76,6 +80,7 @@ void iaTurn(Player *p, Stack *s, Discard *d)
 
     else if (p->hand[indexMax].value > cardToDiscard->value)
     {
+        displayCardWithName(cardToDiscard, "Card to discard");
         Card temp = p->hand[indexMax];
         p->hand[indexMax] = *cardToDiscard;
         removeLastCardFromDiscard(d);
@@ -85,6 +90,7 @@ void iaTurn(Player *p, Stack *s, Discard *d)
     else
     {
         Card *cardToStack = getCardFromStack(s);
+        displayCardWithName(cardToStack, "Card to stack");
         if (cardToStack == NULL)
         {
             fprintf(stderr, "AI %s cannot draw a card because the stack is empty.\n", p->name);
@@ -106,4 +112,5 @@ void iaTurn(Player *p, Stack *s, Discard *d)
             addCardToDiscard(d, &temp);
         }
     }
+    displayCards(p->hand, p->sizeHand);
 }

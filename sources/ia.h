@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "player.h"
 #include "card.h"
+#include "display.h"
 
 // Prototypes des fonctions
 
