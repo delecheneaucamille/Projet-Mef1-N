@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "player.h"
 #include "card.h"
 #include "ia.h"
 
@@ -12,6 +11,9 @@
 #define MAX_SIZE_STACK 15
 #define MIN_SIZE_STACK -5
 #define SIZE_STACK 100
+
+// Déclaration anticipée de Player
+typedef struct Player Player;
 
 // Définition de la structure GameState
 typedef struct

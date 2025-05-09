@@ -3,18 +3,11 @@
 #include <string.h>
 
 #include "card.h"
+#include "display.h"
+#include "player.h"
 
 #define MIN_SIZE_HAND 5
 #define MAX_SIZE_HAND 20
-
-typedef struct
-{
-    int score;
-    char *name;
-    int ai; // 0 = player , 1 = AI player
-    Card *hand;
-    int sizeHand;
-} Player;
 
 void destructPlayer(Player *player)
 {
@@ -100,7 +93,8 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         perror("No card to discard.\n");
         exit(EXIT_FAILURE);
     }
-
+    displayCards(p->hand, p->sizeHand);
+    displayCardWithName(card, "Card to discard");
     printf("It's %s's turn!\n", p->name);
     do
     {
@@ -115,6 +109,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
     if (choice == 1)
     {
         Card *card = getCardFromStack(s);
+        displaycardWithName(card, "Card to stack");
         if (card == NULL)
         {
             perror("No card to draw.\n");
@@ -136,6 +131,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         if (choice == 0)
         {
             addCardToDiscard(d, card);
+            displayCardWithName(card, "Card to discard");
             printf("%s puts the card in the discard pile.\n", p->name);
 
             choice = 0;
@@ -159,6 +155,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
     }
     else
     {
+        displayCards(p->hand, p->sizeHand);
         printf("%s takes the card from the discard pile: %d\n", p->name, card->value);
         removeLastCardFromDiscard(d);
         choice = 0;
@@ -174,5 +171,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         Card *temp = &p->hand[choice - 1];
         p->hand[choice - 1] = *card;
         addCardToDiscard(d, temp);
+        displayCards(p->hand, p->sizeHand);
+        displayCardWithName(card, "Card to discard");
     }
 }
