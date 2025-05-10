@@ -185,7 +185,7 @@ void addCardToDiscard(Discard *d, Card *c)
 
 void removeLastCardFromDiscard(Discard *d)
 {
-    if (d->indexLastCard > -1)
+    if (d->indexLastCard > 0)
     {
         d->pile[d->indexLastCard - 1] = NULL; // Set the state of the card to 0 (face down)
         d->indexLastCard--;
