@@ -111,14 +111,9 @@ int selectNbPlayers()
         {
             printf("\033[31mInvalid number of players. Please enter a value between 2 and %d.\033[0m\n", MAX_PLAYERS);
         }
-        printf("\033[34m╔=============================================╗\n");
-        printf("║    SELECT NUMBER                            ║\n");
-        printf("║         OF PLAYERS                          ║\n");
-        printf("╠=============================================╣\n");
-        printf("║                                             ║\n");
-        printf("║ Please enter the number of players (2-%d):  ║\n", MAX_PLAYERS);
-        printf("║                                             ║\n");
-        printf("╠=============================================╣\033[0m\n");
+        printf("\033[1;35m---  Number Of Players ---\033[0m\n");
+        printf(" Please enter the number of players (2-%d):  \n", MAX_PLAYERS);
+        
 
         scanf("%d", &playerCount);
     } while (playerCount < 2 || playerCount > MAX_PLAYERS);
@@ -135,14 +130,8 @@ int selectNbAI(GameState *game)
         {
             printf("\033[31mInvalid number of AI players. Please enter a value between 0 and %d.\033[0m\n", game->playerCount - 1);
         }
-        printf("\033[34m╔===========================================╗\n");
-        printf("║    SELECT NUMBER                          ║\n");
-        printf("║           OF AI                           ║\n");
-        printf("╠===========================================╣\n");
-        printf("║                                           ║\n");
-        printf("║ Enter the number of AI players (0-%d):     ║\n", game->playerCount - 1);
-        printf("║                                           ║\n");
-        printf("╠===========================================╣\033[0m\n");
+        printf("\033[1;35m---  Number Of AI  ---\033[0m\n");
+        printf(" Enter the number of AI players (0-%d):\n", game->playerCount - 1);
         scanf("%d", &nbAI);
     } while (nbAI < 0 || nbAI > game->playerCount - 1);
 
