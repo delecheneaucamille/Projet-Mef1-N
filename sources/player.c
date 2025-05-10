@@ -107,7 +107,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
 
     if (choice == 1)
     {
-        Card *card = getCardFromStack(s);
+        card = getCardFromStack(s);
         displayCardWithName(card, "Card to stack");
         if (card == NULL)
         {
