@@ -188,7 +188,6 @@ void removeLastCardFromDiscard(Discard *d)
     if (d->indexLastCard > 0)
     {
         d->indexLastCard--;
-        free(d->pile[d->indexLastCard]); // Free the memory of the last card
         d->pile[d->indexLastCard] = NULL;
     }
     else
