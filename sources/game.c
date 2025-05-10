@@ -153,12 +153,12 @@ int checkEndGame(Player *player)
 {
     for (int i = 0; i < player->sizeHand; i++)
     {
-        if (player->hand[i].state == 0)
+        if (player->hand[i]->state == 0) // Utilisez '->' pour accéder au champ 'state'
         {
-            return 0; // A card is still face down
+            return 0; // Une carte est encore face cachée
         }
     }
-    return 1; // All cards are flipped
+    return 1; // Toutes les cartes sont retournées
 }
 
 void displayLoading()
@@ -202,7 +202,7 @@ void turnGame(GameState *game)
 
 void return2RandomCards(GameState *game)
 {
-    // For each player
+    // Pour chaque joueur
     for (int i = 0; i < game->playerCount; i++)
     {
         int index1 = rand() % game->players[i]->sizeHand;
@@ -212,8 +212,8 @@ void return2RandomCards(GameState *game)
             index2 = rand() % game->players[i]->sizeHand;
         } while (index2 == index1);
 
-        game->players[i]->hand[index1].state = 1;
-        game->players[i]->hand[index2].state = 1;
+        game->players[i]->hand[index1]->state = 1; // Utilisez '->' pour accéder au champ 'state'
+        game->players[i]->hand[index2]->state = 1; // Utilisez '->' pour accéder au champ 'state'
     }
 }
 
@@ -235,7 +235,7 @@ void distributeCards(GameState *game)
 
         if (currentPlayer->hand == NULL)
         {
-            currentPlayer->hand = malloc(currentPlayer->sizeHand * sizeof(Card));
+            currentPlayer->hand = malloc(currentPlayer->sizeHand * sizeof(Card *));
             if (currentPlayer->hand == NULL)
             {
                 perror("Memory allocation failed for player's hand");
@@ -258,8 +258,8 @@ void distributeCards(GameState *game)
                 exit(EXIT_FAILURE);
             }
 
-            currentPlayer->hand[j] = *card;
-            currentPlayer->hand[j].state = 0;
+            currentPlayer->hand[j] = card;     // Assignez directement le pointeur
+            currentPlayer->hand[j]->state = 0; // Utilisez '->' pour accéder au champ 'state'
         }
     }
 }
@@ -278,7 +278,7 @@ Player **calculateRanking(GameState *game)
         int score = 0;
         for (int j = 0; j < game->players[i]->sizeHand; j++)
         {
-            score += game->players[i]->hand[j].value;
+            score += game->players[i]->hand[j]->value; // Utilisez '->' pour accéder au champ 'value'
         }
         game->players[i]->score = score;
         ranking[i] = game->players[i]; // Assignez correctement le pointeur

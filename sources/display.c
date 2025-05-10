@@ -7,7 +7,7 @@
 #define MAX_COLUMNS 4
 #define MAX_ROWS 3
 
-void displayCardLine(Card c, int line)
+void displayCardLine(Card *c, int line)
 {
     switch (line)
     {
@@ -15,10 +15,10 @@ void displayCardLine(Card c, int line)
         printf("\033[34m╔═══╗\033[0m"); // Bordure en bleu
         break;
     case 1:
-        if (c.state == 1)                            // Carte visible
-            printf("\033[35m║%3d║\033[0m", c.value); // Chiffre en magenta
-        else                                         // Carte cachée
-            printf("\033[34m║ ??║\033[0m");          // Texte en bleu
+        if (c->state == 1)                            // Carte visible
+            printf("\033[35m║%3d║\033[0m", c->value); // Chiffre en magenta
+        else                                          // Carte cachée
+            printf("\033[34m║ ??║\033[0m");           // Texte en bleu
         break;
     case 2:
         printf("\033[34m╚═══╝\033[0m"); // Bordure en bleu

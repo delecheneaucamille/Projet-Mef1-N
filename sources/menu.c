@@ -78,9 +78,9 @@ void ranking(GameState *game)
 
         for (int j = 0; j < game->players[i]->sizeHand; j++)
         {
-            if (game->players[i]->hand[j].state == 1)
+            if (game->players[i]->hand[j]->state == 1)
             {
-                game->players[i]->score += game->players[i]->hand[j].value;
+                game->players[i]->score += game->players[i]->hand[j]->value;
             }
         }
         for (int i = 0; i < game->playerCount; i++)
