@@ -45,7 +45,7 @@ void selectCardValues(int *pmin, int *pmax)
 
         printf("\n");
 
-        printf(" Enter the maximum card value[%d - %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
+        printf("Enter the maximum card value [%d - %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         scanf("%d", &max);
         system("clear");
 
@@ -168,8 +168,8 @@ void addCardToDiscard(Discard *d, Card *c)
     }
 
     c->state = 1;
-    d->pile[d->indexLastCard] = c; // Ajoute la carte à la pile
-    d->indexLastCard++;            // Incrémente l'index de la dernière carte
+    d->pile[d->indexLastCard] = c; // Add the card to the pile
+    d->indexLastCard++;            // Increment the index of the last card
 }
 
 void removeLastCardFromDiscard(Discard *d)
@@ -180,8 +180,8 @@ void removeLastCardFromDiscard(Discard *d)
         return;
     }
 
-    d->indexLastCard--;               // Décrémente l'index de la dernière carte
-    d->pile[d->indexLastCard] = NULL; // Supprime la carte de la pile
+    d->indexLastCard--;               // Decrement the index of the last card
+    d->pile[d->indexLastCard] = NULL; // Remove the card from the pile
 }
 
 Card *getLastCardFromDiscard(Discard *d)

@@ -9,4 +9,4 @@ int getIndexHighestCard(Player *p);
 void turnStateCard(Player *p);
 void iaTurn(Player *p, Stack *s, Discard *d);
 
-#endif // IA_H
+#endif

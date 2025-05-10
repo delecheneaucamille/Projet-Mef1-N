@@ -5,23 +5,23 @@
 #include "player.h"
 #include "display.h"
 
-#define MIN_SIZE_HAND 5
-#define MAX_SIZE_HAND 7
+#define MIN_CARDS_VALUES 5
+#define MAX_CARDS_VALUES 7
 
 void destructPlayer(Player *player)
 {
     if (player != NULL)
     {
-        printf("Destructing player \n");
+        printf("Destructing player\n");
         if (player->hand != NULL)
         {
             free(player->hand);
-            player->hand = NULL; // Évitez les doubles libérations
+            player->hand = NULL; // Avoid double free
         }
         if (player->name != NULL)
         {
             free(player->name);
-            player->name = NULL; // Évitez les doubles libérations
+            player->name = NULL; // Avoid double free
         }
         free(player);
     }
@@ -56,7 +56,7 @@ char *choiceName()
     {
         if (size != 0)
         {
-            printf("Enter a valid value \n");
+            printf("Enter a valid value\n");
         }
         printf("How many letters will your username contain (max 25):\n");
         scanf("%d", &size);
@@ -72,7 +72,7 @@ char *choiceName()
 
     do
     {
-        printf("Enter your username : \n");
+        printf("Enter your username:\n");
         scanf("%s", name);
     } while (strlen(name) == 0);
     name[size] = '\0';
@@ -82,7 +82,7 @@ char *choiceName()
 
 int selectSizeHand()
 {
-    return rand() % (MAX_SIZE_HAND - MIN_SIZE_HAND + 1) + MIN_SIZE_HAND;
+    return rand() % (MAX_CARDS_VALUES - MIN_CARDS_VALUES + 1) + MIN_CARDS_VALUES;
 }
 
 void playerTurn(Player *p, Discard *d, Stack *s)
@@ -103,7 +103,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         {
             printf("Invalid choice. Please enter 1 or 2.\n");
         }
-        printf("Si vous sahouaitez piocher une carte, entrez 1, sinon, si vous souhaiter prendre la carte de la defausse entrez 2\n");
+        printf("If you want to draw a card, enter 1. Otherwise, if you want to take the card from the discard pile, enter 2:\n");
         scanf("%d", &choice);
     } while (choice != 1 && choice != 2);
 
@@ -125,7 +125,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             {
                 printf("Invalid choice. Please enter a valid number.\n");
             }
-            printf("Entrez 0 pour mettre la carte a la defausse ou choisissez le numero avec laquelle vous vouler echanger (0-%d): \n", p->sizeHand);
+            printf("Enter 0 to put the card in the discard pile or choose the number with which you want to exchange it (0-%d):\n", p->sizeHand);
             scanf("%d", &choice);
         } while (choice < 0 || choice > p->sizeHand);
 
@@ -142,7 +142,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
                 {
                     printf("Invalid choice. Please enter a valid number.\n");
                 }
-                printf("Quelle carte souhaitez vous retourner (1-%d): \n", p->sizeHand);
+                printf("Which card do you want to flip (1-%d):\n", p->sizeHand);
                 scanf("%d", &choice);
             } while (choice < 1 || choice > p->sizeHand);
             p->hand[choice - 1]->state = 1;
@@ -166,7 +166,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             {
                 printf("Invalid choice. Please enter a valid number.\n");
             }
-            printf("Choisissez le numero avec laquelle vous vouler echanger (1-%d): \n", p->sizeHand);
+            printf("Choose the number with which you want to exchange (1-%d):\n", p->sizeHand);
             scanf("%d", &choice);
         } while (choice < 0 || choice > p->sizeHand);
         Card *temp = p->hand[choice - 1];

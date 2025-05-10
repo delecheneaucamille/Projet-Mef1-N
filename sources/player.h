@@ -5,14 +5,13 @@
 #include <stdlib.h>
 #include "card.h"
 
-// Définition de la structure Player
 typedef struct
 {
-    int score;    // Score du joueur
-    char *name;   // Nom du joueur
-    int ai;       // 0 = joueur humain, 1 = joueur IA
-    Card **hand;  // Main du joueur (tableau de cartes)
-    int sizeHand; // Taille de la main
+    int score;
+    char *name;
+    int ai;
+    Card **hand;
+    int sizeHand;
 } Player;
 
 void destructPlayer(Player *player);
@@ -22,4 +21,4 @@ char *choiceName();
 int selectSizeHand();
 void playerTurn(Player *p, Discard *d, Stack *s);
 
-#endif // PLAYER_H
+#endif

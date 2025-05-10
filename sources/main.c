@@ -4,21 +4,20 @@
 #include "game.h"
 #include "card.h"
 #include "player.h"
-// github publiques
-
 int main()
 {
-    // Initialisation du jeu
-    printf("Bienvenue dans le jeu de cartes Skyjo !\n");
-    printf("Chargement des ressources...\n");
+    // Initialization of the game
+    printf("Welcome to the Skyjo card game!\n"); // Welcome to the Skyjo card game!
+    printf("Loading resources...\n");            // Loading resources...
 
-    // Affichage du menu principal
+    // Display the main menu
     createMenu();
 
-    // Sélection du mode de jeu
+    // Select the game mode
     selectGameMode();
 
-    // Fin du programme
-    printf("Merci d'avoir joué ! À bientôt.\n");
-    return 0;
+    // End of the program
+    printf("Thanks for playing! See you soon.\n"); // Thanks for playing! See you soon.
+}
+return 0;
 }

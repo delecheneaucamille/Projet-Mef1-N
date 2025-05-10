@@ -4,30 +4,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Définitions des constantes
 #define SIZE_STACK 100
-#define MIN_SIZE_STACK -5
-#define MAX_SIZE_STACK 15
+#define MIN_CARDS_VALUES -5
+#define MAX_CARDS_VALUES 15
 
-// Définition de la structure Card
 typedef struct
 {
-    int value; // Valeur de la carte
-    int state; // État de la carte (0 = face cachée, 1 = face visible, etc.)
+    int value;
+    int state;
 } Card;
 
-// Définition de la structure Stack
 typedef struct
 {
-    int sizeStack; // Taille actuelle de la pile
-    Card **stack;  // Tableau de pointeurs vers les cartes
+    int sizeStack;
+    Card **stack;
 } Stack;
 
-// Définition de la structure Discard
 typedef struct
 {
-    int indexLastCard; // Index de la dernière carte dans la pile
-    Card **pile;       // Tableau de pointeurs vers les cartes dans le tas de défausse
+    int indexLastCard;
+    Card **pile;
 } Discard;
 
 void destructStack(Stack *stack);
@@ -41,4 +37,4 @@ Card *getLastCardFromDiscard(Discard *d);
 Discard *initDiscard();
 void destructDiscard(Discard *d);
 
-#endif // CARD_H
+#endif

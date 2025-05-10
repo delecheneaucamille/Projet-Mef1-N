@@ -4,8 +4,8 @@
 #include <time.h>
 
 #include "ia.h"
-#include "display.h" // Pour displayPlayerCards et displayCardWithName
-#include "card.h"    // Pour getLastCardFromDiscard
+#include "display.h" // For displayPlayerCards and displayCardWithName
+#include "card.h"    // For getLastCardFromDiscard
 
 int getIndexHighestCard(Player *p)
 {
@@ -19,10 +19,10 @@ int getIndexHighestCard(Player *p)
                 index = i;
             }
         }
-        return index; // Retourne l'index de la carte avec la plus grande valeur
+        return index; // Returns the index of the card with the highest value
     }
     printf("The hand of AI %s is empty.\n", p->name);
-    return -1; // Retourne -1 pour indiquer qu'il n'y a pas de carte valide
+    return -1; // Returns -1 to indicate that there is no valid card
 }
 
 void turnStateCard(Player *p)
@@ -33,7 +33,7 @@ void turnStateCard(Player *p)
         {
             p->hand[i]->state = 1;
             displayPlayerCards(p);
-            printf("IA %s retourne la carte n°%d.\n", p->name, i);
+            printf("AI %s flips card #%d.\n", p->name, i);
             i = p->sizeHand + 1;
         }
     }
@@ -44,7 +44,7 @@ void iaTurn(Player *p, Stack *s, Discard *d)
     printf("AI %s is playing its turn...\n\n", p->name);
 
     int indexMax = getIndexHighestCard(p);
-    if (indexMax == -1) // Vérifie si aucune carte valide n'est trouvée
+    if (indexMax == -1) // Checks if no valid card is found
     {
         fprintf(stderr, "AI %s cannot play because it has no valid cards.\n", p->name);
         exit(EXIT_FAILURE);

@@ -4,16 +4,15 @@
 #include "card.h"
 #include "player.h"
 
-// Définition de la structure GameState
 typedef struct
 {
-    Player **players;  // Tableau de pointeurs vers les joueurs
-    int playerCount;   // Nombre de joueurs
-    int currentPlayer; // Indice du joueur courant
-    Discard *discard;  // Pile de défausse
-    Stack *stack;      // Tas de cartes
+    Player **players;
+    int playerCount;
+    int currentPlayer;
+    Discard *discard;
+    Stack *stack;
 } GameState;
 
 void newGame();
 
-#endif // GAME_H
+#endif

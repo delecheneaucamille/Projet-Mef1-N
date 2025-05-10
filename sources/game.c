@@ -4,15 +4,16 @@
 #include <unistd.h>
 
 #include "game.h"
-#include "player.h" // Pour les fonctions liées aux joueurs
-#include "card.h"   // Pour les fonctions liées aux cartes et piles
-#include "ia.h"
+#include "player.h" // For player-related functions
+#include "card.h"   // For card and stack-related functions
+#include "ia.h"     // For AI-related functions
+#include "display.h"
 
-#define MAX_PLAYERS 4 // Max 9 players
+#define MAX_PLAYERS 9 // Maximum 9 players
 #define MIN_SIZE_HAND 5
 #define MAX_SIZE_HAND 7
-#define MAX_SIZE_STACK 15
-#define MIN_SIZE_STACK -5
+#define MIN_CARDS_VALUES -5
+#define MAX_CARDS_VALUES 15
 #define SIZE_STACK 100
 
 GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playerCount)
@@ -35,7 +36,7 @@ GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playe
     game->discard = discard;
     game->stack = stack;
 
-    // Allouer de la mémoire pour un tableau de pointeurs vers les joueurs
+    // Allocate memory for an array of player pointers
     game->players = malloc(playerCount * sizeof(Player *));
     if (game->players == NULL)
     {
@@ -54,20 +55,20 @@ void destructGame(GameState *game)
         return;
     }
 
-    // Libérer la mémoire pour chaque joueur
+    // Free memory for each player
     for (int i = 0; i < game->playerCount; i++)
     {
         destructPlayer(game->players[i]);
     }
     free(game->players);
 
-    // Libérer la mémoire pour la pile de défausse
+    // Free memory for the discard pile
     destructDiscard(game->discard);
 
-    // Libérer la mémoire pour le tas de cartes
+    // Free memory for the card stack
     destructStack(game->stack);
 
-    // Libérer la mémoire pour l'état du jeu
+    // Free memory for the game state
     free(game);
 }
 
@@ -121,18 +122,18 @@ int selectNbPlayers()
 
 int selectNbAI(GameState *game)
 {
-    int nbAI = 0;
+    int nbAI = -1;
     do
     {
         system("clear");
-        if (nbAI > 0)
+        if (nbAI > -1)
         {
             printf("\033[31mInvalid number of AI players. Please enter a value between 0 and %d.\033[0m\n", game->playerCount - 1);
         }
         printf("\033[1;35m---  Number Of AI  ---\033[0m\n");
-        printf(" Enter the number of AI players (0-%d):\n", game->playerCount - 1);
+        printf(" Enter the number of AI players (0-%d):\n", game->playerCount);
         scanf("%d", &nbAI);
-    } while (nbAI < 0 || nbAI > game->playerCount - 1);
+    } while (nbAI < -1 || nbAI > game->playerCount);
 
     return nbAI;
 }
@@ -141,23 +142,12 @@ int checkEndGame(Player *player)
 {
     for (int i = 0; i < player->sizeHand; i++)
     {
-        if (player->hand[i]->state == 0) // Utilisez '->' pour accéder au champ 'state'
+        if (player->hand[i]->state == 0) // Use '->' to access the 'state' field
         {
-            return 0; // Une carte est encore face cachée
+            return 0; // A card is still face down
         }
     }
-    return 1; // Toutes les cartes sont retournées
-}
-
-void displayLoading()
-{
-    for (int i = 0; i < 3; i++)
-    {
-        sleep(1);       // Attend une seconde
-        printf(".");    // Affiche un point à chaque seconde
-        fflush(stdout); // Force l'affichage immédiat du point
-    }
-    printf("\n\n"); // Passe à la ligne après l'animation
+    return 1; // All cards are flipped
 }
 
 void turnGame(GameState *game)
@@ -190,7 +180,7 @@ void turnGame(GameState *game)
 
 void return2RandomCards(GameState *game)
 {
-    // Pour chaque joueur
+    // For each player
     for (int i = 0; i < game->playerCount; i++)
     {
         int index1 = rand() % game->players[i]->sizeHand;
@@ -200,8 +190,8 @@ void return2RandomCards(GameState *game)
             index2 = rand() % game->players[i]->sizeHand;
         } while (index2 == index1);
 
-        game->players[i]->hand[index1]->state = 1; // Utilisez '->' pour accéder au champ 'state'
-        game->players[i]->hand[index2]->state = 1; // Utilisez '->' pour accéder au champ 'state'
+        game->players[i]->hand[index1]->state = 1; // Use '->' to access the 'state' field
+        game->players[i]->hand[index2]->state = 1; // Use '->' to access the 'state' field
     }
 }
 
@@ -246,8 +236,8 @@ void distributeCards(GameState *game)
                 exit(EXIT_FAILURE);
             }
 
-            currentPlayer->hand[j] = card;     // Assignez directement le pointeur
-            currentPlayer->hand[j]->state = 0; // Utilisez '->' pour accéder au champ 'state'
+            currentPlayer->hand[j] = card;     // Assign the pointer directly
+            currentPlayer->hand[j]->state = 0; // Use '->' to access the 'state' field
         }
     }
 }
@@ -266,10 +256,10 @@ Player **calculateRanking(GameState *game)
         int score = 0;
         for (int j = 0; j < game->players[i]->sizeHand; j++)
         {
-            score += game->players[i]->hand[j]->value; // Utilisez '->' pour accéder au champ 'value'
+            score += game->players[i]->hand[j]->value; // Use '->' to access the 'value' field
         }
         game->players[i]->score = score;
-        ranking[i] = game->players[i]; // Assignez correctement le pointeur
+        ranking[i] = game->players[i]; // Assign the pointer correctly
     }
 
     for (int i = 0; i < game->playerCount - 1; i++)
@@ -338,7 +328,7 @@ void newGame()
     printf("\033[34mThe first card from the stack goes to the discard pile\033[0m");
     displayLoading();
 
-    // Vérifiez les joueurs et leurs mains avant d'afficher
+    // Check players and their hands before displaying
     for (int i = 0; i < game->playerCount; i++)
     {
         if (game->players[i] == NULL)
@@ -367,7 +357,7 @@ void newGame()
         printf("%s : %d points\n", ranking[i]->name, ranking[i]->score);
     }
 
-    // Libérer la mémoire
+    // Free memory
     free(ranking);
     destructGame(game);
 }

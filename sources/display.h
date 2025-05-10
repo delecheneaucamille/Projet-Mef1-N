@@ -5,12 +5,12 @@
 #include "card.h"
 #include "player.h"
 
-// Définitions des constantes
 #define MAX_COLUMNS 4
 #define MAX_ROWS 3
+#define TIME_SLEEP 0.3
 
-// Prototypes des fonctions
 void displayPlayerCards(Player *players);
 void displayCardWithName(Card *card, const char *name);
+void displayLoading();
 
-#endif // DISPLAY_H
+#endif
