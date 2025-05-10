@@ -147,8 +147,8 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         }
         else
         {
-            Card *temp = &p->hand[choice];
-            p->hand[choice] = *card;
+            Card *temp = &p->hand[choice - 1];
+            p->hand[choice - 1] = *card;
             addCardToDiscard(d, temp);
         }
     }
