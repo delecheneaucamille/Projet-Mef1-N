@@ -14,7 +14,7 @@ int getIndexHighestCard(Player *p)
         int index = 0;
         for (int i = 1; i < p->sizeHand; i++)
         {
-            if ((p->hand[i].value > p->hand[index].value) && (p->hand[i].state == 1))
+            if ((p->hand[i]->value > p->hand[index]->value) && (p->hand[i]->state == 1))
             {
                 index = i;
             }
@@ -29,9 +29,9 @@ void turnStateCard(Player *p)
 {
     for (int i = 0; i < p->sizeHand; i++)
     {
-        if (p->hand[i].state == 0)
+        if (p->hand[i]->state == 0)
         {
-            p->hand[i].state = 1;
+            p->hand[i]->state = 1;
             i = p->sizeHand + 1;
             displayPlayerCards(p);
             printf("IA %s retourne la carte n°%d.\n", p->name, i);
@@ -52,40 +52,14 @@ void iaTurn(Player *p, Stack *s, Discard *d)
 
     Card *cardToDiscard = getLastCardFromDiscard(d);
     displayPlayerCards(p);
-    if (cardToDiscard == NULL)
-    {
-        Card *cardToStack = getCardFromStack(s);
-        if (cardToStack == NULL)
-        {
-            fprintf(stderr, "AI %s cannot draw a card because the stack is empty.\n", p->name);
-            exit(EXIT_FAILURE);
-        }
-        displayCardWithName(cardToStack, "Card to stack");
-        printf("AI %s draws a card.\n", p->name);
-
-        if (cardToStack->value > p->hand[indexMax].value)
-        {
-            addCardToDiscard(d, cardToStack);
-            printf("AI %s placed the drawn card %d in the discard pile.\n", p->name, cardToStack->value);
-            turnStateCard(p);
-        }
-        else
-        {
-            printf("AI %s swapped the drawn card %d with its card #%d.\n", p->name, cardToStack->value, indexMax);
-            Card temp = p->hand[indexMax];
-            p->hand[indexMax] = *cardToStack;
-            addCardToDiscard(d, &temp);
-        }
-    }
-
-    else if (p->hand[indexMax].value > cardToDiscard->value)
+    if (cardToDiscard != NULL && p->hand[indexMax]->value > cardToDiscard->value)
     {
         displayCardWithName(cardToDiscard, "Card to discard");
-        Card temp = p->hand[indexMax];
-        p->hand[indexMax] = *cardToDiscard;
+        Card *temp = p->hand[indexMax];
+        p->hand[indexMax] = cardToDiscard;
         removeLastCardFromDiscard(d);
-        printf("AI %s swapped the discard card %d with its card #%d.\n", p->name, cardToDiscard->value, indexMax);
-        addCardToDiscard(d, &temp);
+        printf("AI %s swapped the discard card %d with its card #%d.\n", p->name, cardToDiscard->value, indexMax + 1);
+        addCardToDiscard(d, temp);
     }
     else
     {
@@ -96,9 +70,10 @@ void iaTurn(Player *p, Stack *s, Discard *d)
             fprintf(stderr, "AI %s cannot draw a card because the stack is empty.\n", p->name);
             exit(EXIT_FAILURE);
         }
+        displayCardWithName(cardToStack, "Card to stack");
         printf("AI %s draws a card.\n", p->name);
 
-        if (cardToStack->value > p->hand[indexMax].value)
+        if (cardToStack->value > p->hand[indexMax]->value)
         {
             addCardToDiscard(d, cardToStack);
             printf("AI %s placed the drawn card %d in the discard pile.\n", p->name, cardToStack->value);
@@ -106,10 +81,10 @@ void iaTurn(Player *p, Stack *s, Discard *d)
         }
         else
         {
-            printf("AI %s swapped the drawn card %d with its card #%d.\n", p->name, cardToStack->value, indexMax);
-            Card temp = p->hand[indexMax];
-            p->hand[indexMax] = *cardToStack;
-            addCardToDiscard(d, &temp);
+            printf("AI %s swapped the drawn card %d with its card #%d.\n", p->name, cardToStack->value, indexMax + 1);
+            Card *temp = p->hand[indexMax];
+            p->hand[indexMax] = cardToStack;
+            addCardToDiscard(d, temp);
         }
     }
     displayPlayerCards(p);

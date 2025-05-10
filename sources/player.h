@@ -11,7 +11,7 @@ typedef struct
     int score;    // Score du joueur
     char *name;   // Nom du joueur
     int ai;       // 0 = joueur humain, 1 = joueur IA
-    Card *hand;   // Main du joueur (tableau de cartes)
+    Card **hand;  // Main du joueur (tableau de cartes)
     int sizeHand; // Taille de la main
 } Player;
 
