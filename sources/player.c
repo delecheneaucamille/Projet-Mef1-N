@@ -147,7 +147,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         }
         else
         {
-            Card *temp = &p->hand[choice - 1];
+            Card *temp = p->hand[choice - 1];
             p->hand[choice - 1] = *card;
             addCardToDiscard(d, temp);
         }
@@ -167,7 +167,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             printf("Choisissez le numero avec laquelle vous vouler echanger (1-%d): \n", p->sizeHand);
             scanf("%d", &choice);
         } while (choice < 0 || choice > p->sizeHand);
-        Card *temp = &p->hand[choice - 1];
+        Card *temp = p->hand[choice - 1];
         p->hand[choice - 1] = *card;
         addCardToDiscard(d, temp);
         displayPlayerCards(p);
