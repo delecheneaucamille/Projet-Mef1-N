@@ -6,20 +6,19 @@
 
 void createMenu()
 {
-
-    printf("╔═════════════════════════════════════╗\n");
-    printf("║                                     ║\n");
-    printf("║         ████ \033[32mS K Y J O\033[0m ████         ║\n");
-    printf("║                                     ║\n");
-    printf("║        Le jeu de cartes sur le      ║\n");
-    printf("║        terminal !                   ║\n");
-    printf("║                                     ║\n");
-    printf("╠═════════════════════════════════════╣\n");
-    printf("║ 1. Nouvelle partie                  ║\n");
-    printf("║ 2. Charger une partie               ║\n");
-    printf("║ 3. les règles                       ║\n");
-    printf("║ 4. Quitter                          ║\n");
-    printf("╠═════════════════════════════════════╣\n");
+    printf("+-------------------------------------+\n");
+    printf("|                                     |\n");
+    printf("|         🃏 \033[1;35mC A R D  Y A R D\033[0m 🃏      |\n");
+    printf("|                                     |\n");
+    printf("|        Best game of the year        |\n");
+    printf("|        (we swear)                   |\n");
+    printf("|                                     |\n");
+    printf("+-------------------------------------+\n");
+    printf("| 1. New game                         |\n");
+    printf("| 2. Load a previous game             |\n");
+    printf("| 3. Rules                            |\n");
+    printf("| 4. Exit                             |\n");
+    printf("+-------------------------------------+\n");
 }
 
 int choiceGame()
@@ -33,6 +32,7 @@ int choiceGame()
         }
         printf("Enter your choice: \n");
         scanf("%d", &choice);
+        system("clear");
     } while (choice < 1 || choice > 4);
     return choice;
 }
