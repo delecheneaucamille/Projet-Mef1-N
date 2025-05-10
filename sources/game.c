@@ -73,6 +73,7 @@ void destructGame(GameState *game)
 
 void createPlayers(GameState *game, int aiCount)
 {
+    int sizeHand = selectSizeHand();
     for (int i = 0; i < game->playerCount; i++)
     {
         game->players[i] = constructPlayer();
@@ -90,7 +91,7 @@ void createPlayers(GameState *game, int aiCount)
                 exit(EXIT_FAILURE);
             }
             sprintf(game->players[i]->name, "AI%d", (i + 1) % 10);
-            initPlayer(game->players[i], 0, game->players[i]->name, 1, selectSizeHand()); // AI
+            initPlayer(game->players[i], 0, game->players[i]->name, 1, sizeHand); // AI
             aiCount--;
         }
         else

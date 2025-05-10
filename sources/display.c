@@ -85,7 +85,7 @@ void displayCardWithName(Card *card, const char *name)
         return;
     }
 
-    printf("Card Name: %s\n", name);
+    printf("%s\n", name);
     printf("╔═══╗\n");
     if (card->state == 1) // Carte visible
         printf("║%3d║\n", card->value);

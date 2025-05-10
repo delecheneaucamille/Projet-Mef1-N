@@ -101,7 +101,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         {
             printf("Invalid choice. Please enter 1 or 2.\n");
         }
-        printf("Si vous sahouaitez piocher une carte, entrez 1, sinon, si vous souhaiter prendre la carte de la pioche entrez 2\n");
+        printf("Si vous sahouaitez piocher une carte, entrez 1, sinon, si vous souhaiter prendre la carte de la defausse entrez 2\n");
         scanf("%d", &choice);
     } while (choice != 1 && choice != 2);
 
