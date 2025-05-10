@@ -10,7 +10,7 @@
 
 #define MAX_PLAYERS 4 // Max 9 players
 #define MIN_SIZE_HAND 5
-#define MAX_SIZE_HAND 20
+#define MAX_SIZE_HAND 7
 #define MAX_SIZE_STACK 15
 #define MIN_SIZE_STACK -5
 #define SIZE_STACK 100

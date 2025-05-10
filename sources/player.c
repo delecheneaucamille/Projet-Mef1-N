@@ -6,7 +6,7 @@
 #include "display.h"
 
 #define MIN_SIZE_HAND 5
-#define MAX_SIZE_HAND 20
+#define MAX_SIZE_HAND 7
 
 void destructPlayer(Player *player)
 {
@@ -16,10 +16,12 @@ void destructPlayer(Player *player)
         if (player->hand != NULL)
         {
             free(player->hand);
+            player->hand = NULL; // Évitez les doubles libérations
         }
         if (player->name != NULL)
         {
             free(player->name);
+            player->name = NULL; // Évitez les doubles libérations
         }
         free(player);
     }
