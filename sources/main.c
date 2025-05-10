@@ -18,6 +18,6 @@ int main()
 
     // End of the program
     printf("Thanks for playing! See you soon.\n"); // Thanks for playing! See you soon.
-}
-return 0;
+
+    return 0;
 }
