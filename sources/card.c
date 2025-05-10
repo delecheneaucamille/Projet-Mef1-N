@@ -39,25 +39,16 @@ void selectCardValues(int *pmin, int *pmax)
     int min, max;
     do
     {
-        printf("\033[34m╔===========================================╗\n");
-        printf("║   SELECTION DES VALEURS                   ║\n");
-        printf("║         DES CARTES                        ║\n");
-        printf("╠===========================================╣\n");
-        printf("║                                           ║\n");
-        printf("║  Please enter the minimum card value:     ║\n");
-        printf("║                                           ║\n\n");
-        printf("\033[0m");
+        printf("\033[1;35m--- Select Card Values ---\033[0m\n");
+        printf("Enter the minimum card value [%d-%d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         scanf("%d", &min);
+        
+        
+        printf("\n");
 
-        printf("\033[34m╔===========================================╗\n");
-        printf("║   SELECTION DES VALEURS                   ║\n");
-        printf("║         DES CARTES                        ║\n");
-        printf("╠===========================================╣\n");
-        printf("║                                           ║\n");
-        printf("║  Please enter the maximum card value:     ║\n");
-        printf("║                                           ║\n\n");
-        printf("\033[0m");
+        printf(" Enter the maximum card value[%d-%d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         scanf("%d", &max);
+        system("clear");
 
         if (min < MIN_CARDS_VALUES || max > MAX_CARDS_VALUES || min > max)
         {
