@@ -188,11 +188,10 @@ void removeLastCardFromDiscard(Discard *d)
     if (d->indexLastCard > 0)
     {
         d->indexLastCard--;
-        d->pile[d->indexLastCard] = NULL;
     }
     else
     {
-        printf("\033[31mError: Discard is empty.\033[0m\n");
+        printf("\033[31mError: No cards to remove from discard.\033[0m\n");
     }
 }
 
