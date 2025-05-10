@@ -128,11 +128,6 @@ int selectNbPlayers()
 int selectNbAI(GameState *game)
 {
     int nbAI = 0;
-    if (game->playerCount == MAX_PLAYERS)
-    {
-        fprintf(stderr, "\033[31mNot enough players to select AI.\033[0m\n");
-        return 0;
-    }
     do
     {
         system("clear");
@@ -349,11 +344,11 @@ void newGame()
 
     distributeCards(game);
     printf("\033[34mThe cards have been distributed\033[0m\n");
-    sleep(1);
+    displayLoading();
 
     addCardToDiscard(discard, getCardFromStack(stack));
     printf("\033[34mThe first card from the stack goes to the discard pile\033[0m\n");
-    sleep(1);
+    displayLoading();
 
     // Vérifiez les joueurs et leurs mains avant d'afficher
     for (int i = 0; i < game->playerCount; i++)
