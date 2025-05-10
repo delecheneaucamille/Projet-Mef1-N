@@ -32,16 +32,16 @@ void turnStateCard(Player *p)
         if (p->hand[i]->state == 0)
         {
             p->hand[i]->state = 1;
-            i = p->sizeHand + 1;
             displayPlayerCards(p);
             printf("IA %s retourne la carte n°%d.\n", p->name, i);
+            i = p->sizeHand + 1;
         }
     }
 }
 
 void iaTurn(Player *p, Stack *s, Discard *d)
 {
-    printf("AI %s is playing its turn...\n", p->name);
+    printf("AI %s is playing its turn...\n\n", p->name);
 
     int indexMax = getIndexHighestCard(p);
     if (indexMax == -1) // Vérifie si aucune carte valide n'est trouvée
@@ -52,9 +52,13 @@ void iaTurn(Player *p, Stack *s, Discard *d)
 
     Card *cardToDiscard = getLastCardFromDiscard(d);
     displayPlayerCards(p);
-    if (cardToDiscard != NULL && p->hand[indexMax]->value > cardToDiscard->value)
+    if (cardToDiscard != NULL)
     {
         displayCardWithName(cardToDiscard, "Card to discard");
+    }
+
+    if (cardToDiscard != NULL && p->hand[indexMax]->value > cardToDiscard->value)
+    {
         Card *temp = p->hand[indexMax];
         p->hand[indexMax] = cardToDiscard;
         removeLastCardFromDiscard(d);
@@ -64,7 +68,6 @@ void iaTurn(Player *p, Stack *s, Discard *d)
     else
     {
         Card *cardToStack = getCardFromStack(s);
-        displayCardWithName(cardToStack, "Card to stack");
         if (cardToStack == NULL)
         {
             fprintf(stderr, "AI %s cannot draw a card because the stack is empty.\n", p->name);

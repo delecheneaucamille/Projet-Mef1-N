@@ -42,8 +42,7 @@ void selectCardValues(int *pmin, int *pmax)
         printf("\033[1;35m--- Select Card Values ---\033[0m\n");
         printf("Enter the minimum card value [%d - %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         scanf("%d", &min);
-        
-        
+
         printf("\n");
 
         printf(" Enter the maximum card value[%d - %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
@@ -162,29 +161,27 @@ void destructDiscard(Discard *d)
 
 void addCardToDiscard(Discard *d, Card *c)
 {
-    if (d->indexLastCard < SIZE_STACK)
+    if (d == NULL || c == NULL)
     {
-        d->pile[d->indexLastCard] = c; // Add the card to the array
-        d->indexLastCard++;
-        c->state = 1; // Set the state of the card to 1 (face up)
+        fprintf(stderr, "Error: Discard or card is NULL.\n");
+        return;
     }
-    else
-    {
-        printf("\033[31mError: Discard is full.\033[0m\n");
-    }
+
+    c->state = 1;
+    d->pile[d->indexLastCard] = c; // Ajoute la carte à la pile
+    d->indexLastCard++;            // Incrémente l'index de la dernière carte
 }
 
 void removeLastCardFromDiscard(Discard *d)
 {
-    if (d->indexLastCard > 0)
+    if (d == NULL || d->indexLastCard <= 0)
     {
-        d->pile[d->indexLastCard - 1] = NULL; // Set the state of the card to 0 (face down)
-        d->indexLastCard--;
+        fprintf(stderr, "Error: Discard is empty or NULL.\n");
+        return;
     }
-    else
-    {
-        printf("\033[31mError: No cards to remove from discard.\033[0m\n");
-    }
+
+    d->indexLastCard--;               // Décrémente l'index de la dernière carte
+    d->pile[d->indexLastCard] = NULL; // Supprime la carte de la pile
 }
 
 Card *getLastCardFromDiscard(Discard *d)

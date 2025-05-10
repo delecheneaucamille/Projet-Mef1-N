@@ -113,7 +113,6 @@ int selectNbPlayers()
         }
         printf("\033[1;35m---  Number Of Players ---\033[0m\n");
         printf(" Please enter the number of players (2-%d):  \n", MAX_PLAYERS);
-        
 
         scanf("%d", &playerCount);
     } while (playerCount < 2 || playerCount > MAX_PLAYERS);
@@ -332,11 +331,11 @@ void newGame()
     displayLoading();
 
     distributeCards(game);
-    printf("\033[34mThe cards have been distributed\033[0m\n");
+    printf("\033[34mThe cards have been distributed\033[0m");
     displayLoading();
 
     addCardToDiscard(discard, getCardFromStack(stack));
-    printf("\033[34mThe first card from the stack goes to the discard pile\033[0m\n");
+    printf("\033[34mThe first card from the stack goes to the discard pile\033[0m");
     displayLoading();
 
     // Vérifiez les joueurs et leurs mains avant d'afficher
