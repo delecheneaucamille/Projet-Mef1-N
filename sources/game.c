@@ -96,7 +96,7 @@ void createPlayers(GameState *game, int aiCount)
         }
         else
         {
-            initPlayer(game->players[i], 0, choiceName(), 0, selectSizeHand()); // Human player
+            initPlayer(game->players[i], 0, choiceName(), 0, sizeHand); // Human player
         }
     }
 }
