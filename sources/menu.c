@@ -59,6 +59,7 @@ int selectGameMode()
             return 1;
         case 3:
             printf("\n\033[1;34mDisplaying the rules:\033[0m\n\n");
+            displayLoading();
 #ifdef _WIN32
             system("type README.md"); // Windows command to display file content
 #else
