@@ -3,7 +3,9 @@
 #include <string.h>
 
 #include "menu.h"
+#include "display.h"
 
+// Function to display the main menu
 void createMenu()
 {
     printf("+-------------------------------------+\n");
@@ -21,6 +23,7 @@ void createMenu()
     printf("+-------------------------------------+\n");
 }
 
+// Function to get the user's choice from the menu
 int choiceGame()
 {
     int choice = 0;
@@ -32,12 +35,12 @@ int choiceGame()
         }
         printf("Enter your choice: \n");
         scanf("%d", &choice);
-        system("clear");
-    } while (choice < 1 || choice > 4);
+    } while (choice < 1 || choice > 4); // Ensure the choice is valid
     return choice;
 }
 
-void selectGameMode()
+// Function to handle the selected game mode
+int selectGameMode()
 {
     int choice;
     do
@@ -46,59 +49,25 @@ void selectGameMode()
         switch (choice)
         {
         case 1:
-            newGame();
-            // initializing a new game
-            break;
+            system("clear");
+            newGame(); // Start a new game
+            return 1;
         case 2:
             printf("Loading game...\n");
-            printf("It's not implemented yet sorry :)\n");
-            // loading an already existing game
-            break;
+            printf("It's not implemented yet sorry :)");
+            displayLoading();
+            return 1;
         case 3:
-            fopen("README.md", "r");
-            // redirecting to a rule page
-            break;
+            fopen("README.md", "r"); // Open the rules file (not implemented)
+            displayLoading();
+            return 1;
         case 4:
-            exit(-1);
-            // exit the game
-            break;
-
+            exit(-1); // Exit the game
+            return 0;
         default:
             printf("\031[32mInvalid choice. Please try again.\033[0m\n");
             choice = 0; // Reset choice to continue the loop
         }
     } while (choice == 0);
-}
-
-void ranking(GameState *game)
-{
-    for (int i = 0; i < game->playerCount; i++)
-    {
-        game->players[i]->score = 0;
-
-        for (int j = 0; j < game->players[i]->sizeHand; j++)
-        {
-            if (game->players[i]->hand[j]->state == 1)
-            {
-                game->players[i]->score += game->players[i]->hand[j]->value;
-            }
-        }
-        for (int i = 0; i < game->playerCount; i++)
-        {
-            for (int j = 0; j < game->playerCount; j++)
-            {
-                if (game->players[i]->score < game->players[j]->score)
-                {
-                    Player *temp = game->players[i];
-                    game->players[i] = game->players[j];
-                    game->players[j] = temp;
-                }
-            }
-        }
-    }
-    printf("\nRanking:\n");
-    for (int i = 0; i < game->playerCount; i++)
-    {
-        printf("Player %s; Score %d\n", game->players[i]->name, game->players[i]->score);
-    }
+    return 0;
 }

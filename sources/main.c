@@ -4,20 +4,22 @@
 #include "game.h"
 #include "card.h"
 #include "player.h"
+#include "display.h"
+
 int main()
 {
-    // Initialization of the game
-    printf("Welcome to the Skyjo card game!\n"); // Welcome to the Skyjo card game!
-    printf("Loading resources...\n");            // Loading resources...
+    int run = 1;
 
-    // Display the main menu
-    createMenu();
-
-    // Select the game mode
-    selectGameMode();
-
-    // End of the program
-    printf("Thanks for playing! See you soon.\n"); // Thanks for playing! See you soon.
+    while (run == 1)
+    {
+        system("clear");
+        printf("Welcome to the Skyjo card game!\n");
+        printf("Loading resources");
+        displayLoading();
+        createMenu();
+        run = selectGameMode();
+    }
+    printf("Thanks for playing! See you soon.\n");
 
     return 0;
 }

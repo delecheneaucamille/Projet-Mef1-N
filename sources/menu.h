@@ -5,7 +5,6 @@
 
 void createMenu();
 int choiceGame();
-void selectGameMode();
-void ranking(GameState *game);
+int selectGameMode();
 
 #endif

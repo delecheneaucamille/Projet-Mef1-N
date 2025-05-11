@@ -3,8 +3,9 @@
 #include <unistd.h>
 
 #include "card.h"
+#include "display.h"
 
-#define SIZE_STACK 100
+#define SIZE_STACK 400
 #define MIN_CARDS_VALUES -5
 #define MAX_CARDS_VALUES 15
 
@@ -13,6 +14,7 @@ void destructStack(Stack *stack)
     if (stack != NULL)
     {
         printf("\033[34mDestructing card stack\033[0m");
+        displayLoading();
 
         for (int i = 0; i < stack->sizeStack; i++)
         {
@@ -40,18 +42,18 @@ void selectCardValues(int *pmin, int *pmax)
     do
     {
         printf("\033[1;35m--- Select Card Values ---\033[0m\n");
-        printf("Enter the minimum card value [%d - %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
+        printf("Enter the minimum card value [%d ; %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         scanf("%d", &min);
 
         printf("\n");
 
-        printf("Enter the maximum card value [%d - %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
+        printf("Enter the maximum card value [%d ; %d]:\n ", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         scanf("%d", &max);
         system("clear");
 
         if (min < MIN_CARDS_VALUES || max > MAX_CARDS_VALUES || min > max)
         {
-            printf("\033[31mInvalid values. Please enter values within [%d, %d].\033[0m\n", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
+            printf("\033[31mInvalid values. Please enter values within [%d ; %d].\033[0m\n", MIN_CARDS_VALUES, MAX_CARDS_VALUES);
         }
     } while (min < MIN_CARDS_VALUES || max > MAX_CARDS_VALUES || min > max);
 
@@ -156,7 +158,7 @@ void destructDiscard(Discard *d)
     }
     sleep(1); // Just for fun :)
     printf("\033[34mDestructing discard\033[0m");
-    void displayLoading();
+    displayLoading();
 }
 
 void addCardToDiscard(Discard *d, Card *c)

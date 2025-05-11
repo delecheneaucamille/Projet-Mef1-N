@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE_STACK 100
+#define SIZE_STACK 400
 #define MIN_CARDS_VALUES -5
 #define MAX_CARDS_VALUES 15
 

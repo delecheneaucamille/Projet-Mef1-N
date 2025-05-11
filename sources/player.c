@@ -4,15 +4,16 @@
 
 #include "player.h"
 #include "display.h"
+#define MAX_HAND_SIZE 15
+#define MIN_HAND_SIZE 5
 
-#define MIN_CARDS_VALUES 5
-#define MAX_CARDS_VALUES 7
-
+// Frees the memory allocated for a player and its associated resources
 void destructPlayer(Player *player)
 {
     if (player != NULL)
     {
-        printf("Destructing player\n");
+        printf("Destructing player %s\n", player->name);
+        displayLoading();
         if (player->hand != NULL)
         {
             free(player->hand);
@@ -27,6 +28,7 @@ void destructPlayer(Player *player)
     }
 }
 
+// Allocates memory for a new player and returns a pointer to it
 Player *constructPlayer()
 {
     Player *player = malloc(sizeof(Player));
@@ -39,6 +41,7 @@ Player *constructPlayer()
     return player;
 }
 
+// Initializes a player with the given attributes
 void initPlayer(Player *p, int score, char *name, int ai, int sizeHand)
 {
     p->score = score;
@@ -47,6 +50,7 @@ void initPlayer(Player *p, int score, char *name, int ai, int sizeHand)
     p->sizeHand = sizeHand;
 }
 
+// Prompts the user to choose a name and returns it as a dynamically allocated string
 char *choiceName()
 {
     int size = 0;
@@ -80,11 +84,13 @@ char *choiceName()
     return name;
 }
 
+// Randomly selects the size of a player's hand within the defined range
 int selectSizeHand()
 {
-    return rand() % (MAX_CARDS_VALUES - MIN_CARDS_VALUES + 1) + MIN_CARDS_VALUES;
+    return rand() % (MAX_HAND_SIZE - MIN_HAND_SIZE + 1) + MIN_HAND_SIZE;
 }
 
+// Handles the logic for a player's turn, including drawing or discarding cards
 void playerTurn(Player *p, Discard *d, Stack *s)
 {
     Card *card = getLastCardFromDiscard(d);
@@ -94,9 +100,10 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         perror("No card to discard.\n");
         exit(EXIT_FAILURE);
     }
+    printf("\nIt's %s's turn", p->name);
+    displayLoading();
     displayPlayerCards(p);
     displayCardWithName(card, "Card to discard");
-    printf("It's %s's turn!\n", p->name);
     do
     {
         if (choice > 0)
@@ -145,20 +152,21 @@ void playerTurn(Player *p, Discard *d, Stack *s)
                 printf("Which card do you want to flip (1-%d):\n", p->sizeHand);
                 scanf("%d", &choice);
             } while (choice < 1 || choice > p->sizeHand);
-            p->hand[choice - 1]->state = 1;
+            p->hand[choice - 1]->state = 1; // Flip the selected card
         }
         else
         {
             Card *temp = p->hand[choice - 1];
-            p->hand[choice - 1] = card;
-            addCardToDiscard(d, temp);
+            p->hand[choice - 1] = card; // Replace the selected card with the drawn card
+            addCardToDiscard(d, temp);  // Add the replaced card to the discard pile
         }
+        displayLoading();
     }
     else
     {
         displayPlayerCards(p);
         printf("%s takes the card from the discard pile: %d\n", p->name, card->value);
-        removeLastCardFromDiscard(d);
+        removeLastCardFromDiscard(d); // Remove the card from the discard pile
         choice = 0;
         do
         {
@@ -170,9 +178,11 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             scanf("%d", &choice);
         } while (choice < 0 || choice > p->sizeHand);
         Card *temp = p->hand[choice - 1];
-        p->hand[choice - 1] = card;
-        addCardToDiscard(d, temp);
+        p->hand[choice - 1] = card; // Replace the selected card with the discard card
+        addCardToDiscard(d, temp);  // Add the replaced card to the discard pile
         displayPlayerCards(p);
         displayCardWithName(card, "Card to discard");
+        printf("\n");
+        displayLoading();
     }
 }
