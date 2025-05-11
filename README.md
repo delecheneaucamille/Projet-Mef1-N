@@ -45,22 +45,29 @@ To run this project, you'll need:
 ## 📥 Installation
 
 1. Clone the repository to your local machine:
+
    ```bash
    git clone https://github.com/your-username/Projet-Mef1-N.git
+   ```
+
+   ```bash
    cd Projet-Mef1-N
    ```
 
 2. Compile the project using `make`:
+
    ```bash
    make
    ```
 
 3. Run the game:
+
    ```bash
    make run
    ```
 
 4. Clean up compiled files when you're done:
+
    ```bash
    make clean
    ```
@@ -70,6 +77,7 @@ To run this project, you'll need:
 ## 🎮 How to Play
 
 1. Launch the game by running the executable:
+
    ```bash
    ./main
    ```
