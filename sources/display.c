@@ -8,7 +8,7 @@
 
 #define MAX_COLUMNS 4
 #define MAX_ROWS 3
-#define TIME_SLEEP 0
+#define TIME_SLEEP 500000 // 1 second in microseconds = 1000000 microseconds
 
 // Displays a single line of a card (top, middle, or bottom)
 void displayCardLine(Card *c, int line)
@@ -22,7 +22,7 @@ void displayCardLine(Card *c, int line)
         if (c->state == 1)                                                          // Visible card
             printf("\033[34m║\033[0m\033[35m%3d\033[0m\033[34m║\033[0m", c->value); // Number in magenta
         else                                                                        // Hidden card
-            printf("\033[34m║\033[0m\033[35m ??\033[0m\033[34m║\033[0m");           // Hidden card text
+            printf("\033[34m║\033[0m\033[36m ??\033[0m\033[34m║\033[0m");           // Hidden card text
         break;
     case 2:
         printf("\033[34m╚═══╝\033[0m"); // Blue border (bottom of the card)
@@ -71,7 +71,7 @@ void displayPlayerCards(Player *player)
             int index = cardRow * MAX_COLUMNS + col;
             if (index < numberOfCards)
             {
-                printf("  %2d   ", index + 1); // Display the index aligned below the card
+                printf(" %2d   ", index + 1); // Display the index aligned below the card
             }
             else
             {
@@ -96,7 +96,7 @@ void displayCardWithName(Card *card, const char *name)
     if (card->state == 1) // Visible card
         printf("║\033[35m%3d\033[34m║\n", card->value);
     else // Hidden card
-        printf("║\033[35m ??\033[34m║\n");
+        printf("║\033[36m ??\033[34m║\n");
     printf("╚═══╝\033[0m\n");
 }
 
@@ -105,9 +105,16 @@ void displayLoading()
 {
     for (int i = 0; i < 3; i++)
     {
-        sleep(TIME_SLEEP); // Wait for one second
-        printf(".");       // Display a dot every second
-        fflush(stdout);    // Force immediate display of the dot
+        usleep(TIME_SLEEP); // Wait for one second
+        printf(".");        // Display a dot every second
+        fflush(stdout);     // Force immediate display of the dot
     }
     printf("\n\n"); // Move to the next line after the animation
+}
+
+void checkScanf()
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ; // Clear the input buffer
 }

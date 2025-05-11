@@ -35,6 +35,7 @@ int choiceGame()
         }
         printf("Enter your choice: \n");
         scanf("%d", &choice);
+        checkScanf(); // Clear the input buffer
     } while (choice < 1 || choice > 4); // Ensure the choice is valid
     return choice;
 }

@@ -10,11 +10,6 @@
 #include "display.h"
 
 #define MAX_PLAYERS 9
-#define MIN_SIZE_HAND 5
-#define MAX_SIZE_HAND 7
-#define MIN_CARDS_VALUES -5
-#define MAX_CARDS_VALUES 15
-#define SIZE_STACK 100
 
 // Initializes the game state with the given parameters
 GameState *initGame(Stack *stack, Discard *discard, int currentPlayer, int playerCount)
@@ -120,6 +115,7 @@ int selectNbPlayers()
         printf(" Please enter the number of players (2-%d):  \n", MAX_PLAYERS);
 
         scanf("%d", &playerCount);
+        checkScanf(); // Clear the input buffer
     } while (playerCount < 2 || playerCount > MAX_PLAYERS);
     return playerCount;
 }
@@ -138,6 +134,7 @@ int selectNbAI(GameState *game)
         printf("\033[1;35m---  Number Of AI  ---\033[0m\n");
         printf(" Enter the number of AI players (0-%d):\n", game->playerCount);
         scanf("%d", &nbAI);
+        checkScanf(); // Clear the input buffer
     } while (nbAI < -1 || nbAI > game->playerCount);
 
     return nbAI;

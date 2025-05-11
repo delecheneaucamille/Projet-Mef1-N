@@ -4,6 +4,7 @@
 
 #include "player.h"
 #include "display.h"
+
 #define MAX_HAND_SIZE 15
 #define MIN_HAND_SIZE 5
 
@@ -64,6 +65,7 @@ char *choiceName()
         }
         printf("How many letters will your username contain (max 25):\n");
         scanf("%d", &size);
+        checkScanf(); // Clear the input buffer
     } while (size < 1 || size > 25);
 
     name = malloc(sizeof(char) * (size + 1));
@@ -78,6 +80,7 @@ char *choiceName()
     {
         printf("Enter your username:\n");
         scanf("%s", name);
+        checkScanf(); // Clear the input buffer
     } while (strlen(name) == 0);
     name[size] = '\0';
 
@@ -112,19 +115,21 @@ void playerTurn(Player *p, Discard *d, Stack *s)
         }
         printf("If you want to draw a card, enter 1. Otherwise, if you want to take the card from the discard pile, enter 2:\n");
         scanf("%d", &choice);
+        checkScanf(); // Clear the input buffer
     } while (choice != 1 && choice != 2);
 
     if (choice == 1)
     {
         card = getCardFromStack(s);
-        displayCardWithName(card, "Card to stack");
         if (card == NULL)
         {
             perror("No card to draw.\n");
             exit(EXIT_FAILURE);
         }
 
-        printf("%s draws a card: %d\n", p->name, card->value);
+        printf("%s draws a card: %d", p->name, card->value);
+        displayLoading();
+        displayCardWithName(card, "Card to stack");
         choice = -1;
         do
         {
@@ -134,13 +139,15 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             }
             printf("Enter 0 to put the card in the discard pile or choose the number with which you want to exchange it (0-%d):\n", p->sizeHand);
             scanf("%d", &choice);
+            checkScanf(); // Clear the input buffer
         } while (choice < 0 || choice > p->sizeHand);
 
         if (choice == 0)
         {
             addCardToDiscard(d, card);
+            printf("%s puts the card in the discard pile", p->name);
+            displayLoading();
             displayCardWithName(card, "Card to discard");
-            printf("%s puts the card in the discard pile.\n", p->name);
 
             choice = 0;
             do
@@ -151,6 +158,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
                 }
                 printf("Which card do you want to flip (1-%d):\n", p->sizeHand);
                 scanf("%d", &choice);
+                checkScanf(); // Clear the input buffer
             } while (choice < 1 || choice > p->sizeHand);
             p->hand[choice - 1]->state = 1; // Flip the selected card
         }
@@ -165,7 +173,8 @@ void playerTurn(Player *p, Discard *d, Stack *s)
     else
     {
         displayPlayerCards(p);
-        printf("%s takes the card from the discard pile: %d\n", p->name, card->value);
+        printf("%s takes the card from the discard pile: %d", p->name, card->value);
+        displayLoading();
         removeLastCardFromDiscard(d); // Remove the card from the discard pile
         choice = 0;
         do
@@ -176,6 +185,7 @@ void playerTurn(Player *p, Discard *d, Stack *s)
             }
             printf("Choose the number with which you want to exchange (1-%d):\n", p->sizeHand);
             scanf("%d", &choice);
+            checkScanf(); // Clear the input buffer
         } while (choice < 0 || choice > p->sizeHand);
         Card *temp = p->hand[choice - 1];
         p->hand[choice - 1] = card; // Replace the selected card with the discard card
