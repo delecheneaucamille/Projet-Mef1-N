@@ -54,18 +54,25 @@ int selectGameMode()
             return 1;
         case 2:
             printf("Loading game...\n");
-            printf("It's not implemented yet sorry :)");
+            printf("It's not implemented yet sorry :)\n");
             displayLoading();
             return 1;
         case 3:
-            fopen("README.md", "r"); // Open the rules file (not implemented)
-            displayLoading();
+            printf("\n\033[1;34mDisplaying the rules:\033[0m\n\n");
+#ifdef _WIN32
+            system("type README.md"); // Windows command to display file content
+#else
+            system("cat README.md"); // Linux/macOS command to display file content
+#endif
+            printf("\nPress Enter to return to the menu...\n");
+            getchar(); // Wait for user input
+            getchar(); // To handle the newline left by scanf
             return 1;
         case 4:
-            exit(-1); // Exit the game
+            exit(0); // Exit the game
             return 0;
         default:
-            printf("\031[32mInvalid choice. Please try again.\033[0m\n");
+            printf("\033[31mInvalid choice. Please try again.\033[0m\n");
             choice = 0; // Reset choice to continue the loop
         }
     } while (choice == 0);
